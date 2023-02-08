@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RogueliteSurvivor.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,8 +21,12 @@ namespace RogueliteSurvivor
 
         const int scaleFactor = 3;
         private Matrix transformMatrix;
+
         private Vector2 playerPosition = new Vector2(5,5);
         private float playerSpeed = 100f;
+        private Texture2D playerTexture;
+        private AnimationData playerAnimationData;
+        private AnimationTimer playerAnimationTimer;
 
         public Game1()
         {
@@ -32,8 +37,6 @@ namespace RogueliteSurvivor
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             transformMatrix = Matrix.CreateScale(scaleFactor, scaleFactor, 1f);
 
             base.Initialize();
@@ -47,7 +50,31 @@ namespace RogueliteSurvivor
             tilesets = map.GetTiledTilesets(Content.RootDirectory + "/");
             tilesetTexture = Content.Load<Texture2D>("Tiles");
 
-            // TODO: use this.Content to load your game content here
+            playerTexture = Content.Load<Texture2D>("Animated_Mage_Character");
+            playerAnimationData = new AnimationData(playerTexture, 3, 8);
+            playerAnimationTimer = new AnimationTimer(1, 1, 1);
+        }
+
+        private void setPlayerAnimation(int direction, int speed)
+        {
+            switch(direction)
+            {
+                case 0:
+                    playerAnimationTimer.Reset(1, 1);
+                    break;
+                case 1:
+                    playerAnimationTimer.Reset(0, 2);
+                    break;
+                case 2:
+                    playerAnimationTimer.Reset(3, 5);
+                    break;
+                case 3:
+                    playerAnimationTimer.Reset(6, 8);
+                    break;
+                case 4:
+                    playerAnimationTimer.Reset(9, 11);
+                    break;
+            }
         }
 
         protected override void Update(GameTime gameTime)
@@ -76,8 +103,8 @@ namespace RogueliteSurvivor
             {
                 playerPosition.X += playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-
-            // TODO: Add your update logic here
+            
+            playerAnimationTimer.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -129,6 +156,8 @@ namespace RogueliteSurvivor
                     }
                 }
             }
+
+            _spriteBatch.Draw(playerTexture, playerPosition, playerAnimationData.SourceRectangle(playerAnimationTimer.currentFrame), Color.White);
 
             _spriteBatch.End();
 
