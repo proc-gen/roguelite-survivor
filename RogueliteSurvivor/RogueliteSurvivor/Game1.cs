@@ -175,12 +175,12 @@ namespace RogueliteSurvivor
                         double rotation = 0f;
 
                         // Render sprite at position tileX, tileY using the rect
-                        _spriteBatch.Draw(tilesetTexture, destination, source, Color.White, (float)rotation, Vector2.Zero, effects, 0);
+                        _spriteBatch.Draw(tilesetTexture, new Vector2(tileX, tileY), source, Color.White, (float)rotation, playerPosition, 1f, effects, 0);
                     }
                 }
             }
 
-            _spriteBatch.Draw(playerTexture, playerPosition, playerAnimationData.SourceRectangle(playerAnimationTimer.currentFrame), Color.White);
+            _spriteBatch.Draw(playerTexture, new Vector2(125, 75), playerAnimationData.SourceRectangle(playerAnimationTimer.currentFrame), Color.White, 0f, new Vector2(0, 4), 1f, SpriteEffects.None, 0);
 
             _spriteBatch.End();
 
