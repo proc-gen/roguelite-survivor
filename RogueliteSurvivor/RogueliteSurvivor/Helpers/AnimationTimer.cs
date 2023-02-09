@@ -28,6 +28,7 @@ namespace RogueliteSurvivor.Helpers
             this.firstFrame = firstFrame;
             this.lastFrame = lastFrame;
             numFrames = lastFrame - firstFrame + 1;
+            currentFrame = firstFrame;
             count = 0;
         }
 
@@ -37,7 +38,7 @@ namespace RogueliteSurvivor.Helpers
             if(count > max)
             {
                 count = 0;
-                currentFrame = currentFrame == lastFrame ? firstFrame : currentFrame++;
+                currentFrame = currentFrame == lastFrame ? firstFrame : currentFrame + 1;
             }
         }
     }
