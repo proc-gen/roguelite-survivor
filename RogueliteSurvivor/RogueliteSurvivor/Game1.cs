@@ -76,6 +76,7 @@ namespace RogueliteSurvivor
             renderSystems = new List<IRenderSystem>
             {
                 new RenderMapSystem(world),
+                new RenderSpriteSystem(world),
             };
         }
 
@@ -102,8 +103,6 @@ namespace RogueliteSurvivor
             {
                 system.Render(gameTime, _spriteBatch, textures, player);
             }
-
-            _spriteBatch.Draw(textures["player"], new Vector2(125, 75), player.Get<SpriteSheet>().SourceRectangle(player.Get<Animation>().CurrentFrame), Color.White, 0f, new Vector2(0, 4), 1f, SpriteEffects.None, 0);
 
             _spriteBatch.End();
 
