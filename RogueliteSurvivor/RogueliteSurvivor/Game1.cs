@@ -8,6 +8,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using TiledCS;
+using Arch;
+using Arch.Core;
+using RogueliteSurvivor.Components;
+using RogueliteSurvivor.Systems;
+using Arch.Core.Extensions;
 
 namespace RogueliteSurvivor
 {
@@ -23,12 +28,14 @@ namespace RogueliteSurvivor
         const int scaleFactor = 3;
         private Matrix transformMatrix;
 
-        private Vector2 playerPosition = new Vector2(50,50);
-        private float playerSpeed = 100f;
         private Texture2D playerTexture;
         private AnimationData playerAnimationData;
         private AnimationTimer playerAnimationTimer;
         private int currentPlayerDirection = 0;
+
+        private World world;
+        private List<IUpdateSystem> updateSystems;
+        private Entity player;
 
         public Game1()
         {
@@ -51,6 +58,20 @@ namespace RogueliteSurvivor
             map = new TiledMap(Path.Combine(Content.RootDirectory, "Demo.tmx"));
             tilesets = map.GetTiledTilesets(Content.RootDirectory + "/");
             tilesetTexture = Content.Load<Texture2D>("Tiles");
+
+            world = World.Create();
+            player = world.Create(
+                new Player(),
+                new Position() { XY = new Vector2(50, 50) },
+                new Velocity() { Dxy = Vector2.Zero },
+                new Speed() { speed = 100f }
+            );
+
+            updateSystems = new List<IUpdateSystem>
+            {
+                new PlayerInputSystem(world),
+                new MoveSystem(world),
+            };
 
             playerTexture = Content.Load<Texture2D>("Animated_Mage_Character");
             playerAnimationData = new AnimationData(playerTexture, 3, 8);
@@ -85,11 +106,15 @@ namespace RogueliteSurvivor
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            foreach(var system in updateSystems)
+            {
+                system.Update(gameTime);
+            }
+
             var kstate = Keyboard.GetState();
 
             if (kstate.IsKeyDown(Keys.Up))
             {
-                playerPosition.Y -= playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if(currentPlayerDirection != 3)
                 {
                     setPlayerAnimation(3, 0);
@@ -98,7 +123,6 @@ namespace RogueliteSurvivor
 
             if (kstate.IsKeyDown(Keys.Down))
             {
-                playerPosition.Y += playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (currentPlayerDirection != 1)
                 {
                     setPlayerAnimation(1, 0);
@@ -107,7 +131,6 @@ namespace RogueliteSurvivor
 
             if (kstate.IsKeyDown(Keys.Left))
             {
-                playerPosition.X -= playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (currentPlayerDirection != 2)
                 {
                     setPlayerAnimation(2, 0);
@@ -116,7 +139,6 @@ namespace RogueliteSurvivor
 
             if (kstate.IsKeyDown(Keys.Right))
             {
-                playerPosition.X += playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (currentPlayerDirection != 4)
                 {
                     setPlayerAnimation(4, 0);
@@ -176,7 +198,7 @@ namespace RogueliteSurvivor
                         double rotation = 0f;
 
                         // Render sprite at position tileX, tileY using the rect
-                        _spriteBatch.Draw(tilesetTexture, new Vector2(tileX, tileY), source, Color.White, (float)rotation, playerPosition, 1f, effects, 0);
+                        _spriteBatch.Draw(tilesetTexture, new Vector2(tileX, tileY), source, Color.White, (float)rotation, player.Get<Position>().XY, 1f, effects, 0);
                     }
                 }
             }
