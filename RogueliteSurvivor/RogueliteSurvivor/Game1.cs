@@ -30,8 +30,6 @@ namespace RogueliteSurvivor
 
         private Texture2D playerTexture;
         private AnimationData playerAnimationData;
-        private AnimationTimer playerAnimationTimer;
-        private int currentPlayerDirection = 0;
 
         private World world;
         private List<IUpdateSystem> updateSystems;
@@ -64,41 +62,20 @@ namespace RogueliteSurvivor
                 new Player(),
                 new Position() { XY = new Vector2(50, 50) },
                 new Velocity() { Dxy = Vector2.Zero },
-                new Speed() { speed = 100f }
+                new Speed() { speed = 100f },
+                new Animation(1, 1, .1f)
             );
 
             updateSystems = new List<IUpdateSystem>
             {
                 new PlayerInputSystem(world),
+                new AnimationSetSystem(world),
+                new AnimationUpdateSystem(world),
                 new MoveSystem(world),
             };
 
             playerTexture = Content.Load<Texture2D>("Animated_Mage_Character");
             playerAnimationData = new AnimationData(playerTexture, 3, 8);
-            playerAnimationTimer = new AnimationTimer(1, 1, .1f);
-        }
-
-        private void setPlayerAnimation(int direction, int speed)
-        {
-            currentPlayerDirection = direction;
-            switch(direction)
-            {
-                case 0: //Idle
-                    playerAnimationTimer.Reset(1, 1);
-                    break;
-                case 1: //Down
-                    playerAnimationTimer.Reset(0, 2);
-                    break;
-                case 2: //Left
-                    playerAnimationTimer.Reset(3, 5);
-                    break;
-                case 3: //Up
-                    playerAnimationTimer.Reset(6, 8);
-                    break;
-                case 4: //Right
-                    playerAnimationTimer.Reset(9, 11);
-                    break;
-            }
         }
 
         protected override void Update(GameTime gameTime)
@@ -110,48 +87,7 @@ namespace RogueliteSurvivor
             {
                 system.Update(gameTime);
             }
-
-            var kstate = Keyboard.GetState();
-
-            if (kstate.IsKeyDown(Keys.Up))
-            {
-                if(currentPlayerDirection != 3)
-                {
-                    setPlayerAnimation(3, 0);
-                }
-            }
-
-            if (kstate.IsKeyDown(Keys.Down))
-            {
-                if (currentPlayerDirection != 1)
-                {
-                    setPlayerAnimation(1, 0);
-                }
-            }
-
-            if (kstate.IsKeyDown(Keys.Left))
-            {
-                if (currentPlayerDirection != 2)
-                {
-                    setPlayerAnimation(2, 0);
-                }
-            }
-
-            if (kstate.IsKeyDown(Keys.Right))
-            {
-                if (currentPlayerDirection != 4)
-                {
-                    setPlayerAnimation(4, 0);
-                }
-            }
-
-            if (kstate.GetPressedKeyCount() == 0) 
-            {
-                setPlayerAnimation(0, 0);
-            }
             
-            playerAnimationTimer.Update(gameTime);
-
             base.Update(gameTime);
         }
 
@@ -203,7 +139,7 @@ namespace RogueliteSurvivor
                 }
             }
 
-            _spriteBatch.Draw(playerTexture, new Vector2(125, 75), playerAnimationData.SourceRectangle(playerAnimationTimer.currentFrame), Color.White, 0f, new Vector2(0, 4), 1f, SpriteEffects.None, 0);
+            _spriteBatch.Draw(playerTexture, new Vector2(125, 75), playerAnimationData.SourceRectangle(player.Get<Animation>().CurrentFrame), Color.White, 0f, new Vector2(0, 4), 1f, SpriteEffects.None, 0);
 
             _spriteBatch.End();
 
