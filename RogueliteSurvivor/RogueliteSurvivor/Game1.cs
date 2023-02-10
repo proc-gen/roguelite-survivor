@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using RogueliteSurvivor.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,17 +22,15 @@ namespace RogueliteSurvivor
 
         private TiledMap map;
         private Dictionary<int, TiledTileset> tilesets;
-        private Texture2D tilesetTexture;
 
         const int scaleFactor = 3;
         private Matrix transformMatrix;
 
-        private Texture2D playerTexture;
-        private AnimationData playerAnimationData;
-
         private World world;
         private List<IUpdateSystem> updateSystems;
         private Entity player;
+
+        private Dictionary<string, Texture2D> textures;
 
         public Game1()
         {
@@ -55,7 +52,10 @@ namespace RogueliteSurvivor
 
             map = new TiledMap(Path.Combine(Content.RootDirectory, "Demo.tmx"));
             tilesets = map.GetTiledTilesets(Content.RootDirectory + "/");
-            tilesetTexture = Content.Load<Texture2D>("Tiles");
+
+            textures = new Dictionary<string, Texture2D>();
+            textures.Add("tiles", Content.Load<Texture2D>("Tiles"));
+            textures.Add("player", Content.Load<Texture2D>("Animated_Mage_Character"));
 
             world = World.Create();
             player = world.Create(
@@ -63,7 +63,8 @@ namespace RogueliteSurvivor
                 new Position() { XY = new Vector2(50, 50) },
                 new Velocity() { Dxy = Vector2.Zero },
                 new Speed() { speed = 100f },
-                new Animation(1, 1, .1f)
+                new Animation(1, 1, .1f),
+                new SpriteSheet(textures["player"], "player", 3, 8)
             );
 
             updateSystems = new List<IUpdateSystem>
@@ -73,9 +74,6 @@ namespace RogueliteSurvivor
                 new AnimationUpdateSystem(world),
                 new MoveSystem(world),
             };
-
-            playerTexture = Content.Load<Texture2D>("Animated_Mage_Character");
-            playerAnimationData = new AnimationData(playerTexture, 3, 8);
         }
 
         protected override void Update(GameTime gameTime)
@@ -134,12 +132,12 @@ namespace RogueliteSurvivor
                         double rotation = 0f;
 
                         // Render sprite at position tileX, tileY using the rect
-                        _spriteBatch.Draw(tilesetTexture, new Vector2(tileX, tileY), source, Color.White, (float)rotation, player.Get<Position>().XY, 1f, effects, 0);
+                        _spriteBatch.Draw(textures["tiles"], new Vector2(tileX, tileY), source, Color.White, (float)rotation, player.Get<Position>().XY, 1f, effects, 0);
                     }
                 }
             }
 
-            _spriteBatch.Draw(playerTexture, new Vector2(125, 75), playerAnimationData.SourceRectangle(player.Get<Animation>().CurrentFrame), Color.White, 0f, new Vector2(0, 4), 1f, SpriteEffects.None, 0);
+            _spriteBatch.Draw(textures["player"], new Vector2(125, 75), player.Get<SpriteSheet>().SourceRectangle(player.Get<Animation>().CurrentFrame), Color.White, 0f, new Vector2(0, 4), 1f, SpriteEffects.None, 0);
 
             _spriteBatch.End();
 
