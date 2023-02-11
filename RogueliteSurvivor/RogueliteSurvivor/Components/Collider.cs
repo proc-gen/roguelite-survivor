@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,6 @@ namespace RogueliteSurvivor.Components
     {
         public int Width { get; set; }
         public int Height { get; set; }
+        public Vector2 Offset { get; set; }
     }
 }

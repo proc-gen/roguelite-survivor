@@ -63,7 +63,7 @@ namespace RogueliteSurvivor
                 new Speed() { speed = 100f },
                 new Animation(1, 1, .1f),
                 new SpriteSheet(textures["player"], "player", 3, 8),
-                new Collider() { Width = 16, Height = 32 }
+                new Collider() { Width = 16, Height = 24, Offset = new Vector2(8, 12) }
             );
 
             updateSystems = new List<IUpdateSystem>

@@ -47,9 +47,10 @@ namespace RogueliteSurvivor.Systems
                             int tileLayerIndex = 0;
                             do
                             {
-                                TiledTile tile = getTile(map, tileLayers[tileLayerIndex], (pos.XY + (vel.Dxy * TestVectors[testVectorIndex])));
+                                TiledTile tileA = getTile(map, tileLayers[tileLayerIndex], (pos.XY + col.Offset + (vel.Dxy * TestVectors[testVectorIndex])));
+                                TiledTile tileB = getTile(map, tileLayers[tileLayerIndex], (pos.XY - col.Offset + (vel.Dxy * TestVectors[testVectorIndex])));
 
-                                if (tile.properties[0].value == "true")
+                                if (tileA.properties[0].value == "true" && tileB.properties[0].value == "true")
                                 {
                                     canMove = true;
                                     vel.Dxy = vel.Dxy * TestVectors[testVectorIndex];
@@ -58,7 +59,7 @@ namespace RogueliteSurvivor.Systems
                                 tileLayerIndex++;
                             } while (!canMove && tileLayerIndex < tileLayers.Count());
                             testVectorIndex++;
-                        } while (!canMove && testVectorIndex < 2);
+                        } while (!canMove && testVectorIndex < 3);
 
                         if (!canMove)
                         {
