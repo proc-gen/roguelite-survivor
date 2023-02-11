@@ -47,7 +47,7 @@ namespace RogueliteSurvivor.Systems
                             int tileLayerIndex = 0;
                             do
                             {
-                                TiledTile tile = getTile(map, tileLayers[tileLayerIndex], (new Vector2(125, 75) + pos.XY + (vel.Dxy * TestVectors[testVectorIndex])));
+                                TiledTile tile = getTile(map, tileLayers[tileLayerIndex], (pos.XY + (vel.Dxy * TestVectors[testVectorIndex])));
 
                                 if (tile.properties[0].value == "true")
                                 {

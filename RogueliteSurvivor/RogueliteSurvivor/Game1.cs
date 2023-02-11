@@ -58,7 +58,7 @@ namespace RogueliteSurvivor
             world.Create(new MapInfo(Path.Combine(Content.RootDirectory, "Demo.tmx"), Content.RootDirectory + "/"));
             player = world.Create(
                 new Player(),
-                new Position() { XY = new Vector2(0, 0) },
+                new Position() { XY = new Vector2(125, 75) },
                 new Velocity() { Dxy = Vector2.Zero },
                 new Speed() { speed = 100f },
                 new Animation(1, 1, .1f),
