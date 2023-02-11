@@ -71,8 +71,8 @@ namespace RogueliteSurvivor.Systems
 
         private TiledTile getTile(MapInfo map, TiledLayer layer, Vector2 position)
         {
-            int x = (int)(position.X / map.Map.TileWidth);
-            int y = (int)(position.Y / map.Map.TileHeight);
+            int x = (int)MathF.Round(position.X / map.Map.TileWidth);
+            int y = (int)MathF.Round(position.Y / map.Map.TileHeight);
 
             int index = (y * layer.width) + x;
             int gid = layer.data[index];
