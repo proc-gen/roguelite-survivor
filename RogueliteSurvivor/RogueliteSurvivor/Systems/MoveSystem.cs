@@ -21,7 +21,10 @@ namespace RogueliteSurvivor.Systems
         {
             world.Query(in query, (ref Velocity vel, ref Position pos) =>
             {
-                pos.XY += vel.Dxy;
+                if (vel.Dxy != Vector2.Zero)
+                {
+                    pos.XY += vel.Dxy;
+                }
             });
         }
     }

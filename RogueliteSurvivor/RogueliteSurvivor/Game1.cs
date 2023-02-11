@@ -58,11 +58,12 @@ namespace RogueliteSurvivor
             world.Create(new MapInfo(Path.Combine(Content.RootDirectory, "Demo.tmx"), Content.RootDirectory + "/"));
             player = world.Create(
                 new Player(),
-                new Position() { XY = new Vector2(50, 50) },
+                new Position() { XY = new Vector2(0, 0) },
                 new Velocity() { Dxy = Vector2.Zero },
                 new Speed() { speed = 100f },
                 new Animation(1, 1, .1f),
-                new SpriteSheet(textures["player"], "player", 3, 8)
+                new SpriteSheet(textures["player"], "player", 3, 8),
+                new Collider() { Width = 16, Height = 32 }
             );
 
             updateSystems = new List<IUpdateSystem>
@@ -70,6 +71,7 @@ namespace RogueliteSurvivor
                 new PlayerInputSystem(world),
                 new AnimationSetSystem(world),
                 new AnimationUpdateSystem(world),
+                new CollisionSystem(world),
                 new MoveSystem(world),
             };
 
@@ -83,11 +85,15 @@ namespace RogueliteSurvivor
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            foreach(var system in updateSystems)
             {
-                system.Update(gameTime);
+                Exit();
+            }
+            else
+            {
+                foreach (var system in updateSystems)
+                {
+                    system.Update(gameTime);
+                }
             }
             
             base.Update(gameTime);
@@ -97,7 +103,7 @@ namespace RogueliteSurvivor
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);  // Set samplerState to null to work with high res assets
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
 
             foreach(var system in renderSystems)
             {
