@@ -21,41 +21,49 @@ namespace RogueliteSurvivor.Systems
         {
             world.Query(in query, (ref Animation anim, ref Velocity vel) =>
             {
-                if(vel.Dxy.Y > 0)
+                if (anim.NumDirections == 4)
                 {
-                    if (anim.FirstFrame != 0)
+                    if (vel.Dxy.Y > 0)
                     {
-                        anim.Reset(0, 2);
+                        if (anim.FirstFrame != 0)
+                        {
+                            anim.Reset(0, 2);
+                        }
+                    }
+                    else if (vel.Dxy.Y < 0)
+                    {
+                        if (anim.FirstFrame != 6)
+                        {
+                            anim.Reset(6, 8);
+                        }
+                    }
+                    else if (vel.Dxy.X > 0)
+                    {
+                        if (anim.FirstFrame != 9)
+                        {
+                            anim.Reset(9, 11);
+                        }
+                    }
+                    else if (vel.Dxy.X < 0)
+                    {
+                        if (anim.FirstFrame != 3)
+                        {
+                            anim.Reset(3, 5);
+                        }
+                    }
+                    else if (vel.Dxy == Vector2.Zero)
+                    {
+                        if (anim.FirstFrame != 1)
+                        {
+                            anim.Reset(1, 1);
+                        }
                     }
                 }
-                else if(vel.Dxy.Y < 0)
+                else if(anim.NumDirections == 2)
                 {
-                    if (anim.FirstFrame != 6)
-                    {
-                        anim.Reset(6, 8);
-                    }
+                    //Nothing
                 }
-                else if(vel.Dxy.X > 0)
-                {
-                    if (anim.FirstFrame != 9)
-                    {
-                        anim.Reset(9, 11);
-                    }
-                }
-                else if(vel.Dxy.X < 0)
-                {
-                    if (anim.FirstFrame != 3)
-                    {
-                        anim.Reset(3, 5);
-                    }
-                }
-                else if(vel.Dxy == Vector2.Zero)
-                {
-                    if (anim.FirstFrame != 1)
-                    {
-                        anim.Reset(1, 1);
-                    }
-                }
+
             });
         }
     }

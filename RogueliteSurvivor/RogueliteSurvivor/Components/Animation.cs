@@ -8,16 +8,18 @@ namespace RogueliteSurvivor.Components
 {
     public struct Animation
     {
-        public int FirstFrame { get; set; }
-        public int LastFrame { get; set; }
+        public int FirstFrame { get; private set; }
+        public int LastFrame { get; private set; }
         public int CurrentFrame { get; set; }
-        public int NumFrames { get; set; }
+        public int NumFrames { get; private set; }
         public float Count { get; set; }
-        public float Max { get; set; }
+        public float Max { get; private set; }
+        public int NumDirections { get; private set; }
 
-        public Animation(int firstFrame, int lastFrame, float max)
+        public Animation(int firstFrame, int lastFrame, float max, int numDirections)
         {
             Max = max;
+            NumDirections = numDirections;
             Reset(firstFrame, lastFrame);
         }
 
