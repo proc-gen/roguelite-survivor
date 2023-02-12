@@ -75,7 +75,7 @@ namespace RogueliteSurvivor
                 new AnimationSetSystem(world),
                 new AnimationUpdateSystem(world),
                 new CollisionSystem(world, physicsWorld),
-                new EnemySpawnSystem(world, textures, physicsWorld),
+                new EnemySpawnSystem(world, textures, physicsWorld, _graphics),
             };
 
             renderSystems = new List<IRenderSystem>
