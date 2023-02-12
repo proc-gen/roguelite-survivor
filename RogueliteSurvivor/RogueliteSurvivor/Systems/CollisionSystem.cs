@@ -1,4 +1,5 @@
 ﻿using Arch.Core;
+using Arch.Core.Extensions;
 using Microsoft.Xna.Framework;
 using RogueliteSurvivor.Components;
 using System;
@@ -60,6 +61,31 @@ namespace RogueliteSurvivor.Systems
                             } while (!canMove && tileLayerIndex < tileLayers.Count());
                             testVectorIndex++;
                         } while (!canMove && testVectorIndex < 3);
+
+                        
+                        if(canMove)
+                        {
+                            Vector2 XY = pos.XY, Dxy = vel.Dxy, Offset = col.Offset;
+
+                            world.Query(in query, (ref Position otherPos, ref Collider otherCol) =>
+                            {
+                                if (XY != otherPos.XY && Vector2.DistanceSquared(XY, otherPos.XY) < 512)
+                                {
+                                    int testVectorIndex = 0;
+                                    
+                                    do
+                                    {
+                                        if(Vector2.DistanceSquared(XY + Offset + (Dxy * TestVectors[testVectorIndex]), otherPos.XY) < 192
+                                            || Vector2.DistanceSquared(XY - Offset + (Dxy * TestVectors[testVectorIndex]), otherPos.XY) < 192)
+                                        {
+                                            canMove = false;
+                                        }
+
+                                        testVectorIndex++;
+                                    } while (canMove && testVectorIndex < 3);
+                                }
+                            });
+                        }
 
                         if (!canMove)
                         {
