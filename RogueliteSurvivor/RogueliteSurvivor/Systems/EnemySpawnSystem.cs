@@ -1,4 +1,5 @@
 ﻿using Arch.Core;
+using Arch.Core.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.Components;
@@ -31,21 +32,28 @@ namespace RogueliteSurvivor.Systems
         public void Update(GameTime gameTime) 
         {
             int numEnemies = 0;
-            world.Query(in query, (ref Enemy enemy) =>
+            world.Query(in query, (in Entity entity, ref Enemy enemy) =>
             {
-                numEnemies++;
+                if(enemy.State == EnemyState.Alive)
+                {
+                    numEnemies++;
+                }
+                else
+                {
+                    world.Destroy(entity);
+                }
             });
 
-            if(numEnemies < 200)
+            if(numEnemies < 20)
             {
-                for(int i = numEnemies; i < 200; i++)
+                for(int i = numEnemies; i < 20; i++)
                 {
                     var body = new Box2D.NetStandard.Dynamics.Bodies.BodyDef();
                     body.position = new System.Numerics.Vector2(random.Next(32, 768), random.Next(32, 768));
                     body.fixedRotation = true;
 
-                    world.Create(
-                        new Enemy(),
+                    var entity = world.Create(
+                        new Enemy() { State = EnemyState.Alive },
                         new Position() { XY = new Vector2(body.position.X, body.position.Y) },
                         new Velocity() { Vector = Vector2.Zero },
                         new Speed() { speed = 8000f },
@@ -53,6 +61,8 @@ namespace RogueliteSurvivor.Systems
                         new SpriteSheet(textures["vampire_bat"], "vampire_bat", 4, 2),
                         new Collider(16, 16, physicsWorld, body)
                     );
+
+                    entity.Get<Collider>().SetEntityForPhysics(entity);
                 }
             }
         }

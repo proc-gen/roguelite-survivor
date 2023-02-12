@@ -12,6 +12,7 @@ using Arch.Core;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Systems;
 using Arch.Core.Extensions;
+using RogueliteSurvivor.Physics;
 
 namespace RogueliteSurvivor
 {
@@ -65,6 +66,7 @@ namespace RogueliteSurvivor
 
             world = World.Create();
             physicsWorld = new Box2D.NetStandard.Dynamics.World.World(gravity);
+            physicsWorld.SetContactListener(new PlayerContactListener());
 
             updateSystems = new List<IUpdateSystem>
             {
@@ -96,6 +98,8 @@ namespace RogueliteSurvivor
                 new SpriteSheet(textures["player"], "player", 3, 8),
                 new Collider(16, 24, physicsWorld, body, 9999)
             );
+
+            player.Get<Collider>().SetEntityForPhysics(player);
         }
 
         protected override void Update(GameTime gameTime)

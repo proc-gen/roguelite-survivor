@@ -1,4 +1,5 @@
-﻿using Box2D.NetStandard.Collision.Shapes;
+﻿using Arch.Core;
+using Box2D.NetStandard.Collision.Shapes;
 using Box2D.NetStandard.Dynamics.Bodies;
 using Microsoft.Xna.Framework;
 using System;
@@ -30,6 +31,11 @@ namespace RogueliteSurvivor.Components
 
             PhysicsBody = physicsWorld.CreateBody(bodyDef);
             PhysicsBody.CreateFixture(bodyShape);
+        }
+
+        public void SetEntityForPhysics(Entity entity)
+        {
+            PhysicsBody.SetUserData(entity);
         }
     }
 }

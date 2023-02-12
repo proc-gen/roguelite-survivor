@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Components
 {
+    public enum EnemyState
+    {
+        Alive,
+        Dead
+    }
+
     public struct Enemy
     {
+        public EnemyState State { get; set; }
     }
 }
