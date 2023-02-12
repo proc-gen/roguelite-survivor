@@ -1,5 +1,6 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
+using Box2D.NetStandard.Dynamics.Bodies;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.Components;
@@ -40,7 +41,15 @@ namespace RogueliteSurvivor.Systems
                 }
                 else
                 {
-                    world.Destroy(entity);
+                    enemy.State = EnemyState.Alive;
+                    
+                    var collider = entity.Get<Collider>();
+                    var position = entity.Get<Position>();
+
+                    collider.PhysicsBody.SetTransform(new System.Numerics.Vector2(random.Next(32, 768), random.Next(32, 768)), 0);
+                    position.XY = new Vector2(collider.PhysicsBody.Position.X, collider.PhysicsBody.Position.Y);
+
+                    entity.SetRange(collider, position);
                 }
             });
 
