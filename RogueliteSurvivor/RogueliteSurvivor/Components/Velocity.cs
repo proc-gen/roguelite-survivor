@@ -9,6 +9,7 @@ namespace RogueliteSurvivor.Components
 {
     public struct Velocity
     {
-        public Vector2 Dxy { get; set; }
+        public Vector2 Direction { get; set; }
+        public float Speed { get; set; }
     }
 }

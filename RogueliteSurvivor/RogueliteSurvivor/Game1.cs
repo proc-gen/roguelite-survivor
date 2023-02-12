@@ -60,7 +60,7 @@ namespace RogueliteSurvivor
             player = world.Create(
                 new Player(),
                 new Position() { XY = new Vector2(125, 75) },
-                new Velocity() { Dxy = Vector2.Zero },
+                new Velocity() { Direction = Vector2.Zero },
                 new Speed() { speed = 100f },
                 new Animation(1, 1, .1f, 4),
                 new SpriteSheet(textures["player"], "player", 3, 8),

@@ -41,7 +41,8 @@ namespace RogueliteSurvivor.Systems
 
                 if (player.HasValue)
                 {
-                    vel.Dxy = Vector2.Normalize(player.Value.XY - enemyPos) * sp.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    vel.Direction = Vector2.Normalize(player.Value.XY - enemyPos);
+                    vel.Speed = sp.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
             });
         }

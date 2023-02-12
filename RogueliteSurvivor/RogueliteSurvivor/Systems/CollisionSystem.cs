@@ -38,7 +38,7 @@ namespace RogueliteSurvivor.Systems
 
                 world.Query(in query, (ref Position pos, ref Velocity vel, ref Collider col) => 
                 {
-                    if (vel.Dxy != Vector2.Zero)
+                    if (vel.Direction != Vector2.Zero)
                     {
                         bool canMove = false;
                         int testVectorIndex = 0;
@@ -48,13 +48,13 @@ namespace RogueliteSurvivor.Systems
                             int tileLayerIndex = 0;
                             do
                             {
-                                TiledTile tileA = getTile(map, tileLayers[tileLayerIndex], (pos.XY + col.Offset + (vel.Dxy * TestVectors[testVectorIndex])));
-                                TiledTile tileB = getTile(map, tileLayers[tileLayerIndex], (pos.XY - col.Offset + (vel.Dxy * TestVectors[testVectorIndex])));
+                                TiledTile tileA = getTile(map, tileLayers[tileLayerIndex], (pos.XY + col.Offset + (vel.Direction * TestVectors[testVectorIndex] * vel.Speed)));
+                                TiledTile tileB = getTile(map, tileLayers[tileLayerIndex], (pos.XY - col.Offset + (vel.Direction * TestVectors[testVectorIndex] * vel.Speed)));
 
                                 if (tileA.properties[0].value == "true" && tileB.properties[0].value == "true")
                                 {
                                     canMove = true;
-                                    vel.Dxy = vel.Dxy * TestVectors[testVectorIndex];
+                                    vel.Direction = vel.Direction * TestVectors[testVectorIndex];
                                 }
 
                                 tileLayerIndex++;
@@ -65,31 +65,32 @@ namespace RogueliteSurvivor.Systems
                         
                         if(canMove)
                         {
-                            Vector2 XY = pos.XY, Dxy = vel.Dxy, Offset = col.Offset;
+                            Vector2 XY = pos.XY, Direction = vel.Direction, Offset = col.Offset;
+                            float speed = vel.Speed;
 
-                            world.Query(in query, (ref Position otherPos, ref Collider otherCol) =>
+                            world.Query(in query, (in Entity otherEntity, ref Position otherPos, ref Velocity otherVel, ref Collider otherCol) =>
                             {
                                 if (XY != otherPos.XY && Vector2.DistanceSquared(XY, otherPos.XY) < 512)
                                 {
-                                    int testVectorIndex = 0;
-                                    
-                                    do
+                                    if(Vector2.DistanceSquared(XY + Offset + Direction * speed, otherPos.XY) < 192
+                                        || Vector2.DistanceSquared(XY - Offset + Direction * speed, otherPos.XY) < 192)
                                     {
-                                        if(Vector2.DistanceSquared(XY + Offset + (Dxy * TestVectors[testVectorIndex]), otherPos.XY) < 192
-                                            || Vector2.DistanceSquared(XY - Offset + (Dxy * TestVectors[testVectorIndex]), otherPos.XY) < 192)
+                                        if (otherEntity.Has<Player>())
                                         {
                                             canMove = false;
                                         }
-
-                                        testVectorIndex++;
-                                    } while (canMove && testVectorIndex < 3);
+                                        else
+                                        {
+                                            otherVel.Direction = Vector2.Normalize(Direction + otherVel.Direction);
+                                        }
+                                    }
                                 }
                             });
                         }
 
                         if (!canMove)
                         {
-                            vel.Dxy = Vector2.Zero;
+                            vel.Direction = Vector2.Zero;
                         }
                     }
                 });

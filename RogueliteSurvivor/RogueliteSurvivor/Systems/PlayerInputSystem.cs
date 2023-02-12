@@ -24,27 +24,28 @@ namespace RogueliteSurvivor.Systems
 
             world.Query(in query, (ref Velocity vel, ref Speed sp) =>
             {
-                vel.Dxy = Vector2.Zero;
+                vel.Direction = Vector2.Zero;
                 if (kState.GetPressedKeyCount() > 0)
                 {
                     if (kState.IsKeyDown(Keys.Up))
                     {
-                        vel.Dxy -= Vector2.UnitY;
+                        vel.Direction -= Vector2.UnitY;
                     }
                     if (kState.IsKeyDown(Keys.Down))
                     {
-                        vel.Dxy += Vector2.UnitY;
+                        vel.Direction += Vector2.UnitY;
                     }
                     if (kState.IsKeyDown(Keys.Left))
                     {
-                        vel.Dxy -= Vector2.UnitX;
+                        vel.Direction -= Vector2.UnitX;
                     }
                     if (kState.IsKeyDown(Keys.Right))
                     {
-                        vel.Dxy += Vector2.UnitX;
+                        vel.Direction += Vector2.UnitX;
                     }
 
-                    vel.Dxy = Vector2.Normalize(vel.Dxy) * sp.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    vel.Direction = Vector2.Normalize(vel.Direction);
+                    vel.Speed = sp.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
             });
         }

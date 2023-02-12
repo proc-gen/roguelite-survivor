@@ -39,7 +39,7 @@ namespace RogueliteSurvivor.Systems
                     world.Create(
                         new Enemy(),
                         new Position() { XY = new Vector2(random.Next(32, 768), random.Next(32, 768)) },
-                        new Velocity() { Dxy = Vector2.Zero },
+                        new Velocity() { Direction = Vector2.Zero },
                         new Speed() { speed = 75f },
                         new Animation(0, 3, .1f, 2),
                         new SpriteSheet(textures["vampire_bat"], "vampire_bat", 4, 2),
