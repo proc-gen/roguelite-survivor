@@ -28,6 +28,9 @@ namespace RogueliteSurvivor
         private List<IRenderSystem> renderSystems;
         private Entity player;
 
+        Box2D.NetStandard.Dynamics.World.World physicsWorld;
+        System.Numerics.Vector2 gravity = System.Numerics.Vector2.Zero;
+
         private Dictionary<string, Texture2D> textures;
 
         public Game1()
@@ -56,16 +59,7 @@ namespace RogueliteSurvivor
             };
 
             world = World.Create();
-            world.Create(new MapInfo(Path.Combine(Content.RootDirectory, "Demo.tmx"), Content.RootDirectory + "/"));
-            player = world.Create(
-                new Player(),
-                new Position() { XY = new Vector2(125, 75) },
-                new Velocity() { Direction = Vector2.Zero },
-                new Speed() { speed = 100f },
-                new Animation(1, 1, .1f, 4),
-                new SpriteSheet(textures["player"], "player", 3, 8),
-                new Collider() { Width = 16, Height = 24, Offset = new Vector2(8, 12) }
-            );
+            physicsWorld = new Box2D.NetStandard.Dynamics.World.World(gravity);
 
             updateSystems = new List<IUpdateSystem>
             {
@@ -73,9 +67,8 @@ namespace RogueliteSurvivor
                 new EnemyAISystem(world),
                 new AnimationSetSystem(world),
                 new AnimationUpdateSystem(world),
-                new CollisionSystem(world),
-                new MoveSystem(world),
-                new EnemySpawnSystem(world, textures),
+                new CollisionSystem(world, physicsWorld),
+                new EnemySpawnSystem(world, textures, physicsWorld),
             };
 
             renderSystems = new List<IRenderSystem>
@@ -83,6 +76,21 @@ namespace RogueliteSurvivor
                 new RenderMapSystem(world),
                 new RenderSpriteSystem(world),
             };
+
+            var body = new Box2D.NetStandard.Dynamics.Bodies.BodyDef();
+            body.position = new System.Numerics.Vector2(125, 75);
+            body.fixedRotation = true;
+            
+            world.Create(new MapInfo(Path.Combine(Content.RootDirectory, "Demo.tmx"), Content.RootDirectory + "/"));
+            player = world.Create(
+                new Player(),
+                new Position() { XY = new Vector2(125, 75) },
+                new Velocity() { Vector = Vector2.Zero },
+                new Speed() { speed = 16000f },
+                new Animation(1, 1, .1f, 4),
+                new SpriteSheet(textures["player"], "player", 3, 8),
+                new Collider(16, 24, physicsWorld, body)
+            );
         }
 
         protected override void Update(GameTime gameTime)
