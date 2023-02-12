@@ -89,7 +89,7 @@ namespace RogueliteSurvivor
                 new Speed() { speed = 16000f },
                 new Animation(1, 1, .1f, 4),
                 new SpriteSheet(textures["player"], "player", 3, 8),
-                new Collider(16, 24, physicsWorld, body)
+                new Collider(16, 24, physicsWorld, body, 9999)
             );
         }
 

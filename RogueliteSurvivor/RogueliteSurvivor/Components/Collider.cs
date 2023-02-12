@@ -16,7 +16,7 @@ namespace RogueliteSurvivor.Components
         public Vector2 Offset { get; set; }
         public Body PhysicsBody { get; set; }
 
-        public Collider(int width, int height, Box2D.NetStandard.Dynamics.World.World physicsWorld, BodyDef bodyDef)
+        public Collider(int width, int height, Box2D.NetStandard.Dynamics.World.World physicsWorld, BodyDef bodyDef, float density = 1)
         {
             Width = width;
             Height = height;
@@ -24,7 +24,7 @@ namespace RogueliteSurvivor.Components
 
             var bodyShape = new Box2D.NetStandard.Dynamics.Fixtures.FixtureDef();
             bodyShape.shape = new PolygonShape(width / 2, height / 2);
-            bodyShape.density = 1;
+            bodyShape.density = density;
             bodyShape.friction = 0.0f;
             bodyDef.type = BodyType.Dynamic;
 
