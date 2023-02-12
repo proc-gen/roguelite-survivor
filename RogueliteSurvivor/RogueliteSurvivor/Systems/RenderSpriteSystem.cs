@@ -26,19 +26,22 @@ namespace RogueliteSurvivor.Systems
             Vector2 playerPosition = player.Get<Position>().XY;
             world.Query(in query, (ref Position pos, ref Animation anim, ref SpriteSheet sprite) =>
             {
-                Vector2 position = pos.XY - playerPosition + Offset;
+                Vector2 position = pos.XY - playerPosition;
 
-                spriteBatch.Draw(
-                    textures[sprite.TextureName], 
-                    position, 
-                    sprite.SourceRectangle(anim.CurrentFrame), 
-                    Color.White, 
-                    0f, 
-                    new Vector2(sprite.Width / 2, sprite.Height / 2), 
-                    1f, 
-                    SpriteEffects.None, 
-                    0
-                );
+                if (MathF.Abs(position.X) < 141 && MathF.Abs(position.Y) < 91)
+                {
+                    spriteBatch.Draw(
+                        textures[sprite.TextureName],
+                        position + Offset,
+                        sprite.SourceRectangle(anim.CurrentFrame),
+                        Color.White,
+                        0f,
+                        new Vector2(sprite.Width / 2, sprite.Height / 2),
+                        1f,
+                        SpriteEffects.None,
+                        0
+                    );
+                }
             });
         }
     }
