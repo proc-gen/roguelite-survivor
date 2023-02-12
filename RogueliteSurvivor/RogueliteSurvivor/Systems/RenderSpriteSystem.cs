@@ -34,7 +34,7 @@ namespace RogueliteSurvivor.Systems
                     sprite.SourceRectangle(anim.CurrentFrame), 
                     Color.White, 
                     0f, 
-                    new Vector2(0, sprite.Height / 4), 
+                    new Vector2(sprite.Width / 2, sprite.Height / 2), 
                     1f, 
                     SpriteEffects.None, 
                     0
