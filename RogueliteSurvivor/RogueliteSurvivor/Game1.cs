@@ -67,16 +67,6 @@ namespace RogueliteSurvivor
                 new Collider() { Width = 16, Height = 24, Offset = new Vector2(8, 12) }
             );
 
-            world.Create(
-                new Enemy(),
-                new Position() { XY = new Vector2(50, 50) },
-                new Velocity() { Dxy = Vector2.Zero },
-                new Speed() { speed = 75f },
-                new Animation(0, 3, .1f, 2),
-                new SpriteSheet(textures["vampire_bat"], "vampire_bat", 4, 2),
-                new Collider() { Width = 16, Height = 16, Offset = new Vector2(8, 8) }
-            );
-
             updateSystems = new List<IUpdateSystem>
             {
                 new PlayerInputSystem(world),
@@ -85,6 +75,7 @@ namespace RogueliteSurvivor
                 new AnimationUpdateSystem(world),
                 new CollisionSystem(world),
                 new MoveSystem(world),
+                new EnemySpawnSystem(world, textures),
             };
 
             renderSystems = new List<IRenderSystem>
