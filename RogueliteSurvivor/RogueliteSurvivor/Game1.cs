@@ -81,7 +81,7 @@ namespace RogueliteSurvivor
             body.position = new System.Numerics.Vector2(125, 75);
             body.fixedRotation = true;
             
-            world.Create(new MapInfo(Path.Combine(Content.RootDirectory, "Demo.tmx"), Content.RootDirectory + "/"));
+            world.Create(new MapInfo(Path.Combine(Content.RootDirectory, "Demo.tmx"), Content.RootDirectory + "/", physicsWorld));
             player = world.Create(
                 new Player(),
                 new Position() { XY = new Vector2(125, 75) },

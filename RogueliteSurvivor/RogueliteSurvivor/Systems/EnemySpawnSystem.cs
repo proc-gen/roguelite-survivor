@@ -36,11 +36,10 @@ namespace RogueliteSurvivor.Systems
                 numEnemies++;
             });
 
-            if(numEnemies < 20)
+            if(numEnemies < 200)
             {
-                for(int i = numEnemies; i < 20; i++)
+                for(int i = numEnemies; i < 200; i++)
                 {
-
                     var body = new Box2D.NetStandard.Dynamics.Bodies.BodyDef();
                     body.position = new System.Numerics.Vector2(random.Next(32, 768), random.Next(32, 768));
                     body.fixedRotation = true;

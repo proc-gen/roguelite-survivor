@@ -41,19 +41,5 @@ namespace RogueliteSurvivor.Systems
                 pos.XY = new Vector2(position.X, position.Y);
             });
         }
-
-        private TiledTile getTile(MapInfo map, TiledLayer layer, Vector2 position)
-        {
-            int x = (int)MathF.Round(position.X / map.Map.TileWidth);
-            int y = (int)MathF.Round(position.Y / map.Map.TileHeight);
-
-            int index = (y * layer.width) + x;
-            int gid = layer.data[index];
-
-            var mapTileset = map.Map.GetTiledMapTileset(gid);
-            var tileset = map.Tilesets[mapTileset.firstgid];
-
-            return map.Map.GetTiledTile(mapTileset, tileset, gid);
-        }
     }
 }
