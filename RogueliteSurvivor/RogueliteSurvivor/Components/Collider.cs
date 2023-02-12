@@ -24,7 +24,7 @@ namespace RogueliteSurvivor.Components
             Offset = new Vector2(width / 2, height / 2);
 
             var bodyShape = new Box2D.NetStandard.Dynamics.Fixtures.FixtureDef();
-            bodyShape.shape = new PolygonShape(width / 2, height / 2);
+            bodyShape.shape = new CircleShape() { Radius = width / 2 };
             bodyShape.density = density;
             bodyShape.friction = 0.0f;
             bodyDef.type = BodyType.Dynamic;

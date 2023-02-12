@@ -57,7 +57,7 @@ namespace RogueliteSurvivor.Systems
             {
                 for(int i = numEnemies; i < 20; i++)
                 {
-                    var body = new Box2D.NetStandard.Dynamics.Bodies.BodyDef();
+                    var body = new BodyDef();
                     body.position = new System.Numerics.Vector2(random.Next(32, 768), random.Next(32, 768));
                     body.fixedRotation = true;
 
