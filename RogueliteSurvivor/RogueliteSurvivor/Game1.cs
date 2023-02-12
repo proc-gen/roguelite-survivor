@@ -80,6 +80,7 @@ namespace RogueliteSurvivor
             updateSystems = new List<IUpdateSystem>
             {
                 new PlayerInputSystem(world),
+                new EnemyAISystem(world),
                 new AnimationSetSystem(world),
                 new AnimationUpdateSystem(world),
                 new CollisionSystem(world),

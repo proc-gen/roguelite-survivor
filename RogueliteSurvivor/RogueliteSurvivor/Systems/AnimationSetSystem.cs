@@ -61,7 +61,20 @@ namespace RogueliteSurvivor.Systems
                 }
                 else if(anim.NumDirections == 2)
                 {
-                    //Nothing
+                    if (vel.Dxy.X > 0)
+                    {
+                        if (anim.FirstFrame != 0)
+                        {
+                            anim.Reset(0, 3);
+                        }
+                    }
+                    else
+                    {
+                        if (anim.FirstFrame != 4)
+                        {
+                            anim.Reset(4, 7);
+                        }
+                    }
                 }
 
             });
