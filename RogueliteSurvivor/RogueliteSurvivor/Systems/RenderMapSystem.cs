@@ -22,15 +22,23 @@ namespace RogueliteSurvivor.Systems
 
         public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player)
         {
+            Vector2 playerPosition = player.Get<Position>().XY;
+
             world.Query(in query, (ref MapInfo map) =>
             {
                 var tileLayers = map.Map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
 
                 foreach (var layer in tileLayers)
                 {
-                    for (var y = 0; y < layer.height; y++)
+                    int minY, maxY, minX, maxX;
+                    minY = (int)MathF.Max(playerPosition.Y / 16f - 6, 0);
+                    maxY = (int)MathF.Min(playerPosition.Y / 16f + 7, layer.height);
+                    minX = (int)MathF.Max(playerPosition.X / 16f - 9, 0);
+                    maxX = (int)MathF.Min(playerPosition.X / 16f + 10, layer.width);
+
+                    for (var y = minY; y < maxY; y++)
                     {
-                        for (var x = 0; x < layer.width; x++)
+                        for (var x = minX; x < maxX; x++)
                         {
                             var index = (y * layer.width) + x;
                             var gid = layer.data[index];
@@ -54,7 +62,7 @@ namespace RogueliteSurvivor.Systems
                             SpriteEffects effects = SpriteEffects.None;
                             double rotation = 0f;
 
-                            spriteBatch.Draw(textures["tiles"], new Vector2(tileX + 125, tileY + 75), source, Color.White, (float)rotation, player.Get<Position>().XY, 1f, effects, 0);
+                            spriteBatch.Draw(textures["tiles"], new Vector2(tileX + 125, tileY + 75), source, Color.White, (float)rotation, playerPosition, 1f, effects, 0);
                         }
                     }
                 }
