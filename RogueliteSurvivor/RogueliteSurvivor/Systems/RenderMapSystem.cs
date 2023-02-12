@@ -14,15 +14,18 @@ namespace RogueliteSurvivor.Systems
 {
     public class RenderMapSystem : ArchSystem, IRenderSystem
     {
-        public RenderMapSystem(World world)
+        GraphicsDeviceManager graphics;
+        public RenderMapSystem(World world, GraphicsDeviceManager graphics)
             : base(world, new QueryDescription()
                                 .WithAll<MapInfo>())
         {
+            this.graphics = graphics;
         }
 
         public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player)
         {
             Vector2 playerPosition = player.Get<Position>().XY;
+            Vector2 offset = new Vector2(graphics.PreferredBackBufferWidth / 8, graphics.PreferredBackBufferHeight / 8);
 
             world.Query(in query, (ref MapInfo map) =>
             {
@@ -31,10 +34,10 @@ namespace RogueliteSurvivor.Systems
                 foreach (var layer in tileLayers)
                 {
                     int minY, maxY, minX, maxX;
-                    minY = (int)MathF.Max(playerPosition.Y / 16f - 6, 0);
-                    maxY = (int)MathF.Min(playerPosition.Y / 16f + 7, layer.height);
-                    minX = (int)MathF.Max(playerPosition.X / 16f - 9, 0);
-                    maxX = (int)MathF.Min(playerPosition.X / 16f + 10, layer.width);
+                    minY = (int)MathF.Max((playerPosition.Y - graphics.PreferredBackBufferHeight / 2) / 16f, 0);
+                    maxY = (int)MathF.Min((playerPosition.Y + graphics.PreferredBackBufferHeight / 2) / 16f, layer.height);
+                    minX = (int)MathF.Max((playerPosition.X - graphics.PreferredBackBufferWidth / 2) / 16f, 0);
+                    maxX = (int)MathF.Min((playerPosition.X + graphics.PreferredBackBufferWidth / 2) / 16f, layer.width);
 
                     for (var y = minY; y < maxY; y++)
                     {
@@ -62,7 +65,7 @@ namespace RogueliteSurvivor.Systems
                             SpriteEffects effects = SpriteEffects.None;
                             double rotation = 0f;
 
-                            spriteBatch.Draw(textures["tiles"], new Vector2(tileX + 125, tileY + 75), source, Color.White, (float)rotation, playerPosition, 1f, effects, 0);
+                            spriteBatch.Draw(textures["tiles"], new Vector2(tileX + offset.X, tileY + offset.Y), source, Color.White, (float)rotation, playerPosition, 1f, effects, 0);
                         }
                     }
                 }

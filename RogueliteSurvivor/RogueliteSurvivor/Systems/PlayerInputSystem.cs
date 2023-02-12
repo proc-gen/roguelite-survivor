@@ -27,24 +27,29 @@ namespace RogueliteSurvivor.Systems
                 vel.Vector = Vector2.Zero;
                 if (kState.GetPressedKeyCount() > 0)
                 {
-                    if (kState.IsKeyDown(Keys.Up))
-                    {
-                        vel.Vector -= Vector2.UnitY;
-                    }
-                    if (kState.IsKeyDown(Keys.Down))
-                    {
-                        vel.Vector += Vector2.UnitY;
-                    }
-                    if (kState.IsKeyDown(Keys.Left))
-                    {
-                        vel.Vector -= Vector2.UnitX;
-                    }
-                    if (kState.IsKeyDown(Keys.Right))
-                    {
-                        vel.Vector += Vector2.UnitX;
-                    }
+                    var keys = kState.GetPressedKeys();
 
-                    vel.Vector = Vector2.Normalize(vel.Vector) * sp.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (keys.Contains(Keys.Up) || keys.Contains(Keys.Down) || keys.Contains(Keys.Left) || keys.Contains(Keys.Right))
+                    { 
+                        if (keys.Contains(Keys.Up))
+                        {
+                            vel.Vector -= Vector2.UnitY;
+                        }
+                        if (keys.Contains(Keys.Down))
+                        {
+                            vel.Vector += Vector2.UnitY;
+                        }
+                        if (keys.Contains(Keys.Left))
+                        {
+                            vel.Vector -= Vector2.UnitX;
+                        }
+                        if (keys.Contains(Keys.Right))
+                        {
+                            vel.Vector += Vector2.UnitX;
+                        }
+
+                        vel.Vector = Vector2.Normalize(vel.Vector) * sp.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    }
                 }
             });
         }
