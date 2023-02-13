@@ -94,7 +94,7 @@ namespace RogueliteSurvivor.Systems
             {
                 x = random.Next(64, 736);
                 y = random.Next(64, 736);
-            } while ((x > (playerPosition.X - offset.X) && x < (playerPosition.X + offset.X)) || (y > (playerPosition.Y - offset.Y) && y < (playerPosition.Y + offset.Y)));
+            } while ((x > (playerPosition.X - offset.X) && x < (playerPosition.X + offset.X)) && (y > (playerPosition.Y - offset.Y) && y < (playerPosition.Y + offset.Y)));
 
             return new System.Numerics.Vector2(x, y);
         }
