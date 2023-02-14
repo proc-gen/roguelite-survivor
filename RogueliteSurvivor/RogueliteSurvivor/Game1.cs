@@ -13,6 +13,7 @@ using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Systems;
 using Arch.Core.Extensions;
 using RogueliteSurvivor.Physics;
+using JobScheduler;
 
 namespace RogueliteSurvivor
 {
@@ -28,9 +29,11 @@ namespace RogueliteSurvivor
         private List<IUpdateSystem> updateSystems;
         private List<IRenderSystem> renderSystems;
         private Entity player;
+        private JobScheduler.JobScheduler jobScheduler;
 
         Box2D.NetStandard.Dynamics.World.World physicsWorld;
         System.Numerics.Vector2 gravity = System.Numerics.Vector2.Zero;
+        
 
         private Dictionary<string, Texture2D> textures;
 
@@ -65,6 +68,7 @@ namespace RogueliteSurvivor
             };
 
             world = World.Create();
+            jobScheduler = new JobScheduler.JobScheduler("WorkerThread", 0);
             physicsWorld = new Box2D.NetStandard.Dynamics.World.World(gravity);
             physicsWorld.SetContactListener(new PlayerContactListener());
 
@@ -137,6 +141,15 @@ namespace RogueliteSurvivor
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                jobScheduler.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
