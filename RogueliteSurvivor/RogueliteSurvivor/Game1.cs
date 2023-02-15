@@ -109,7 +109,8 @@ namespace RogueliteSurvivor
                 new Collider(16, 24, physicsWorld, body, 9999),
                 new Target(),
                 new Spell() { CurrentSpell = AvailableSpells.SmallFireball },
-                new AttackSpeed() { BaseAttackSpeed = .5f, CurrentAttackSpeed = .5f, Cooldown = 0f }
+                new AttackSpeed() { BaseAttackSpeed = .5f, CurrentAttackSpeed = .5f, Cooldown = 0f },
+                new Health() { Current = 100, Max = 100 }
             );
 
             player.Get<Collider>().SetEntityForPhysics(player);

@@ -55,14 +55,16 @@ namespace RogueliteSurvivor.Systems
                 if (enemy.State == EnemyState.Dead)
                 {
                     enemy.State = EnemyState.Alive;
-                    
+
                     var collider = entity.Get<Collider>();
                     var position = entity.Get<Position>();
+                    var health = entity.Get<Health>();
 
                     collider.PhysicsBody.SetTransform(getSpawnPosition(player.Value.XY, offset), 0);
                     position.XY = new Vector2(collider.PhysicsBody.Position.X, collider.PhysicsBody.Position.Y);
+                    health.Current = health.Max;
 
-                    entity.SetRange(collider, position);
+                    entity.SetRange(collider, position, health);
                 }
             });
 
@@ -82,7 +84,9 @@ namespace RogueliteSurvivor.Systems
                         new Animation(0, 3, .1f, 2),
                         new SpriteSheet(textures["vampire_bat"], "vampire_bat", 4, 2),
                         new Collider(16, 16, physicsWorld, body),
-                        new Target()
+                        new Target(),
+                        new Health() { Current = 10, Max = 10 },
+                        new Damage() { Amount = 2}
                     );
 
                     entity.Get<Collider>().SetEntityForPhysics(entity);

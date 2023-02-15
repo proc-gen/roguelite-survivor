@@ -50,7 +50,8 @@ namespace RogueliteSurvivor.Systems
                         new Speed() { speed = 32000f },
                         new Animation(0, 59, 1/60f, 1),
                         new SpriteSheet(textures[spell.CurrentSpell.ToString()], spell.CurrentSpell.ToString(), 60, 1, MathF.Atan2(targetPosition.Y - pos.XY.Y, targetPosition.X - pos.XY.X), 0.5f),
-                        new Collider(16, 16, physicsWorld, body)
+                        new Collider(16, 16, physicsWorld, body),
+                        new Damage() { Amount = 5 }
                         );
 
                     entity.Get<Collider>().SetEntityForPhysics(entity);

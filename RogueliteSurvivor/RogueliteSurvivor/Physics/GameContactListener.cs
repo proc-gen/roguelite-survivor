@@ -22,7 +22,7 @@ namespace RogueliteSurvivor.Physics
 
         public override void EndContact(in Contact contact)
         {
-            checkContact(contact);
+
         }
 
         private void checkContact(Contact contact)
@@ -34,27 +34,30 @@ namespace RogueliteSurvivor.Physics
 
                 if ((a.Has<Player>() && b.Has<Enemy>()) || (b.Has<Player>() && a.Has<Enemy>()))
                 {
-                    setEnemyDead(a, b);
+                    damagePlayer(a, b);
                 }
                 else if ((a.Has<Projectile>() && b.Has<Enemy>()) || (b.Has<Projectile>() && a.Has<Enemy>()))
                 {
                     Projectile p;
                     ProjectileState state;
+                    Damage damage;
                     if (!a.TryGet(out p))
                     {
                         b.TryGet(out p);
                         state = p.State;
+                        damage = b.Get<Damage>();
                         setProjectileDead(b, p);
                     }
                     else
                     {
                         state = p.State;
+                        damage = a.Get<Damage>();
                         setProjectileDead(a, p);
                     }
 
                     if (state == ProjectileState.Alive)
                     {
-                        setEnemyDead(a, b);
+                        damageEnemy(a, b, damage);
                     }
                 }
                 else if ((a.Has<Projectile>() && b.Has<Map>()) || (b.Has<Projectile>() && a.Has<Map>()))
@@ -72,26 +75,35 @@ namespace RogueliteSurvivor.Physics
             }
         }
 
-        private void setEnemyDead(Entity a, Entity b)
+        private void damageEnemy(Entity a, Entity b, Damage damage)
         {
             Enemy e;
             if (!a.TryGet(out e))
             {
                 b.TryGet(out e);
-                setEnemyStateDead(b, e);
+                setEnemyHealthAndState(b, e, damage);
             }
             else
             {
-                setEnemyStateDead(a, e);
+                setEnemyHealthAndState(a, e, damage);
             }
         }
 
-        private void setEnemyStateDead(Entity entity, Enemy enemy)
+        private void setEnemyHealthAndState(Entity entity, Enemy enemy, Damage damage)
         {
             if (enemy.State == EnemyState.Alive)
             {
-                enemy.State = EnemyState.Dead;
-                entity.Set(enemy);
+                Health health = entity.Get<Health>();
+                health.Current -= damage.Amount;
+                if (health.Current < 1)
+                {
+                    enemy.State = EnemyState.Dead;
+                    entity.Set(enemy);
+                }
+                else
+                {
+                    entity.Set(health);
+                }
             }
         }
 
@@ -103,6 +115,29 @@ namespace RogueliteSurvivor.Physics
                 entity.Set(projectile);
             }
         }
+
+        private void damagePlayer(Entity a, Entity b)
+        {
+            if (!a.TryGet(out Player e))
+            {
+                b.TryGet(out e);
+                setPlayerHealthAndState(b, a, e);
+            }
+            else
+            {
+                setPlayerHealthAndState(a, b, e);
+            }
+        }
+
+        private void setPlayerHealthAndState(Entity entity, Entity other, Player enemy)
+        {
+            
+            Health health = entity.Get<Health>();
+            Damage damage = other.Get<Damage>();
+            health.Current -= damage.Amount;
+            entity.Set(health);
+        }
+
 
         public override void PostSolve(in Contact contact, in ContactImpulse impulse)
         {
