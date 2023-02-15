@@ -26,6 +26,7 @@ namespace RogueliteSurvivor.Systems
                 {
                     anim.Count = 0;
                     anim.CurrentFrame = anim.CurrentFrame == anim.LastFrame ? anim.FirstFrame : anim.CurrentFrame + 1;
+                    anim.Overlay = Color.White;
                 }
             });
         }

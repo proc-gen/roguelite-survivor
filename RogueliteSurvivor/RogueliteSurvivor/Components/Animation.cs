@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,11 +16,13 @@ namespace RogueliteSurvivor.Components
         public float Count { get; set; }
         public float Max { get; private set; }
         public int NumDirections { get; private set; }
+        public Color Overlay { get; set; }
 
         public Animation(int firstFrame, int lastFrame, float max, int numDirections)
         {
             Max = max;
             NumDirections = numDirections;
+            Overlay = Color.White;
             Reset(firstFrame, lastFrame);
         }
 

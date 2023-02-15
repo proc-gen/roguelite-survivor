@@ -102,7 +102,9 @@ namespace RogueliteSurvivor.Physics
                 }
                 else
                 {
-                    entity.Set(health);
+                    Animation anim = entity.Get<Animation>();
+                    anim.Overlay = Microsoft.Xna.Framework.Color.Red;
+                    entity.SetRange(health, anim);
                 }
             }
         }
@@ -129,15 +131,15 @@ namespace RogueliteSurvivor.Physics
             }
         }
 
-        private void setPlayerHealthAndState(Entity entity, Entity other, Player enemy)
+        private void setPlayerHealthAndState(Entity entity, Entity other, Player player)
         {
-            
             Health health = entity.Get<Health>();
             Damage damage = other.Get<Damage>();
             health.Current -= damage.Amount;
-            entity.Set(health);
+            Animation anim = entity.Get<Animation>();
+            anim.Overlay = Microsoft.Xna.Framework.Color.Red;
+            entity.SetRange(health, anim);
         }
-
 
         public override void PostSolve(in Contact contact, in ContactImpulse impulse)
         {

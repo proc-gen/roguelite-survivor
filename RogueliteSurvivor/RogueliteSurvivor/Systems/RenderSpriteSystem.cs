@@ -45,7 +45,7 @@ namespace RogueliteSurvivor.Systems
                         textures[sprite.TextureName],
                         position + offset,
                         sprite.SourceRectangle(anim.CurrentFrame),
-                        Color.White,
+                        anim.Overlay,
                         sprite.Rotation,
                         new Vector2(sprite.Width / 2, sprite.Height / 2),
                         sprite.Scale,
