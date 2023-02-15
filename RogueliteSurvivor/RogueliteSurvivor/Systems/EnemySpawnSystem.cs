@@ -21,7 +21,7 @@ namespace RogueliteSurvivor.Systems
         Box2D.NetStandard.Dynamics.World.World physicsWorld;
         GraphicsDeviceManager graphics;
 
-        const int ENEMY_COUNT = 1000;
+        const int ENEMY_COUNT = 200;
 
         public EnemySpawnSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, GraphicsDeviceManager graphics)
             : base(world, new QueryDescription()

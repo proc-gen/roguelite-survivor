@@ -64,7 +64,10 @@ namespace RogueliteSurvivor
             {
                 { "tiles", Content.Load<Texture2D>("Tiles") },
                 { "player", Content.Load<Texture2D>("Animated_Mage_Character") },
-                { "vampire_bat", Content.Load<Texture2D>("VampireBat") }
+                { "vampire_bat", Content.Load<Texture2D>("VampireBat") },
+                { "small_fireball", Content.Load<Texture2D>("small-fireball") },
+                { "medium_fireball", Content.Load<Texture2D>("medium-fireball") },
+                { "large_fireball", Content.Load<Texture2D>("large-fireball") }
             };
 
             world = World.Create();
