@@ -84,6 +84,7 @@ namespace RogueliteSurvivor
                 new CollisionSystem(world, physicsWorld),
                 new EnemySpawnSystem(world, textures, physicsWorld, _graphics),
                 new AttackSystem(world, textures, physicsWorld),
+                new ProjectileCleanupSystem(world, physicsWorld),
             };
 
             renderSystems = new List<IRenderSystem>

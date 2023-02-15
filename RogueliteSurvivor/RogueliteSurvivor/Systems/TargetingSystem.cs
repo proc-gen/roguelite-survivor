@@ -48,7 +48,7 @@ namespace RogueliteSurvivor.Systems
                 }
                 else
                 {
-                    if (Vector2.DistanceSquared(sourcePosition, otherPos.XY) < Vector2.DistanceSquared(sourcePosition, targetPos))
+                    if (Vector2.Distance(sourcePosition, otherPos.XY) < Vector2.Distance(sourcePosition, targetPos))
                     {
                         targetPos = otherPos.XY;
                         target = other;
