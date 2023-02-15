@@ -19,7 +19,7 @@ namespace RogueliteSurvivor.Components
         public TiledMap Map { get; set; }
         public Dictionary<int, TiledTileset> Tilesets { get; set; }
 
-        public MapInfo(string mapPath, string tilesetPath, Box2D.NetStandard.Dynamics.World.World physicsWorld) 
+        public MapInfo(string mapPath, string tilesetPath, Box2D.NetStandard.Dynamics.World.World physicsWorld, Entity mapEntity) 
         {
             Map = new TiledMap(mapPath);
             Tilesets = Map.GetTiledTilesets(tilesetPath);
@@ -52,6 +52,7 @@ namespace RogueliteSurvivor.Components
 
                             var PhysicsBody = physicsWorld.CreateBody(body);
                             PhysicsBody.CreateFixture(bodyShape);
+                            PhysicsBody.SetUserData(mapEntity);
                         }
                     }
                 }

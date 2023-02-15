@@ -29,7 +29,6 @@ namespace RogueliteSurvivor
         private List<IUpdateSystem> updateSystems;
         private List<IRenderSystem> renderSystems;
         private Entity player;
-        private JobScheduler.JobScheduler jobScheduler;
 
         Box2D.NetStandard.Dynamics.World.World physicsWorld;
         System.Numerics.Vector2 gravity = System.Numerics.Vector2.Zero;
@@ -93,11 +92,13 @@ namespace RogueliteSurvivor
                 new RenderSpriteSystem(world, _graphics),
             };
 
+            var mapEntity = world.Create<Map, MapInfo>();
+            mapEntity.SetRange(new Map(), new MapInfo(Path.Combine(Content.RootDirectory, "Demo.tmx"), Content.RootDirectory + "/", physicsWorld, mapEntity));
+
             var body = new Box2D.NetStandard.Dynamics.Bodies.BodyDef();
             body.position = new System.Numerics.Vector2(125, 75);
             body.fixedRotation = true;
             
-            world.Create(new MapInfo(Path.Combine(Content.RootDirectory, "Demo.tmx"), Content.RootDirectory + "/", physicsWorld));
             player = world.Create(
                 new Player(),
                 new Position() { XY = new Vector2(125, 75) },

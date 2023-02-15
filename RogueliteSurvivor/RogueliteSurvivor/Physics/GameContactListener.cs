@@ -57,6 +57,18 @@ namespace RogueliteSurvivor.Physics
                         setEnemyDead(a, b);
                     }
                 }
+                else if ((a.Has<Projectile>() && b.Has<Map>()) || (b.Has<Projectile>() && a.Has<Map>()))
+                {
+                    if (!a.TryGet(out Projectile p))
+                    {
+                        b.TryGet(out p);
+                        setProjectileDead(b, p);
+                    }
+                    else
+                    {
+                        setProjectileDead(a, p);
+                    }
+                }
             }
         }
 
