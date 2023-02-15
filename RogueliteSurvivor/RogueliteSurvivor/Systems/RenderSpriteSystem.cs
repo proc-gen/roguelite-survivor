@@ -46,9 +46,9 @@ namespace RogueliteSurvivor.Systems
                         position + offset,
                         sprite.SourceRectangle(anim.CurrentFrame),
                         Color.White,
-                        0f,
+                        sprite.Rotation,
                         new Vector2(sprite.Width / 2, sprite.Height / 2),
-                        1f,
+                        sprite.Scale,
                         SpriteEffects.None,
                         0
                     );

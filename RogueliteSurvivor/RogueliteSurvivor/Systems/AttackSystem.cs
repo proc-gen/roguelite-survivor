@@ -37,7 +37,8 @@ namespace RogueliteSurvivor.Systems
                     attackSpeed.Cooldown -= attackSpeed.CurrentAttackSpeed;
 
                     var body = new BodyDef();
-                    var velocityVector = Vector2.Normalize(target.Entity.Get<Position>().XY - pos.XY);
+                    var targetPosition = target.Entity.Get<Position>().XY;
+                    var velocityVector = Vector2.Normalize(targetPosition - pos.XY);
                     var position = pos.XY + velocityVector;
                     body.position = new System.Numerics.Vector2(position.X, position.Y);
                     body.fixedRotation = true;
@@ -48,8 +49,8 @@ namespace RogueliteSurvivor.Systems
                         new Velocity() { Vector = velocityVector * 32000f * (float)gameTime.ElapsedGameTime.TotalSeconds },
                         new Speed() { speed = 32000f },
                         new Animation(0, 59, 1/60f, 1),
-                        new SpriteSheet(textures[spell.CurrentSpell.ToString()], spell.CurrentSpell.ToString(), 60, 1),
-                        new Collider(64, 64, physicsWorld, body)
+                        new SpriteSheet(textures[spell.CurrentSpell.ToString()], spell.CurrentSpell.ToString(), 60, 1, MathF.Atan2(targetPosition.Y - pos.XY.Y, targetPosition.X - pos.XY.X)),
+                        new Collider(32, 32, physicsWorld, body)
                         );
 
                     entity.Get<Collider>().SetEntityForPhysics(entity);

@@ -14,8 +14,10 @@ namespace RogueliteSurvivor.Components
         private int framesPerRow, framesPerColumn;
         public int Width { get; private set; }
         public int Height { get; private set; }
+        public float Rotation { get; set; }
+        public float Scale { get; set; }
 
-        public SpriteSheet(Texture2D texture, string textureName, int framesPerRow, int framesPerColumn)
+        public SpriteSheet(Texture2D texture, string textureName, int framesPerRow, int framesPerColumn, float rotation = 0, float scale = 1)
         {
             this.TextureName = textureName;
             this.framesPerRow = framesPerRow;
@@ -23,6 +25,9 @@ namespace RogueliteSurvivor.Components
 
             Width = texture.Width / framesPerRow;
             Height = texture.Height / framesPerColumn;
+
+            Rotation = rotation;
+            Scale = scale;
         }
 
         private int Column(int currentFrame)
