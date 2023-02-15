@@ -1,4 +1,5 @@
 ﻿using Arch.Core;
+using Arch.Core.Extensions;
 using Microsoft.Xna.Framework;
 using RogueliteSurvivor.Components;
 using System;
@@ -11,37 +12,19 @@ namespace RogueliteSurvivor.Systems
 {
     public class EnemyAISystem : ArchSystem, IUpdateSystem
     {
-        QueryDescription playerQuery = new QueryDescription()
-                                            .WithAll<Player, Position>();
         public EnemyAISystem(World world)
             : base(world, new QueryDescription()
-                                .WithAll<Enemy, Position, Velocity, Speed>())
+                                .WithAll<Enemy, Position, Velocity, Speed, Target>())
         { }
 
         public void Update(GameTime gameTime) 
         {
-            world.Query(in query, (ref Position pos, ref Velocity vel, ref Speed sp) =>
+            world.Query(in query, (ref Position pos, ref Velocity vel, ref Speed sp, ref Target target) =>
             {
-                Position? player = null;
-                Vector2 enemyPos = pos.XY;
-                world.Query(in playerQuery, (ref Position playerPos) =>
+                if (target.Entity.Has<Position>())
                 {
-                    if (!player.HasValue)
-                    {
-                        player = playerPos;
-                    }
-                    else
-                    {
-                        if(Vector2.DistanceSquared(enemyPos, playerPos.XY) < Vector2.DistanceSquared(enemyPos, player.Value.XY))
-                        {
-                            player = playerPos;
-                        }
-                    }
-                });
-
-                if (player.HasValue)
-                {
-                    vel.Vector = Vector2.Normalize(player.Value.XY - enemyPos) * sp.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    var targetPosition = target.Entity.Get<Position>();
+                    vel.Vector = Vector2.Normalize(targetPosition.XY - pos.XY) * sp.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
             });
         }

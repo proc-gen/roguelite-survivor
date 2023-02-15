@@ -77,6 +77,7 @@ namespace RogueliteSurvivor
             updateSystems = new List<IUpdateSystem>
             {
                 new PlayerInputSystem(world),
+                new TargetingSystem(world),
                 new EnemyAISystem(world),
                 new AnimationSetSystem(world),
                 new AnimationUpdateSystem(world),
@@ -102,7 +103,8 @@ namespace RogueliteSurvivor
                 new Speed() { speed = 16000f },
                 new Animation(1, 1, .1f, 4),
                 new SpriteSheet(textures["player"], "player", 3, 8),
-                new Collider(16, 24, physicsWorld, body, 9999)
+                new Collider(16, 24, physicsWorld, body, 9999),
+                new Target()
             );
 
             player.Get<Collider>().SetEntityForPhysics(player);

@@ -81,7 +81,8 @@ namespace RogueliteSurvivor.Systems
                         new Speed() { speed = 8000f },
                         new Animation(0, 3, .1f, 2),
                         new SpriteSheet(textures["vampire_bat"], "vampire_bat", 4, 2),
-                        new Collider(16, 16, physicsWorld, body)
+                        new Collider(16, 16, physicsWorld, body),
+                        new Target()
                     );
 
                     entity.Get<Collider>().SetEntityForPhysics(entity);
