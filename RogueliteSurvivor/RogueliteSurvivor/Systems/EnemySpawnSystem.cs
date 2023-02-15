@@ -21,6 +21,8 @@ namespace RogueliteSurvivor.Systems
         Box2D.NetStandard.Dynamics.World.World physicsWorld;
         GraphicsDeviceManager graphics;
 
+        const int ENEMY_COUNT = 1000;
+
         public EnemySpawnSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, GraphicsDeviceManager graphics)
             : base(world, new QueryDescription()
                                 .WithAll<Enemy>())
@@ -64,9 +66,9 @@ namespace RogueliteSurvivor.Systems
                 }
             });
 
-            if(numEnemies < 200)
+            if(numEnemies < ENEMY_COUNT)
             {
-                for(int i = numEnemies; i < 200; i++)
+                for(int i = numEnemies; i < ENEMY_COUNT; i++)
                 {
                     var body = new BodyDef();
                     body.position = getSpawnPosition(player.Value.XY, offset);

@@ -24,14 +24,14 @@ namespace RogueliteSurvivor.Systems
 
         public void Update(GameTime gameTime)
         {
-            world.ParallelQuery(in query, (ref Position pos, ref Velocity vel, ref Collider col) =>
+            world.Query(in query, (ref Position pos, ref Velocity vel, ref Collider col) =>
             {
                 col.PhysicsBody.SetLinearVelocity(vel.VectorPhysics);
             });
 
             physicsWorld.Step(1/60f, 8, 3);
 
-            world.ParallelQuery(in query, (in Entity entity, ref Position pos, ref Velocity vel, ref Collider col) =>
+            world.Query(in query, (in Entity entity, ref Position pos, ref Velocity vel, ref Collider col) =>
             {
                 var position = col.PhysicsBody.GetPosition();
                 pos.XY = new Vector2(position.X, position.Y);

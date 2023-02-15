@@ -68,7 +68,6 @@ namespace RogueliteSurvivor
             };
 
             world = World.Create();
-            jobScheduler = new JobScheduler.JobScheduler("WorkerThread", 0);
             physicsWorld = new Box2D.NetStandard.Dynamics.World.World(gravity);
             physicsWorld.SetContactListener(new PlayerContactListener());
 
@@ -141,15 +140,6 @@ namespace RogueliteSurvivor
             _spriteBatch.End();
 
             base.Draw(gameTime);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                jobScheduler.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

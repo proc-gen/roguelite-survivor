@@ -1,3 +1,5 @@
 ﻿
-using var game = new RogueliteSurvivor.Game1();
-game.Run();
+using (var game = new RogueliteSurvivor.Game1())
+{
+    game.Run();
+}

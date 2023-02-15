@@ -24,7 +24,7 @@ namespace RogueliteSurvivor.Systems
             {
                 Position? player = null;
                 Vector2 enemyPos = pos.XY;
-                world.ParallelQuery(in playerQuery, (ref Position playerPos) =>
+                world.Query(in playerQuery, (ref Position playerPos) =>
                 {
                     if (!player.HasValue)
                     {
