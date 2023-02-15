@@ -37,14 +37,15 @@ namespace RogueliteSurvivor.Systems
                     attackSpeed.Cooldown -= attackSpeed.CurrentAttackSpeed;
 
                     var body = new BodyDef();
-                    var position = pos.XY + Vector2.Normalize(target.Entity.Get<Position>().XY - pos.XY);
+                    var velocityVector = Vector2.Normalize(target.Entity.Get<Position>().XY - pos.XY);
+                    var position = pos.XY + velocityVector;
                     body.position = new System.Numerics.Vector2(position.X, position.Y);
                     body.fixedRotation = true;
 
                     var entity = world.Create(
                         new Projectile() { State = ProjectileState.Alive },
                         new Position() { XY = new Vector2(body.position.X, body.position.Y) },
-                        new Velocity() { Vector = Vector2.Zero },
+                        new Velocity() { Vector = velocityVector * 32000f * (float)gameTime.ElapsedGameTime.TotalSeconds },
                         new Speed() { speed = 32000f },
                         new Animation(0, 59, 1/60f, 1),
                         new SpriteSheet(textures[spell.CurrentSpell.ToString()], spell.CurrentSpell.ToString(), 60, 1),

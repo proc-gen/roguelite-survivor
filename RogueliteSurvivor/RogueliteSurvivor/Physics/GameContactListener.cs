@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Physics
 {
-    public class PlayerContactListener : ContactListener
+    public class GameContactListener : ContactListener
     {
         public override void BeginContact(in Contact contact)
         {
@@ -34,26 +34,61 @@ namespace RogueliteSurvivor.Physics
 
                 if ((a.Has<Player>() && b.Has<Enemy>()) || (b.Has<Player>() && a.Has<Enemy>()))
                 {
-                    Enemy e;
-                    if (!a.TryGet(out e))
+                    setEnemyDead(a, b);
+                }
+                else if ((a.Has<Projectile>() && b.Has<Enemy>()) || (b.Has<Projectile>() && a.Has<Enemy>()))
+                {
+                    Projectile p;
+                    ProjectileState state;
+                    if (!a.TryGet(out p))
                     {
-                        b.TryGet(out e);
-                        setEnemyDead(b, e);
+                        b.TryGet(out p);
+                        state = p.State;
+                        setProjectileDead(b, p);
                     }
                     else
                     {
-                        setEnemyDead(a, e);
+                        state = p.State;
+                        setProjectileDead(a, p);
+                    }
+
+                    if (state == ProjectileState.Alive)
+                    {
+                        setEnemyDead(a, b);
                     }
                 }
             }
         }
 
-        private void setEnemyDead(Entity entity, Enemy enemy)
+        private void setEnemyDead(Entity a, Entity b)
+        {
+            Enemy e;
+            if (!a.TryGet(out e))
+            {
+                b.TryGet(out e);
+                setEnemyStateDead(b, e);
+            }
+            else
+            {
+                setEnemyStateDead(a, e);
+            }
+        }
+
+        private void setEnemyStateDead(Entity entity, Enemy enemy)
         {
             if (enemy.State == EnemyState.Alive)
             {
                 enemy.State = EnemyState.Dead;
                 entity.Set(enemy);
+            }
+        }
+
+        private void setProjectileDead(Entity entity, Projectile projectile)
+        {
+            if (projectile.State == ProjectileState.Alive)
+            {
+                projectile.State = ProjectileState.Dead;
+                entity.Set(projectile);
             }
         }
 

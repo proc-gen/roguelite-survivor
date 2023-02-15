@@ -21,7 +21,7 @@ namespace RogueliteSurvivor.Systems
         Box2D.NetStandard.Dynamics.World.World physicsWorld;
         GraphicsDeviceManager graphics;
 
-        const int ENEMY_COUNT = 200;
+        const int ENEMY_COUNT = 20;
 
         public EnemySpawnSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, GraphicsDeviceManager graphics)
             : base(world, new QueryDescription()
@@ -78,7 +78,7 @@ namespace RogueliteSurvivor.Systems
                         new Enemy() { State = EnemyState.Alive },
                         new Position() { XY = new Vector2(body.position.X, body.position.Y) },
                         new Velocity() { Vector = Vector2.Zero },
-                        new Speed() { speed = 8000f },
+                        new Speed() { speed = 2000f },
                         new Animation(0, 3, .1f, 2),
                         new SpriteSheet(textures["vampire_bat"], "vampire_bat", 4, 2),
                         new Collider(16, 16, physicsWorld, body),
