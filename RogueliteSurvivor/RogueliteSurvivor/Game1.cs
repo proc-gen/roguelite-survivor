@@ -65,9 +65,9 @@ namespace RogueliteSurvivor
                 { "tiles", Content.Load<Texture2D>("Tiles") },
                 { "player", Content.Load<Texture2D>("Animated_Mage_Character") },
                 { "vampire_bat", Content.Load<Texture2D>("VampireBat") },
-                { "small_fireball", Content.Load<Texture2D>("small-fireball") },
-                { "medium_fireball", Content.Load<Texture2D>("medium-fireball") },
-                { "large_fireball", Content.Load<Texture2D>("large-fireball") }
+                { "SmallFireball", Content.Load<Texture2D>("small-fireball") },
+                { "MediumFireball", Content.Load<Texture2D>("medium-fireball") },
+                { "LargeFireball", Content.Load<Texture2D>("large-fireball") }
             };
 
             world = World.Create();
@@ -83,6 +83,7 @@ namespace RogueliteSurvivor
                 new AnimationUpdateSystem(world),
                 new CollisionSystem(world, physicsWorld),
                 new EnemySpawnSystem(world, textures, physicsWorld, _graphics),
+                new AttackSystem(world, textures, physicsWorld),
             };
 
             renderSystems = new List<IRenderSystem>
@@ -104,7 +105,9 @@ namespace RogueliteSurvivor
                 new Animation(1, 1, .1f, 4),
                 new SpriteSheet(textures["player"], "player", 3, 8),
                 new Collider(16, 24, physicsWorld, body, 9999),
-                new Target()
+                new Target(),
+                new Spell() { CurrentSpell = AvailableSpells.SmallFireball },
+                new AttackSpeed() { BaseAttackSpeed = .5f, CurrentAttackSpeed = .5f, Cooldown = 0f }
             );
 
             player.Get<Collider>().SetEntityForPhysics(player);

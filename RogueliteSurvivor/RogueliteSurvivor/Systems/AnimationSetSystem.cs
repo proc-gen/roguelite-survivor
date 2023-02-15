@@ -76,7 +76,10 @@ namespace RogueliteSurvivor.Systems
                         }
                     }
                 }
-
+                else if(anim.NumDirections == 1)
+                {
+                    //Do nothing
+                }
             });
         }
     }
