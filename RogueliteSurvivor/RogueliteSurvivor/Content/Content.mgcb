@@ -31,6 +31,18 @@
 #begin Dungeon - Tiles.tsx
 /copy:Dungeon - Tiles.tsx
 
+#begin HealthBar.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:HealthBar.png
+
 #begin large-fireball.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -66,6 +78,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:small-fireball.png
+
+#begin StatBar.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:StatBar.png
 
 #begin Tiles.png
 /importer:TextureImporter

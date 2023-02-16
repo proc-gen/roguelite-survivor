@@ -66,7 +66,9 @@ namespace RogueliteSurvivor
                 { "vampire_bat", Content.Load<Texture2D>("VampireBat") },
                 { "SmallFireball", Content.Load<Texture2D>("small-fireball") },
                 { "MediumFireball", Content.Load<Texture2D>("medium-fireball") },
-                { "LargeFireball", Content.Load<Texture2D>("large-fireball") }
+                { "LargeFireball", Content.Load<Texture2D>("large-fireball") },
+                { "StatBar", Content.Load<Texture2D>("StatBar") },
+                { "HealthBar", Content.Load<Texture2D>("HealthBar") }
             };
 
             world = World.Create();
@@ -90,6 +92,7 @@ namespace RogueliteSurvivor
             {
                 new RenderMapSystem(world, _graphics),
                 new RenderSpriteSystem(world, _graphics),
+                new RenderHudSystem(world, _graphics),
             };
 
             var mapEntity = world.Create<Map, MapInfo>();
