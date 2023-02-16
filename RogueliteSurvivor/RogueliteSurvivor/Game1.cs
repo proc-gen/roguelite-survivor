@@ -35,6 +35,7 @@ namespace RogueliteSurvivor
         
 
         private Dictionary<string, Texture2D> textures;
+        private Dictionary<string, SpriteFont> fonts;
 
         public Game1()
         {
@@ -71,6 +72,11 @@ namespace RogueliteSurvivor
                 { "HealthBar", Content.Load<Texture2D>("HealthBar") }
             };
 
+            fonts = new Dictionary<string, SpriteFont>()
+            {
+                { "Font", Content.Load<SpriteFont>("Font") },
+            };
+
             world = World.Create();
             physicsWorld = new Box2D.NetStandard.Dynamics.World.World(gravity);
             physicsWorld.SetContactListener(new GameContactListener());
@@ -92,7 +98,7 @@ namespace RogueliteSurvivor
             {
                 new RenderMapSystem(world, _graphics),
                 new RenderSpriteSystem(world, _graphics),
-                new RenderHudSystem(world, _graphics),
+                new RenderHudSystem(world, _graphics, fonts),
             };
 
             var mapEntity = world.Create<Map, MapInfo>();

@@ -14,11 +14,13 @@ namespace RogueliteSurvivor.Systems
     public class RenderHudSystem : ArchSystem, IRenderSystem
     {
         GraphicsDeviceManager graphics;
-        public RenderHudSystem(World world, GraphicsDeviceManager graphics)
+        Dictionary<string, SpriteFont> fonts;
+        public RenderHudSystem(World world, GraphicsDeviceManager graphics, Dictionary<string, SpriteFont> fonts)
             : base(world, new QueryDescription()
                                 .WithAll<Player>())
         {
             this.graphics = graphics;
+            this.fonts = fonts;
         }
 
         static Vector2 HealthLocation = new Vector2(10, 10);
@@ -39,6 +41,13 @@ namespace RogueliteSurvivor.Systems
                     1f,
                     SpriteEffects.None,
                     0
+                );
+
+                spriteBatch.DrawString(
+                    fonts["Font"], 
+                    string.Concat(health.Current, " / ", health.Max), 
+                    HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitX * 5, 
+                    Color.White
                 );
 
                 spriteBatch.Draw(

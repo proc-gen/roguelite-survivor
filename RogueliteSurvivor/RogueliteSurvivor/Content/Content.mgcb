@@ -31,6 +31,13 @@
 #begin Dungeon - Tiles.tsx
 /copy:Dungeon - Tiles.tsx
 
+#begin Font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Font.spritefont
+
 #begin HealthBar.png
 /importer:TextureImporter
 /processor:TextureProcessor
