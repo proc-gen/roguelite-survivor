@@ -24,12 +24,12 @@ namespace RogueliteSurvivor.Systems
         }
 
         static Vector2 HealthLocation = new Vector2(10, 10);
-        const int Increment = 32;
+        const int Increment = 64;
 
         public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player)
         {
             int counter = 0;
-            world.Query(in query, (ref Health health) =>
+            world.Query(in query, (ref Health health, ref KillCount killCount) =>
             {
                 spriteBatch.Draw(
                     textures["HealthBar"],
@@ -60,6 +60,13 @@ namespace RogueliteSurvivor.Systems
                     1f,
                     SpriteEffects.None,
                     0
+                );
+
+                spriteBatch.DrawString(
+                    fonts["Font"],
+                    string.Concat("Enemies Killed: ", killCount.Count),
+                    HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * Increment / 2,
+                    Color.White
                 );
 
                 counter++;

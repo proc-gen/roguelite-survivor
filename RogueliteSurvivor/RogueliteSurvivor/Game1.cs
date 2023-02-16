@@ -105,12 +105,12 @@ namespace RogueliteSurvivor
             mapEntity.SetRange(new Map(), new MapInfo(Path.Combine(Content.RootDirectory, "Demo.tmx"), Content.RootDirectory + "/", physicsWorld, mapEntity));
 
             var body = new Box2D.NetStandard.Dynamics.Bodies.BodyDef();
-            body.position = new System.Numerics.Vector2(125, 75);
+            body.position = new System.Numerics.Vector2(384, 384);
             body.fixedRotation = true;
             
             player = world.Create(
                 new Player(),
-                new Position() { XY = new Vector2(125, 75) },
+                new Position() { XY = new Vector2(384, 384) },
                 new Velocity() { Vector = Vector2.Zero },
                 new Speed() { speed = 16000f },
                 new Animation(1, 1, .1f, 4),
@@ -119,7 +119,8 @@ namespace RogueliteSurvivor
                 new Target(),
                 new Spell() { CurrentSpell = AvailableSpells.SmallFireball },
                 new AttackSpeed() { BaseAttackSpeed = .5f, CurrentAttackSpeed = .5f, Cooldown = 0f },
-                new Health() { Current = 100, Max = 100 }
+                new Health() { Current = 100, Max = 100 },
+                new KillCount() { Count = 0 }
             );
 
             player.Get<Collider>().SetEntityForPhysics(player);
@@ -148,7 +149,7 @@ namespace RogueliteSurvivor
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
 

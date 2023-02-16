@@ -41,23 +41,26 @@ namespace RogueliteSurvivor.Physics
                     Projectile p;
                     ProjectileState state;
                     Damage damage;
+                    Owner owner;
                     if (!a.TryGet(out p))
                     {
                         b.TryGet(out p);
                         state = p.State;
                         damage = b.Get<Damage>();
+                        owner = b.Get<Owner>();
                         setProjectileDead(b, p);
                     }
                     else
                     {
                         state = p.State;
                         damage = a.Get<Damage>();
+                        owner = a.Get<Owner>();
                         setProjectileDead(a, p);
                     }
 
                     if (state == ProjectileState.Alive)
                     {
-                        damageEnemy(a, b, damage);
+                        damageEnemy(a, b, damage, owner);
                     }
                 }
                 else if ((a.Has<Projectile>() && b.Has<Map>()) || (b.Has<Projectile>() && a.Has<Map>()))
@@ -75,21 +78,21 @@ namespace RogueliteSurvivor.Physics
             }
         }
 
-        private void damageEnemy(Entity a, Entity b, Damage damage)
+        private void damageEnemy(Entity a, Entity b, Damage damage, Owner owner)
         {
             Enemy e;
             if (!a.TryGet(out e))
             {
                 b.TryGet(out e);
-                setEnemyHealthAndState(b, e, damage);
+                setEnemyHealthAndState(b, e, damage, owner);
             }
             else
             {
-                setEnemyHealthAndState(a, e, damage);
+                setEnemyHealthAndState(a, e, damage, owner);
             }
         }
 
-        private void setEnemyHealthAndState(Entity entity, Enemy enemy, Damage damage)
+        private void setEnemyHealthAndState(Entity entity, Enemy enemy, Damage damage, Owner owner)
         {
             if (enemy.State == EnemyState.Alive)
             {
@@ -99,6 +102,9 @@ namespace RogueliteSurvivor.Physics
                 {
                     enemy.State = EnemyState.Dead;
                     entity.Set(enemy);
+                    KillCount killCount = owner.Entity.Get<KillCount>();
+                    killCount.Count++;
+                    owner.Entity.Set(killCount);
                 }
                 else
                 {
