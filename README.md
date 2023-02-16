@@ -19,3 +19,10 @@ A simple Vampire Survivors clone
   - Pixel art editor
 - Tiled [https://www.mapeditor.org/](https://www.mapeditor.org/)
   - Map editor
+
+## Assets
+
+- Fireballs by xyezawr [https://xyezawr.itch.io/free-pixel-effects-pack-13-fireballs](https://xyezawr.itch.io/free-pixel-effects-pack-13-fireballs)
+- Player character by cyberrumor [https://cyberrumor.itch.io/animated-mage-character](https://cyberrumor.itch.io/animated-mage-character)
+- Bats by Deep Dive Gaming Studio [https://deepdivegamestudio.itch.io/undead-asset-pack](https://deepdivegamestudio.itch.io/undead-asset-pack)
+- Dungeon Tileset by Anokolisa [https://anokolisa.itch.io/dungeon-crawler-pixel-art-asset-pack](https://anokolisa.itch.io/dungeon-crawler-pixel-art-asset-pack)
