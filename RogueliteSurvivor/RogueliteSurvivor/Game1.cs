@@ -14,6 +14,7 @@ using RogueliteSurvivor.Systems;
 using Arch.Core.Extensions;
 using RogueliteSurvivor.Physics;
 using JobScheduler;
+using Box2D.NetStandard.Dynamics.Bodies;
 
 namespace RogueliteSurvivor
 {
@@ -107,23 +108,23 @@ namespace RogueliteSurvivor
             var body = new Box2D.NetStandard.Dynamics.Bodies.BodyDef();
             body.position = new System.Numerics.Vector2(384, 384);
             body.fixedRotation = true;
-            
-            player = world.Create(
+
+            player = world.Create<Player, Position, Velocity, Speed, Animation, SpriteSheet, Target, Spell, AttackSpeed, Health, KillCount, Body>();
+
+            player.SetRange(
                 new Player(),
                 new Position() { XY = new Vector2(384, 384) },
                 new Velocity() { Vector = Vector2.Zero },
                 new Speed() { speed = 16000f },
                 new Animation(1, 1, .1f, 4),
                 new SpriteSheet(textures["player"], "player", 3, 8),
-                new Collider(16, 24, physicsWorld, body, 9999),
                 new Target(),
                 new Spell() { CurrentSpell = AvailableSpells.SmallFireball },
                 new AttackSpeed() { BaseAttackSpeed = .5f, CurrentAttackSpeed = .5f, Cooldown = 0f },
                 new Health() { Current = 100, Max = 100 },
-                new KillCount() { Count = 0 }
+                new KillCount() { Count = 0 },
+                BodyFactory.CreateCircularBody(player, 16, physicsWorld, body, 9999)
             );
-
-            player.Get<Collider>().SetEntityForPhysics(player);
         }
 
         protected override void Update(GameTime gameTime)

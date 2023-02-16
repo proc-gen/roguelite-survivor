@@ -4,6 +4,7 @@ using Box2D.NetStandard.Dynamics.Bodies;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.Components;
+using RogueliteSurvivor.Physics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,15 +57,15 @@ namespace RogueliteSurvivor.Systems
                 {
                     enemy.State = EnemyState.Alive;
 
-                    var collider = entity.Get<Collider>();
+                    var body = (Body)entity.Get(typeof(Body));
                     var position = entity.Get<Position>();
                     var health = entity.Get<Health>();
 
-                    collider.PhysicsBody.SetTransform(getSpawnPosition(player.Value.XY, offset), 0);
-                    position.XY = new Vector2(collider.PhysicsBody.Position.X, collider.PhysicsBody.Position.Y);
+                    body.SetTransform(getSpawnPosition(player.Value.XY, offset), 0);
+                    position.XY = new Vector2(body.Position.X, body.Position.Y);
                     health.Current = health.Max;
 
-                    entity.SetRange(collider, position, health);
+                    entity.SetRange(body, position, health);
                 }
             });
 
@@ -76,21 +77,21 @@ namespace RogueliteSurvivor.Systems
                     body.position = getSpawnPosition(player.Value.XY, offset);
                     body.fixedRotation = true;
 
-                    var entity = world.Create(
+                    var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body>();
+
+                    entity.SetRange(
                         new Enemy() { State = EnemyState.Alive },
                         new Position() { XY = new Vector2(body.position.X, body.position.Y) },
                         new Velocity() { Vector = Vector2.Zero },
                         new Speed() { speed = 2000f },
                         new Animation(0, 3, .1f, 2),
                         new SpriteSheet(textures["vampire_bat"], "vampire_bat", 4, 2),
-                        new Collider(16, 16, physicsWorld, body),
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
                         new Damage() { Amount = 2 },
-                        new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 }
+                        new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
+                        BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body)
                     );
-
-                    entity.Get<Collider>().SetEntityForPhysics(entity);
                 }
             }
         }

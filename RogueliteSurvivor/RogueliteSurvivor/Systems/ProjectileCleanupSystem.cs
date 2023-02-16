@@ -26,11 +26,11 @@ namespace RogueliteSurvivor.Systems
         public void Update(GameTime gameTime) 
         {
             
-            world.Query(in query, (in Entity entity, ref Projectile projectile, ref Collider col) =>
+            world.Query(in query, (in Entity entity, ref Projectile projectile, ref Body body) =>
             {
                 if(projectile.State == ProjectileState.Dead)
                 {
-                    physicsWorld.DestroyBody(col.PhysicsBody);
+                    physicsWorld.DestroyBody(body);
                     world.Destroy(entity);
                 }
             });
