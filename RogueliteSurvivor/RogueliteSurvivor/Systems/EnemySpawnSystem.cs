@@ -86,7 +86,8 @@ namespace RogueliteSurvivor.Systems
                         new Collider(16, 16, physicsWorld, body),
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
-                        new Damage() { Amount = 2}
+                        new Damage() { Amount = 2 },
+                        new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 }
                     );
 
                     entity.Get<Collider>().SetEntityForPhysics(entity);

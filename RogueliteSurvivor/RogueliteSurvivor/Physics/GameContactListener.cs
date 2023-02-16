@@ -133,12 +133,19 @@ namespace RogueliteSurvivor.Physics
 
         private void setPlayerHealthAndState(Entity entity, Entity other, Player player)
         {
-            Health health = entity.Get<Health>();
-            Damage damage = other.Get<Damage>();
-            health.Current -= damage.Amount;
-            Animation anim = entity.Get<Animation>();
-            anim.Overlay = Microsoft.Xna.Framework.Color.Red;
-            entity.SetRange(health, anim);
+            AttackSpeed attackSpeed = other.Get<AttackSpeed>();
+            if(attackSpeed.Cooldown > attackSpeed.CurrentAttackSpeed)
+            {
+                attackSpeed.Cooldown -= attackSpeed.CurrentAttackSpeed;
+                Health health = entity.Get<Health>();
+                Damage damage = other.Get<Damage>();
+                health.Current -= damage.Amount;
+                Animation anim = entity.Get<Animation>();
+                anim.Overlay = Microsoft.Xna.Framework.Color.Red;
+                
+                entity.SetRange(health, anim);
+                other.Set(attackSpeed);
+            }
         }
 
         public override void PostSolve(in Contact contact, in ContactImpulse impulse)

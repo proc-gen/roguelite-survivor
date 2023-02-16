@@ -32,7 +32,7 @@ namespace RogueliteSurvivor.Systems
                 spriteBatch.Draw(
                     textures["HealthBar"],
                     HealthLocation + (Vector2.UnitY * Increment * counter),
-                    new Rectangle(0, 0, (int)(textures["HealthBar"].Width * (float)(health.Current / health.Max)), textures["HealthBar"].Height),
+                    new Rectangle(0, 0, (int)(textures["HealthBar"].Width * ((float)health.Current / health.Max)), textures["HealthBar"].Height),
                     Color.White,
                     0f,
                     Vector2.Zero,
