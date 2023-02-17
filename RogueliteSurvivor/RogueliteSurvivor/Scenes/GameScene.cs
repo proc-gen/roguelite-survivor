@@ -118,7 +118,5 @@ namespace RogueliteSurvivor.Scenes
                 system.Render(gameTime, _spriteBatch, textures, player);
             }
         }
-
-        
     }
 }

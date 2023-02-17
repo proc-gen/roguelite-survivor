@@ -28,7 +28,7 @@ namespace RogueliteSurvivor
         private Matrix transformMatrix;
 
         Dictionary<string, Scene> scenes = new Dictionary<string, Scene>();
-        string currentScene = "game";
+        string currentScene = "main-menu";
 
         public Game1()
         {
@@ -55,7 +55,11 @@ namespace RogueliteSurvivor
 
             GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics);
             gameScene.LoadContent();
+            MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics);
+            mainMenu.LoadContent();
+
             scenes.Add("game", gameScene);
+            scenes.Add("main-menu", mainMenu);
         }
 
         protected override void Update(GameTime gameTime)
