@@ -29,12 +29,20 @@ namespace RogueliteSurvivor.Scenes
             };
         }
 
-        public override void Update(GameTime gameTime)
+        public override string Update(GameTime gameTime)
         {
+            string retVal = string.Empty;
+
             if (Keyboard.GetState().IsKeyDown(Keys.Space) || GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed)
             {
-                
+                retVal = "game";
             }
+            else if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Q))
+            {
+                retVal = "exit";
+            }
+
+            return retVal;
         }
 
         public override void Draw(GameTime gameTime)

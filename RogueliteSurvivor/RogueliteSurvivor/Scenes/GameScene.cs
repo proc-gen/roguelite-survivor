@@ -103,12 +103,23 @@ namespace RogueliteSurvivor.Scenes
             );
         }
 
-        public override void Update(GameTime gameTime)
+        public override string Update(GameTime gameTime)
         {
-            foreach (var system in updateSystems)
+            string retVal = string.Empty;
+
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
-                system.Update(gameTime);
+                retVal = "main-menu";
             }
+            else
+            {
+                foreach (var system in updateSystems)
+                {
+                    system.Update(gameTime);
+                }
+            }
+
+            return retVal;
         }
 
         public override void Draw(GameTime gameTime)

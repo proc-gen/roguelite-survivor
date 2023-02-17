@@ -24,6 +24,6 @@ namespace RogueliteSurvivor.Scenes
 
         public abstract void Draw(GameTime gameTime);
         public abstract void LoadContent();
-        public abstract void Update(GameTime gameTime);
+        public abstract string Update(GameTime gameTime);
     }
 }

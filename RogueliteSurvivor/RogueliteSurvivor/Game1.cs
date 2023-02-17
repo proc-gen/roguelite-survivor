@@ -29,6 +29,7 @@ namespace RogueliteSurvivor
 
         Dictionary<string, Scene> scenes = new Dictionary<string, Scene>();
         string currentScene = "main-menu";
+        string nextScene = string.Empty;
 
         public Game1()
         {
@@ -54,7 +55,6 @@ namespace RogueliteSurvivor
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics);
-            gameScene.LoadContent();
             MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics);
             mainMenu.LoadContent();
 
@@ -68,13 +68,27 @@ namespace RogueliteSurvivor
             {
                 _graphics.ToggleFullScreen();
             }
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-                Exit();
-            }
+            
             else
             {
-                scenes[currentScene].Update(gameTime);
+                nextScene = scenes[currentScene].Update(gameTime);
+                if(!string.IsNullOrEmpty(nextScene))
+                {
+                    switch (nextScene)
+                    {
+                        case "game":
+                            scenes["game"].LoadContent();
+                            break;
+                        case "main-menu":
+                            break;
+                        case "exit":
+                            Exit();
+                            break;
+                    }
+
+                    currentScene = nextScene;
+                }
+
                 base.Update(gameTime);
             }
         }
