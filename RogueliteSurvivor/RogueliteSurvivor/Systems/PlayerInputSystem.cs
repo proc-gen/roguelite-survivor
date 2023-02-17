@@ -18,9 +18,12 @@ namespace RogueliteSurvivor.Systems
         {
         }
 
+        static Vector2 InverseY = new Vector2(1, -1);
+
         public void Update(GameTime gameTime)
         {
             KeyboardState kState = Keyboard.GetState();
+            GamePadState gState = GamePad.GetState(PlayerIndex.One);
 
             world.Query(in query, (ref Velocity vel, ref Speed sp) =>
             {
@@ -50,6 +53,10 @@ namespace RogueliteSurvivor.Systems
 
                         vel.Vector = Vector2.Normalize(vel.Vector) * sp.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     }
+                }
+                else if(gState.ThumbSticks.Left != Vector2.Zero)
+                {
+                    vel.Vector = Vector2.Normalize(gState.ThumbSticks.Left) * InverseY * sp.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
             });
         }
