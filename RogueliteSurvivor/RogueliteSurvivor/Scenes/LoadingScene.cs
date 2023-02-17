@@ -37,7 +37,10 @@ namespace RogueliteSurvivor.Scenes
 
             if ((bool)values[0])
             {
-                retVal = "game";
+                if (Keyboard.GetState().IsKeyDown(Keys.Space) || GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed)
+                {
+                    retVal = "game";
+                }
             }
 
             return retVal;
@@ -47,10 +50,20 @@ namespace RogueliteSurvivor.Scenes
         {
             _spriteBatch.DrawString(
                 fonts["Font"],
-                "Loading...",
+                (bool)values[0] ? "Time to kill the bats!" : "Loading...",
                 new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6),
                 Color.White
             );
+
+            if ((bool)values[0])
+            {
+                _spriteBatch.DrawString(
+                    fonts["Font"],
+                    "Press Space on the keyboard or Start on the controller to start",
+                    new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 32),
+                    Color.White
+                );
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ using RogueliteSurvivor.Physics;
 using JobScheduler;
 using Box2D.NetStandard.Dynamics.Bodies;
 using RogueliteSurvivor.Scenes;
+using System.Threading.Tasks;
 
 namespace RogueliteSurvivor
 {
@@ -88,7 +89,7 @@ namespace RogueliteSurvivor
                     case "main-menu":
                         break;
                     case "loading":
-                        scenes["game"].LoadContent();
+                        Task.Run(() => scenes["game"].LoadContent());
                         break;
                     case "exit":
                         Exit();
@@ -107,7 +108,15 @@ namespace RogueliteSurvivor
 
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
 
-            scenes[currentScene].Draw(gameTime);
+            switch (currentScene)
+            {
+                case "loading":
+                    scenes[currentScene].Draw(gameTime, scenes["game"].Loaded);
+                    break;
+                default:
+                    scenes[currentScene].Draw(gameTime);
+                    break;
+            }
 
             _spriteBatch.End();
 

@@ -102,6 +102,8 @@ namespace RogueliteSurvivor.Scenes
                 BodyFactory.CreateCircularBody(player, 16, physicsWorld, body, 9999)
             );
 
+            Task.Delay(3000);
+
             Loaded = true;
         }
 
