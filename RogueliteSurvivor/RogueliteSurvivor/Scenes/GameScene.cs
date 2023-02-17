@@ -101,9 +101,11 @@ namespace RogueliteSurvivor.Scenes
                 new KillCount() { Count = 0 },
                 BodyFactory.CreateCircularBody(player, 16, physicsWorld, body, 9999)
             );
+
+            Loaded = true;
         }
 
-        public override string Update(GameTime gameTime)
+        public override string Update(GameTime gameTime, params object[] values)
         {
             string retVal = string.Empty;
 
@@ -122,7 +124,7 @@ namespace RogueliteSurvivor.Scenes
             return retVal;
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime, params object[] values)
         {
             foreach (var system in renderSystems)
             {

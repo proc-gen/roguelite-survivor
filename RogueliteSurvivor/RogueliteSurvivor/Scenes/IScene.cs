@@ -10,7 +10,7 @@ namespace RogueliteSurvivor.Scenes
     public interface IScene
     {
         void LoadContent();
-        string Update(GameTime gameTime);
-        void Draw(GameTime gameTime);
+        string Update(GameTime gameTime, params object[] values);
+        void Draw(GameTime gameTime, params object[] values);
     }
 }

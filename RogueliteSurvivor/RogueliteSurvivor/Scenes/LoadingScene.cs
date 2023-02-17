@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Scenes
 {
-    public class MainMenuScene : Scene
+    public class LoadingScene : Scene
     {
         private Dictionary<string, Texture2D> textures;
         private Dictionary<string, SpriteFont> fonts;
 
-        public MainMenuScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics) : base(spriteBatch, contentManager, graphics)
+        public LoadingScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics) : base(spriteBatch, contentManager, graphics)
         {
         }
 
@@ -35,13 +35,9 @@ namespace RogueliteSurvivor.Scenes
         {
             string retVal = string.Empty;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) || GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed)
+            if ((bool)values[0])
             {
-                retVal = "loading";
-            }
-            else if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Q))
-            {
-                retVal = "exit";
+                retVal = "game";
             }
 
             return retVal;
@@ -51,7 +47,7 @@ namespace RogueliteSurvivor.Scenes
         {
             _spriteBatch.DrawString(
                 fonts["Font"],
-                "Press Space on the keyboard or Start on the controller to begin the game",
+                "Loading...",
                 new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6),
                 Color.White
             );

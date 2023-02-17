@@ -55,42 +55,50 @@ namespace RogueliteSurvivor
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics);
+
             MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics);
             mainMenu.LoadContent();
 
+            LoadingScene loadingScene = new LoadingScene(_spriteBatch, Content, _graphics);
+            loadingScene.LoadContent();
+
             scenes.Add("game", gameScene);
             scenes.Add("main-menu", mainMenu);
+            scenes.Add("loading", loadingScene);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.F))
+            switch (currentScene)
             {
-                _graphics.ToggleFullScreen();
+                case "loading":
+                    nextScene = scenes[currentScene].Update(gameTime, scenes["game"].Loaded);
+                    break;
+                default:
+                    nextScene = scenes[currentScene].Update(gameTime);
+                    break;
             }
             
-            else
+            if(!string.IsNullOrEmpty(nextScene))
             {
-                nextScene = scenes[currentScene].Update(gameTime);
-                if(!string.IsNullOrEmpty(nextScene))
+                switch (nextScene)
                 {
-                    switch (nextScene)
-                    {
-                        case "game":
-                            scenes["game"].LoadContent();
-                            break;
-                        case "main-menu":
-                            break;
-                        case "exit":
-                            Exit();
-                            break;
-                    }
-
-                    currentScene = nextScene;
+                    case "game":
+                        break;
+                    case "main-menu":
+                        break;
+                    case "loading":
+                        scenes["game"].LoadContent();
+                        break;
+                    case "exit":
+                        Exit();
+                        break;
                 }
 
-                base.Update(gameTime);
+                currentScene = nextScene;
             }
+
+            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)

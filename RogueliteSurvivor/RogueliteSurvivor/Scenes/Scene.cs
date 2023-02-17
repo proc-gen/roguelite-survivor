@@ -15,15 +15,19 @@ namespace RogueliteSurvivor.Scenes
         protected ContentManager Content;
         protected GraphicsDeviceManager _graphics;
 
+        public bool Loaded {  get; protected set; }
+
         public Scene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics)
         {
             _spriteBatch = spriteBatch;
             Content = contentManager;
             _graphics = graphics;
+
+            Loaded = false;
         }
 
-        public abstract void Draw(GameTime gameTime);
+        public abstract void Draw(GameTime gameTime, params object[] values);
         public abstract void LoadContent();
-        public abstract string Update(GameTime gameTime);
+        public abstract string Update(GameTime gameTime, params object[] values);
     }
 }
