@@ -18,6 +18,9 @@ namespace RogueliteSurvivor.Scenes
         private Dictionary<string, Texture2D> textures;
         private Dictionary<string, SpriteFont> fonts;
 
+        private bool readyForInput = false;
+        private float counter = 0f;
+
         public MainMenuScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
         {
@@ -37,13 +40,27 @@ namespace RogueliteSurvivor.Scenes
         {
             string retVal = string.Empty;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) || GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed)
+            if (!readyForInput)
             {
-                retVal = "loading";
+                counter += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (counter > 1f)
+                {
+                    counter = 0f;
+                    readyForInput = true;
+                }
             }
-            else if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Q))
+            else if (readyForInput)
             {
-                retVal = "exit";
+                if (Keyboard.GetState().IsKeyDown(Keys.Space) || GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed)
+                {
+                    retVal = "loading";
+                    readyForInput = false;
+                }
+                else if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                {
+                    retVal = "exit";
+                    readyForInput = false;
+                }
             }
 
             return retVal;
@@ -55,6 +72,13 @@ namespace RogueliteSurvivor.Scenes
                 fonts["Font"],
                 "Press Space on the keyboard or Start on the controller to begin the game",
                 new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6),
+                Color.White
+            );
+
+            _spriteBatch.DrawString(
+                fonts["Font"],
+                "Press Esc on the keyboard or Back on the controller to exit",
+                new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 32),
                 Color.White
             );
         }
