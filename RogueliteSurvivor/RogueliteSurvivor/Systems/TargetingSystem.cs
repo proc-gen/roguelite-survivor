@@ -41,17 +41,20 @@ namespace RogueliteSurvivor.Systems
             Vector2 targetPos = new Vector2(9999, 9999);
             world.Query(in targetQuery, (in Entity other, ref Position otherPos) =>
             {
-                if (!target.HasValue)
+                if (!other.Has<Enemy>() || other.Get<Enemy>().State != Constants.EntityState.Dead)
                 {
-                    targetPos = otherPos.XY;
-                    target = other;
-                }
-                else
-                {
-                    if (Vector2.Distance(sourcePosition, otherPos.XY) < Vector2.Distance(sourcePosition, targetPos))
+                    if (!target.HasValue)
                     {
                         targetPos = otherPos.XY;
                         target = other;
+                    }
+                    else
+                    {
+                        if (Vector2.Distance(sourcePosition, otherPos.XY) < Vector2.Distance(sourcePosition, targetPos))
+                        {
+                            targetPos = otherPos.XY;
+                            target = other;
+                        }
                     }
                 }
             });

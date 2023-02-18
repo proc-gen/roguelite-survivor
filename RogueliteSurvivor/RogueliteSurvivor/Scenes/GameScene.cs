@@ -49,7 +49,8 @@ namespace RogueliteSurvivor.Scenes
                 { "MediumFireball", Content.Load<Texture2D>(Path.Combine("Spells", "medium-fireball")) },
                 { "LargeFireball", Content.Load<Texture2D>(Path.Combine("Spells", "large-fireball")) },
                 { "StatBar", Content.Load<Texture2D>(Path.Combine("Hud", "StatBar")) },
-                { "HealthBar", Content.Load<Texture2D>(Path.Combine("Hud", "HealthBar")) }
+                { "HealthBar", Content.Load<Texture2D>(Path.Combine("Hud", "HealthBar")) },
+                { "pickups", Content.Load<Texture2D>(Path.Combine("Pickups", "player-pickups")) }
             };
 
             fonts = new Dictionary<string, SpriteFont>()
@@ -95,6 +96,7 @@ namespace RogueliteSurvivor.Scenes
             {
                 new RenderMapSystem(world, _graphics),
                 new RenderSpriteSystem(world, _graphics),
+                new RenderPickupSystem(world, _graphics),
                 new RenderHudSystem(world, _graphics, fonts),
             };
 

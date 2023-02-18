@@ -110,6 +110,18 @@
 /processorParam:TextureFormat=Color
 /build:Maps/Tiles.png
 
+#begin Pickups/player-pickups.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Pickups/player-pickups.png
+
 #begin Player/Animated_Mage_Character.png
 /importer:TextureImporter
 /processor:TextureProcessor

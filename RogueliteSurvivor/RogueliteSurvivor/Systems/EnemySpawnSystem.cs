@@ -23,7 +23,8 @@ namespace RogueliteSurvivor.Systems
         Random random;
         Box2D.NetStandard.Dynamics.World.World physicsWorld;
         GraphicsDeviceManager graphics;
-        RandomTable table;
+        RandomTable<string> enemyTable;
+        RandomTable<PickupType> pickupTable;
 
         int enemyCount = 20;
         int difficulty = 1;
@@ -60,11 +61,15 @@ namespace RogueliteSurvivor.Systems
                 }
             });
 
-            world.Query(in query, (in Entity entity, ref Enemy enemy) =>
+            world.Query(in query, (in Entity entity, ref Enemy enemy, ref Pickup pickup, ref Body body, ref Position position) =>
             {
                 if(enemy.State == EntityState.Dead)
                 {
-                    var body = (Body)entity.Get(typeof(Body));
+                    if (pickup.Type != PickupType.None)
+                    {
+                        createPickup(pickup, position);
+                    }
+
                     physicsWorld.DestroyBody(body);
                     world.Destroy(entity);
                 }
@@ -101,16 +106,23 @@ namespace RogueliteSurvivor.Systems
 
             enemyCount = 20 * difficulty;
 
-            table = new RandomTable()
+            enemyTable = new RandomTable<string>()
                 .Add("VampireBat", 10)
                 .Add("GhastlyBeholder", difficulty - 1)
                 .Add("GraveRevenant", difficulty - 2)
                 .Add("BloodLich", difficulty - 3);
+
+            pickupTable = new RandomTable<PickupType>()
+                .Add(PickupType.None, 30)
+                .Add(PickupType.AttackSpeed, difficulty)
+                .Add(PickupType.Damage, difficulty)
+                .Add(PickupType.MoveSpeed, difficulty)
+                .Add(PickupType.Health, difficulty);
         }
     
         private void createEnemy(Position? player, Vector2 offset)
         {
-            switch (table.Roll(random))
+            switch (enemyTable.Roll(random))
             {
                 case "VampireBat":
                     createVampireBat(player, offset);
@@ -129,13 +141,11 @@ namespace RogueliteSurvivor.Systems
 
         private void createVampireBat(Position? player, Vector2 offset)
         {
-            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body>();
+            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body, Pickup>();
 
             var body = new BodyDef();
             body.position = getSpawnPosition(player.Value.XY, offset);
             body.fixedRotation = true;
-
-            var physicsBody = BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body);
 
             entity.SetRange(
                         new Enemy() { State = EntityState.Alive },
@@ -148,13 +158,14 @@ namespace RogueliteSurvivor.Systems
                         new Health() { Current = 10, Max = 10 },
                         new Damage() { Amount = 2 },
                         new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
-                        physicsBody
+                        BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
+                        createPickupForEnemy()
                     );
         }
 
         private void createGhastlyBeholder(Position? player, Vector2 offset)
         {
-            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body>();
+            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body, Pickup>();
 
             var body = new BodyDef();
             body.position = getSpawnPosition(player.Value.XY, offset);
@@ -171,13 +182,14 @@ namespace RogueliteSurvivor.Systems
                         new Health() { Current = 10, Max = 10 },
                         new Damage() { Amount = 2 },
                         new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
-                        BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body)
+                        BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
+                        createPickupForEnemy()
                     );
         }
 
         private void createGraveRevenant(Position? player, Vector2 offset)
         {
-            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body>();
+            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body, Pickup>();
 
             var body = new BodyDef();
             body.position = getSpawnPosition(player.Value.XY, offset);
@@ -194,13 +206,14 @@ namespace RogueliteSurvivor.Systems
                         new Health() { Current = 10, Max = 10 },
                         new Damage() { Amount = 2 },
                         new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
-                        BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body)
+                        BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
+                        createPickupForEnemy()
                     );
         }
 
         private void createBloodLich(Position? player, Vector2 offset)
         {
-            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body>();
+            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body, Pickup>();
 
             var body = new BodyDef();
             body.position = getSpawnPosition(player.Value.XY, offset);
@@ -217,8 +230,41 @@ namespace RogueliteSurvivor.Systems
                         new Health() { Current = 10, Max = 10 },
                         new Damage() { Amount = 2 },
                         new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
-                        BodyFactory.CreateCircularBody(entity, 32, physicsWorld, body)
+                        BodyFactory.CreateCircularBody(entity, 32, physicsWorld, body),
+                        createPickupForEnemy()
                     );
+        }
+
+        private Pickup createPickupForEnemy()
+        {
+            var pickup = new Pickup() { Type = pickupTable.Roll(random) };
+
+            switch (pickup.Type)
+            {
+                case PickupType.AttackSpeed:
+                    pickup.PickupAmount = .1f;
+                    break;
+                case PickupType.Damage:
+                    pickup.PickupAmount = 1f;
+                    break;
+                case PickupType.MoveSpeed:
+                    pickup.PickupAmount = 1000f;
+                    break;
+                case PickupType.Health:
+                    pickup.PickupAmount = 5f;
+                    break;
+            }
+
+            return pickup;
+        }
+
+        private void createPickup(Pickup pickup, Position position)
+        {
+            var entity = world.Create<PickupSprite, Position>();
+            
+            entity.SetRange(new PickupSprite() { Type = pickup.Type, PickupAmount = pickup.PickupAmount },
+                new Position() { XY = new Vector2(position.XY.X, position.XY.Y) }
+            );
         }
     }
 }

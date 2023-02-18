@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Utils
 {
-    internal class RandomTable
+    internal class RandomTable<T>
     {
-        Dictionary<string, int> _entries;
+        Dictionary<T, int> _entries;
         int _totalWeight;
 
         public RandomTable()
         {
-            _entries = new Dictionary<string, int>();
+            _entries = new Dictionary<T, int>();
             _totalWeight = 0;
         }
 
-        public RandomTable Add(string name, int weight)
+        public RandomTable<T> Add(T name, int weight)
         {
             if (weight > 0)
             {
@@ -27,9 +27,9 @@ namespace RogueliteSurvivor.Utils
             return this;
         }
 
-        public string Roll(Random random)
+        public T Roll(Random random)
         {
-            string retVal = "None";
+            T retVal = default(T);
 
             if(_totalWeight > 0)
             {
