@@ -28,6 +28,10 @@ namespace RogueliteSurvivor
         const int scaleFactor = 3;
         private Matrix transformMatrix;
 
+        private World world = null;
+        Box2D.NetStandard.Dynamics.World.World physicsWorld = null;
+        System.Numerics.Vector2 gravity = System.Numerics.Vector2.Zero;
+
         Dictionary<string, Scene> scenes = new Dictionary<string, Scene>();
         string currentScene = "main-menu";
         string nextScene = string.Empty;
@@ -54,16 +58,19 @@ namespace RogueliteSurvivor
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            world = World.Create();
+            physicsWorld = new Box2D.NetStandard.Dynamics.World.World(gravity);
+            physicsWorld.SetContactListener(new GameContactListener());
 
-            GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics);
+            GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics, world, physicsWorld);
 
-            MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics);
+            MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics, world, physicsWorld);
             mainMenu.LoadContent();
 
-            LoadingScene loadingScene = new LoadingScene(_spriteBatch, Content, _graphics);
+            LoadingScene loadingScene = new LoadingScene(_spriteBatch, Content, _graphics, world, physicsWorld);
             loadingScene.LoadContent();
 
-            GameOverScene gameOverScene = new GameOverScene(_spriteBatch, Content, _graphics);
+            GameOverScene gameOverScene = new GameOverScene(_spriteBatch, Content, _graphics, world, physicsWorld);
             gameOverScene.LoadContent();
 
             scenes.Add("game", gameScene);

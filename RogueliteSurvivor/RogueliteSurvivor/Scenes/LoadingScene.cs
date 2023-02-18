@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Arch.Core;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -17,7 +18,8 @@ namespace RogueliteSurvivor.Scenes
         private Dictionary<string, Texture2D> textures;
         private Dictionary<string, SpriteFont> fonts;
 
-        public LoadingScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics) : base(spriteBatch, contentManager, graphics)
+        public LoadingScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
+            : base(spriteBatch, contentManager, graphics, world, physicsWorld)
         {
         }
 

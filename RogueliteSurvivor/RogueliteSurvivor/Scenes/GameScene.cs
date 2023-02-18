@@ -20,19 +20,16 @@ namespace RogueliteSurvivor.Scenes
 {
     public class GameScene : Scene
     {
-        private World world;
+        
         private List<IUpdateSystem> updateSystems;
         private List<IRenderSystem> renderSystems;
         private Entity player;
 
-        Box2D.NetStandard.Dynamics.World.World physicsWorld;
-        System.Numerics.Vector2 gravity = System.Numerics.Vector2.Zero;
-
         private Dictionary<string, Texture2D> textures;
         private Dictionary<string, SpriteFont> fonts;
 
-        public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics) 
-            : base(spriteBatch, contentManager, graphics)
+        public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
+            : base(spriteBatch, contentManager, graphics, world, physicsWorld)
         {
         }
 
@@ -55,9 +52,26 @@ namespace RogueliteSurvivor.Scenes
                 { "Font", Content.Load<SpriteFont>("Font") },
             };
 
-            world = World.Create();
-            physicsWorld = new Box2D.NetStandard.Dynamics.World.World(gravity);
-            physicsWorld.SetContactListener(new GameContactListener());
+            if(world.CountEntities(new QueryDescription()) > 0)
+            {
+                List<Entity> entities = new List<Entity>();
+                world.GetEntities(new QueryDescription(), entities);
+                foreach(var entity in entities)
+                {
+                    world.Destroy(entity);
+                }
+            }
+
+            if(physicsWorld.GetBodyCount() > 0)
+            {
+                var physicsBody = physicsWorld.GetBodyList();
+                while(physicsBody != null) 
+                {
+                    var nextPhysicsBody = physicsBody.GetNext();
+                    physicsWorld.DestroyBody(physicsBody);
+                    physicsBody = nextPhysicsBody;
+                };
+            }
 
             updateSystems = new List<IUpdateSystem>
             {

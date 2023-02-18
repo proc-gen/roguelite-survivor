@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Arch.Core;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -17,8 +18,13 @@ namespace RogueliteSurvivor.Scenes
         private Dictionary<string, Texture2D> textures;
         private Dictionary<string, SpriteFont> fonts;
 
-        public GameOverScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics) : base(spriteBatch, contentManager, graphics)
+        private QueryDescription queryDescription;
+
+        public GameOverScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld) 
+            : base(spriteBatch, contentManager, graphics, world, physicsWorld)
         {
+            queryDescription = new QueryDescription()
+                                    .WithAll<Player, KillCount>();
         }
 
         public override void LoadContent()
@@ -51,13 +57,31 @@ namespace RogueliteSurvivor.Scenes
                 new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6),
                 Color.White
             );
-            
+
             _spriteBatch.DrawString(
                 fonts["Font"],
-                "Press Space on the keyboard or Start on the controller to return to the main menu",
+               string.Concat("Enemies Killed: ", getPlayerKillCount().Count),
                 new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 32),
                 Color.White
             );
+
+
+            _spriteBatch.DrawString(
+                fonts["Font"],
+                "Press Space on the keyboard or Start on the controller to return to the main menu",
+                new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 96),
+                Color.White
+            );
+        }
+
+        private KillCount getPlayerKillCount()
+        {
+            KillCount playerKillCount = new KillCount();
+            world.Query(in queryDescription, (ref KillCount killCount) =>
+            {
+                playerKillCount.Count = killCount.Count;
+            });
+            return playerKillCount;
         }
     }
 }
