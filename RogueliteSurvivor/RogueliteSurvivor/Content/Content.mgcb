@@ -13,7 +13,7 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Animated_Mage_Character.png
+#begin Enemies/VampireBat.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -23,22 +23,16 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Animated_Mage_Character.png
+/build:Enemies/VampireBat.png
 
-#begin Demo.tmx
-/copy:Demo.tmx
-
-#begin Dungeon - Tiles.tsx
-/copy:Dungeon - Tiles.tsx
-
-#begin Font.spritefont
+#begin Fonts/Font.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Font.spritefont
+/build:Fonts/Font.spritefont
 
-#begin HealthBar.png
+#begin Hud/HealthBar.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -48,9 +42,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:HealthBar.png
+/build:Hud/HealthBar.png
 
-#begin large-fireball.png
+#begin Hud/StatBar.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -60,9 +54,15 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:large-fireball.png
+/build:Hud/StatBar.png
 
-#begin medium-fireball.png
+#begin Maps/Demo.tmx
+/copy:Maps/Demo.tmx
+
+#begin Maps/Dungeon - Tiles.tsx
+/copy:Maps/Dungeon - Tiles.tsx
+
+#begin Maps/Tiles.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -72,9 +72,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:medium-fireball.png
+/build:Maps/Tiles.png
 
-#begin small-fireball.png
+#begin Player/Animated_Mage_Character.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -84,9 +84,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:small-fireball.png
+/build:Player/Animated_Mage_Character.png
 
-#begin StatBar.png
+#begin Spells/large-fireball.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -96,9 +96,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:StatBar.png
+/build:Spells/large-fireball.png
 
-#begin Tiles.png
+#begin Spells/medium-fireball.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -108,9 +108,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Tiles.png
+/build:Spells/medium-fireball.png
 
-#begin VampireBat.png
+#begin Spells/small-fireball.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -120,5 +120,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:VampireBat.png
+/build:Spells/small-fireball.png
 

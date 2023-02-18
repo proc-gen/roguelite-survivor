@@ -39,19 +39,19 @@ namespace RogueliteSurvivor.Scenes
         {
             textures = new Dictionary<string, Texture2D>
             {
-                { "tiles", Content.Load<Texture2D>("Tiles") },
-                { "player", Content.Load<Texture2D>("Animated_Mage_Character") },
-                { "vampire_bat", Content.Load<Texture2D>("VampireBat") },
-                { "SmallFireball", Content.Load<Texture2D>("small-fireball") },
-                { "MediumFireball", Content.Load<Texture2D>("medium-fireball") },
-                { "LargeFireball", Content.Load<Texture2D>("large-fireball") },
-                { "StatBar", Content.Load<Texture2D>("StatBar") },
-                { "HealthBar", Content.Load<Texture2D>("HealthBar") }
+                { "tiles", Content.Load<Texture2D>("Maps/Tiles") },
+                { "player", Content.Load<Texture2D>("Player/Animated_Mage_Character") },
+                { "vampire_bat", Content.Load<Texture2D>("Enemies/VampireBat") },
+                { "SmallFireball", Content.Load<Texture2D>("Spells/small-fireball") },
+                { "MediumFireball", Content.Load<Texture2D>("Spells/medium-fireball") },
+                { "LargeFireball", Content.Load<Texture2D>("Spells/large-fireball") },
+                { "StatBar", Content.Load<Texture2D>("Hud/StatBar") },
+                { "HealthBar", Content.Load<Texture2D>("Hud/HealthBar") }
             };
 
             fonts = new Dictionary<string, SpriteFont>()
             {
-                { "Font", Content.Load<SpriteFont>("Font") },
+                { "Font", Content.Load<SpriteFont>("Fonts/Font") },
             };
 
             if(world.CountEntities(new QueryDescription()) > 0)
@@ -96,7 +96,7 @@ namespace RogueliteSurvivor.Scenes
             };
 
             var mapEntity = world.Create<Map, MapInfo>();
-            mapEntity.SetRange(new Map(), new MapInfo(Path.Combine(Content.RootDirectory, "Demo.tmx"), Content.RootDirectory + "/", physicsWorld, mapEntity));
+            mapEntity.SetRange(new Map(), new MapInfo(Path.Combine(Content.RootDirectory, "Maps\\\\Demo.tmx"), Content.RootDirectory + "\\\\Maps\\\\", physicsWorld, mapEntity));
 
             var body = new Box2D.NetStandard.Dynamics.Bodies.BodyDef();
             body.position = new System.Numerics.Vector2(384, 384);
