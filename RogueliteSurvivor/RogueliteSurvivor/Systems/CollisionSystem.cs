@@ -37,6 +37,8 @@ namespace RogueliteSurvivor.Systems
                 var position = body.GetPosition();
                 pos.XY = new Vector2(position.X, position.Y);
             });
+
+            physicsWorld.ClearForces();
         }
     }
 }
