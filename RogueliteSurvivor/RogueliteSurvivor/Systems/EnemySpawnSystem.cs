@@ -28,7 +28,7 @@ namespace RogueliteSurvivor.Systems
 
         int enemyCount = 20;
         int difficulty = 1;
-        int increaseAfterSeconds = 30;
+        int increaseAfterSeconds = 15;
 
         public EnemySpawnSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, GraphicsDeviceManager graphics)
             : base(world, new QueryDescription()
@@ -113,7 +113,7 @@ namespace RogueliteSurvivor.Systems
                 .Add("BloodLich", difficulty - 3);
 
             pickupTable = new RandomTable<PickupType>()
-                .Add(PickupType.None, 30)
+                //.Add(PickupType.None, 30)
                 .Add(PickupType.AttackSpeed, difficulty)
                 .Add(PickupType.Damage, difficulty)
                 .Add(PickupType.MoveSpeed, difficulty)
@@ -157,7 +157,7 @@ namespace RogueliteSurvivor.Systems
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
                         new Damage() { Amount = 2, BaseAmount = 2 },
-                        new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
+                        new AttackSpeed() { BaseAttacksPerSecond = 1f, CurrentAttacksPerSecond = 1f, Cooldown = 0 },
                         BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
                         createPickupForEnemy()
                     );
@@ -181,7 +181,7 @@ namespace RogueliteSurvivor.Systems
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
                         new Damage() { Amount = 2, BaseAmount = 2 },
-                        new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
+                        new AttackSpeed() { BaseAttacksPerSecond = 1f, CurrentAttacksPerSecond = 1f, Cooldown = 0 },
                         BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
                         createPickupForEnemy()
                     );
@@ -205,7 +205,7 @@ namespace RogueliteSurvivor.Systems
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
                         new Damage() { Amount = 2, BaseAmount = 2 },
-                        new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
+                        new AttackSpeed() { BaseAttacksPerSecond = 1f, CurrentAttacksPerSecond = 1f, Cooldown = 0 },
                         BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
                         createPickupForEnemy()
                     );
@@ -229,7 +229,7 @@ namespace RogueliteSurvivor.Systems
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
                         new Damage() { Amount = 2, BaseAmount = 2 },
-                        new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
+                        new AttackSpeed() { BaseAttacksPerSecond = 1f, CurrentAttacksPerSecond = 1f, Cooldown = 0 },
                         BodyFactory.CreateCircularBody(entity, 32, physicsWorld, body),
                         createPickupForEnemy()
                     );

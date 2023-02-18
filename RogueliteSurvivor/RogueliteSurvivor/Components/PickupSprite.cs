@@ -25,7 +25,7 @@ namespace RogueliteSurvivor.Components
             Current = 0;
             Increment = 1;
             Count = 0;
-            MaxCount = .33f;
+            MaxCount = .1f;
         }
     }
 }

@@ -45,7 +45,7 @@ namespace RogueliteSurvivor.Systems
                     {
                         case PickupType.AttackSpeed:
                             var attackSpeed = player.Value.Get<AttackSpeed>();
-                            attackSpeed.CurrentAttackSpeed += sprite.PickupAmount * attackSpeed.BaseAttackSpeed;
+                            attackSpeed.CurrentAttacksPerSecond += sprite.PickupAmount * attackSpeed.BaseAttacksPerSecond;
                             player.Value.Set(attackSpeed);
                             world.Destroy(entity);
                             break;
@@ -75,7 +75,7 @@ namespace RogueliteSurvivor.Systems
                 else
                 {
                     sprite.Count += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    if(sprite.Count > sprite.Max)
+                    if(sprite.Count > sprite.MaxCount)
                     {
                         sprite.Count = 0;
                         sprite.Current += sprite.Increment;
