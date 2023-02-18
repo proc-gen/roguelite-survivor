@@ -27,7 +27,7 @@ namespace RogueliteSurvivor.Systems
         {
             world.Query(in query, (in Entity entity, ref Position pos, ref Velocity vel, ref Body body) =>
             {
-                body.SetLinearVelocity(vel.VectorPhysics);
+                body.SetLinearVelocity(vel.VectorPhysics + System.Numerics.Vector2.Zero);
             });
 
             physicsWorld.Step(1/60f, 8, 3);
