@@ -11,7 +11,8 @@ namespace RogueliteSurvivor.Components
     public struct SpriteSheet
     {
         public string TextureName { get; private set; }
-        private int framesPerRow, framesPerColumn;
+        public int framesPerRow { get; private set; }
+        public int framesPerColumn { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
         public float Rotation { get; set; }

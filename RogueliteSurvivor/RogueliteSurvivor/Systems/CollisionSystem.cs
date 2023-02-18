@@ -25,7 +25,7 @@ namespace RogueliteSurvivor.Systems
 
         public void Update(GameTime gameTime, float totalElapsedTime)
         {
-            world.Query(in query, (ref Position pos, ref Velocity vel, ref Body body) =>
+            world.Query(in query, (in Entity entity, ref Position pos, ref Velocity vel, ref Body body) =>
             {
                 body.SetLinearVelocity(vel.VectorPhysics);
             });

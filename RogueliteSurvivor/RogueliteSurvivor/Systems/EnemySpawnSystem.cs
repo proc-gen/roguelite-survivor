@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Physics;
+using RogueliteSurvivor.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +23,11 @@ namespace RogueliteSurvivor.Systems
         Random random;
         Box2D.NetStandard.Dynamics.World.World physicsWorld;
         GraphicsDeviceManager graphics;
+        RandomTable table;
 
-        const int ENEMY_COUNT = 20;
+        int enemyCount = 20;
+        int difficulty = 1;
+        int increaseAfterSeconds = 30;
 
         public EnemySpawnSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, GraphicsDeviceManager graphics)
             : base(world, new QueryDescription()
@@ -34,11 +38,17 @@ namespace RogueliteSurvivor.Systems
             this.graphics = graphics;
 
             random = new Random();
+            setDifficulty(0);
         }
 
         public void Update(GameTime gameTime, float totalElapsedTime) 
         {
             int numEnemies = 0;
+
+            if(((int)totalElapsedTime) % increaseAfterSeconds == 0)
+            {
+                setDifficulty((int) totalElapsedTime);
+            }
 
             Vector2 offset = new Vector2(graphics.PreferredBackBufferWidth / 6, graphics.PreferredBackBufferHeight / 6);
             Position? player = null;
@@ -52,47 +62,23 @@ namespace RogueliteSurvivor.Systems
 
             world.Query(in query, (in Entity entity, ref Enemy enemy) =>
             {
-                numEnemies++;
-
-                if (enemy.State == EntityState.Dead)
+                if(enemy.State == EntityState.Dead)
                 {
-                    enemy.State = EntityState.Alive;
-
                     var body = (Body)entity.Get(typeof(Body));
-                    var position = entity.Get<Position>();
-                    var health = entity.Get<Health>();
-
-                    body.SetTransform(getSpawnPosition(player.Value.XY, offset), 0);
-                    position.XY = new Vector2(body.Position.X, body.Position.Y);
-                    health.Current = health.Max;
-
-                    entity.SetRange(body, position, health);
+                    physicsWorld.DestroyBody(body);
+                    world.Destroy(entity);
+                }
+                else
+                {
+                    numEnemies++;
                 }
             });
 
-            if(numEnemies < ENEMY_COUNT)
+            if(numEnemies < enemyCount)
             {
-                for(int i = numEnemies; i < ENEMY_COUNT; i++)
+                for(int i = numEnemies; i < enemyCount; i++)
                 {
-                    var body = new BodyDef();
-                    body.position = getSpawnPosition(player.Value.XY, offset);
-                    body.fixedRotation = true;
-
-                    var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body>();
-
-                    entity.SetRange(
-                        new Enemy() { State = EntityState.Alive },
-                        new Position() { XY = new Vector2(body.position.X, body.position.Y) },
-                        new Velocity() { Vector = Vector2.Zero },
-                        new Speed() { speed = 2000f },
-                        new Animation(0, 3, .1f, 2),
-                        new SpriteSheet(textures["vampire_bat"], "vampire_bat", 4, 2),
-                        new Target(),
-                        new Health() { Current = 10, Max = 10 },
-                        new Damage() { Amount = 2 },
-                        new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
-                        BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body)
-                    );
+                    createEnemy(player, offset);
                 }
             }
         }
@@ -107,6 +93,132 @@ namespace RogueliteSurvivor.Systems
             } while ((x > (playerPosition.X - offset.X) && x < (playerPosition.X + offset.X)) && (y > (playerPosition.Y - offset.Y) && y < (playerPosition.Y + offset.Y)));
 
             return new System.Numerics.Vector2(x, y);
+        }
+    
+        private void setDifficulty(int time)
+        {
+            difficulty = (time / increaseAfterSeconds) + 1;
+
+            enemyCount = 20 * difficulty;
+
+            table = new RandomTable()
+                .Add("VampireBat", 10)
+                .Add("GhastlyBeholder", difficulty - 1)
+                .Add("GraveRevenant", difficulty - 2)
+                .Add("BloodLich", 99);//difficulty - 3);
+        }
+    
+        private void createEnemy(Position? player, Vector2 offset)
+        {
+            switch (table.Roll(random))
+            {
+                case "VampireBat":
+                    createVampireBat(player, offset);
+                    break;
+                case "GhastlyBeholder":
+                    createGhastlyBeholder(player, offset);
+                    break;
+                case "GraveRevenant":
+                    createGraveRevenant(player, offset);
+                    break;
+                case "BloodLich":
+                    createBloodLich(player, offset);
+                    break;
+            }
+        }
+
+        private void createVampireBat(Position? player, Vector2 offset)
+        {
+            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body>();
+
+            var body = new BodyDef();
+            body.position = getSpawnPosition(player.Value.XY, offset);
+            body.fixedRotation = true;
+
+            var physicsBody = BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body);
+
+            entity.SetRange(
+                        new Enemy() { State = EntityState.Alive },
+                        new Position() { XY = new Vector2(body.position.X, body.position.Y) },
+                        new Velocity() { Vector = Vector2.Zero },
+                        new Speed() { speed = 2000f },
+                        new Animation(0, 3, .1f, 2),
+                        new SpriteSheet(textures["VampireBat"], "VampireBat", 4, 2),
+                        new Target(),
+                        new Health() { Current = 10, Max = 10 },
+                        new Damage() { Amount = 2 },
+                        new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
+                        physicsBody
+                    );
+        }
+
+        private void createGhastlyBeholder(Position? player, Vector2 offset)
+        {
+            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body>();
+
+            var body = new BodyDef();
+            body.position = getSpawnPosition(player.Value.XY, offset);
+            body.fixedRotation = true;
+
+            entity.SetRange(
+                        new Enemy() { State = EntityState.Alive },
+                        new Position() { XY = new Vector2(body.position.X, body.position.Y) },
+                        new Velocity() { Vector = Vector2.Zero },
+                        new Speed() { speed = 2000f },
+                        new Animation(0, 3, .1f, 2),
+                        new SpriteSheet(textures["GhastlyBeholder"], "GhastlyBeholder", 4, 2),
+                        new Target(),
+                        new Health() { Current = 10, Max = 10 },
+                        new Damage() { Amount = 2 },
+                        new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
+                        BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body)
+                    );
+        }
+
+        private void createGraveRevenant(Position? player, Vector2 offset)
+        {
+            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body>();
+
+            var body = new BodyDef();
+            body.position = getSpawnPosition(player.Value.XY, offset);
+            body.fixedRotation = true;
+
+            entity.SetRange(
+                        new Enemy() { State = EntityState.Alive },
+                        new Position() { XY = new Vector2(body.position.X, body.position.Y) },
+                        new Velocity() { Vector = Vector2.Zero },
+                        new Speed() { speed = 2000f },
+                        new Animation(0, 3, .1f, 2),
+                        new SpriteSheet(textures["GraveRevenant"], "GraveRevenant", 4, 2),
+                        new Target(),
+                        new Health() { Current = 10, Max = 10 },
+                        new Damage() { Amount = 2 },
+                        new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
+                        BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body)
+                    );
+        }
+
+        private void createBloodLich(Position? player, Vector2 offset)
+        {
+            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body>();
+
+            var body = new BodyDef();
+            body.position = getSpawnPosition(player.Value.XY, offset);
+            body.fixedRotation = true;
+
+            entity.SetRange(
+                        new Enemy() { State = EntityState.Alive },
+                        new Position() { XY = new Vector2(body.position.X, body.position.Y) },
+                        new Velocity() { Vector = Vector2.Zero },
+                        new Speed() { speed = 2000f },
+                        new Animation(0, 9, .1f, 2),
+                        new SpriteSheet(textures["BloodLich"], "BloodLich", 10, 2),
+                        new Target(),
+                        new Health() { Current = 10, Max = 10 },
+                        new Damage() { Amount = 2 },
+                        new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
+                        BodyFactory.CreateCircularBody(entity, 32, physicsWorld, body)
+                    );
         }
     }
 }

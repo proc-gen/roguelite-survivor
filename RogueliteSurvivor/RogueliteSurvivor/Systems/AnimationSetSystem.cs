@@ -19,7 +19,7 @@ namespace RogueliteSurvivor.Systems
 
         public void Update(GameTime gameTime, float totalElapsedTime) 
         {
-            world.Query(in query, (ref Animation anim, ref Velocity vel) =>
+            world.Query(in query, (ref Animation anim, ref SpriteSheet spriteSheet, ref Velocity vel) =>
             {
                 if (anim.NumDirections == 4)
                 {
@@ -65,14 +65,14 @@ namespace RogueliteSurvivor.Systems
                     {
                         if (anim.FirstFrame != 0)
                         {
-                            anim.Reset(0, 3);
+                            anim.Reset(0, spriteSheet.framesPerRow - 1);
                         }
                     }
                     else
                     {
-                        if (anim.FirstFrame != 4)
+                        if (anim.FirstFrame != spriteSheet.framesPerRow)
                         {
-                            anim.Reset(4, 7);
+                            anim.Reset(spriteSheet.framesPerRow, (spriteSheet.framesPerRow * 2) - 1);
                         }
                     }
                 }

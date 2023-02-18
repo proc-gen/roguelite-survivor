@@ -41,7 +41,10 @@ namespace RogueliteSurvivor.Scenes
             {
                 { "tiles", Content.Load<Texture2D>(Path.Combine("Maps", "Tiles")) },
                 { "player", Content.Load<Texture2D>(Path.Combine("Player", "Animated_Mage_Character")) },
-                { "vampire_bat", Content.Load<Texture2D>(Path.Combine("Enemies", "VampireBat")) },
+                { "VampireBat", Content.Load<Texture2D>(Path.Combine("Enemies", "VampireBat")) },
+                { "GhastlyBeholder", Content.Load<Texture2D>(Path.Combine("Enemies", "GhastlyBeholderIdleSide")) },
+                { "GraveRevenant", Content.Load<Texture2D>(Path.Combine("Enemies", "GraveRevenantIdleSide")) },
+                { "BloodLich", Content.Load<Texture2D>(Path.Combine("Enemies", "BloodLichIdleSIde")) },
                 { "SmallFireball", Content.Load<Texture2D>(Path.Combine("Spells", "small-fireball")) },
                 { "MediumFireball", Content.Load<Texture2D>(Path.Combine("Spells", "medium-fireball")) },
                 { "LargeFireball", Content.Load<Texture2D>(Path.Combine("Spells", "large-fireball")) },
