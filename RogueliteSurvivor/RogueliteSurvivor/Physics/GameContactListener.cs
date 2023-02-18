@@ -150,7 +150,12 @@ namespace RogueliteSurvivor.Physics
                 Animation anim = entity.Get<Animation>();
                 anim.Overlay = Microsoft.Xna.Framework.Color.Red;
                 
-                entity.SetRange(health, anim);
+                if(health.Current < 1)
+                {
+                    player.State = EntityState.Dead;
+                }
+
+                entity.SetRange(health, anim, player);
                 other.Set(attackSpeed);
             }
         }

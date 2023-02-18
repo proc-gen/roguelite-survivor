@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RogueliteSurvivor.Components;
+using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Physics;
 using RogueliteSurvivor.Systems;
 using System;
@@ -88,7 +89,7 @@ namespace RogueliteSurvivor.Scenes
             player = world.Create<Player, Position, Velocity, Speed, Animation, SpriteSheet, Target, Spell, AttackSpeed, Health, KillCount, Body>();
 
             player.SetRange(
-                new Player(),
+                new Player() { State = EntityState.Alive },
                 new Position() { XY = new Vector2(384, 384) },
                 new Velocity() { Vector = Vector2.Zero },
                 new Speed() { speed = 16000f },
@@ -112,6 +113,10 @@ namespace RogueliteSurvivor.Scenes
             string retVal = string.Empty;
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                retVal = "main-menu";
+            }
+            else if(player.Get<Player>().State == EntityState.Dead)
             {
                 retVal = "main-menu";
             }
