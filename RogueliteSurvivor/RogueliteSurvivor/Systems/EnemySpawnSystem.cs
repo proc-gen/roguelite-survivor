@@ -113,11 +113,11 @@ namespace RogueliteSurvivor.Systems
                 .Add("BloodLich", difficulty - 3);
 
             pickupTable = new RandomTable<PickupType>()
-                //.Add(PickupType.None, 30)
+                .Add(PickupType.None, 20)
                 .Add(PickupType.AttackSpeed, difficulty)
                 .Add(PickupType.Damage, difficulty)
                 .Add(PickupType.MoveSpeed, difficulty)
-                .Add(PickupType.Health, difficulty);
+                .Add(PickupType.Health, 2 * difficulty);
         }
     
         private void createEnemy(Position? player, Vector2 offset)
@@ -248,7 +248,7 @@ namespace RogueliteSurvivor.Systems
                     pickup.PickupAmount = 1f;
                     break;
                 case PickupType.MoveSpeed:
-                    pickup.PickupAmount = 1000f;
+                    pickup.PickupAmount = 5000f;
                     break;
                 case PickupType.Health:
                     pickup.PickupAmount = 5f;

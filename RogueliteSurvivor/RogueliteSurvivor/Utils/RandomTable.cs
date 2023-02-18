@@ -46,7 +46,14 @@ namespace RogueliteSurvivor.Utils
                     else
                     {
                         roll -= _entries.ElementAt(index).Value;
-                        index++;
+                        if (roll == 0)
+                        {
+                            retVal = _entries.ElementAt(index).Key;
+                        }
+                        else
+                        {
+                            index++;
+                        }
                     }
                 }
             }
