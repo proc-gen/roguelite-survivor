@@ -4,6 +4,7 @@ using Box2D.NetStandard.Dynamics.Bodies;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.Components;
+using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Physics;
 using System;
 using System.Collections.Generic;
@@ -53,9 +54,9 @@ namespace RogueliteSurvivor.Systems
             {
                 numEnemies++;
 
-                if (enemy.State == EnemyState.Dead)
+                if (enemy.State == EntityState.Dead)
                 {
-                    enemy.State = EnemyState.Alive;
+                    enemy.State = EntityState.Alive;
 
                     var body = (Body)entity.Get(typeof(Body));
                     var position = entity.Get<Position>();
@@ -80,7 +81,7 @@ namespace RogueliteSurvivor.Systems
                     var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body>();
 
                     entity.SetRange(
-                        new Enemy() { State = EnemyState.Alive },
+                        new Enemy() { State = EntityState.Alive },
                         new Position() { XY = new Vector2(body.position.X, body.position.Y) },
                         new Velocity() { Vector = Vector2.Zero },
                         new Speed() { speed = 2000f },

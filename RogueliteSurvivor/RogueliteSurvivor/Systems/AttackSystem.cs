@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RogueliteSurvivor.Components;
+using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Physics;
 using System;
 using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace RogueliteSurvivor.Systems
                         var projectile = world.Create<Projectile, Position, Velocity, Speed, Animation, SpriteSheet, Damage, Owner, Body>();
 
                         projectile.SetRange(
-                            new Projectile() { State = ProjectileState.Alive },
+                            new Projectile() { State = EntityState.Alive },
                             new Position() { XY = new Microsoft.Xna.Framework.Vector2(body.position.X, body.position.Y) },
                             new Velocity() { Vector = velocityVector * 32000f * (float)gameTime.ElapsedGameTime.TotalSeconds },
                             new Speed() { speed = 32000f },

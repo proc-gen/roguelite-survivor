@@ -4,6 +4,7 @@ using Box2D.NetStandard.Dynamics.Bodies;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.Components;
+using RogueliteSurvivor.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace RogueliteSurvivor.Systems
             
             world.Query(in query, (in Entity entity, ref Projectile projectile, ref Body body) =>
             {
-                if(projectile.State == ProjectileState.Dead)
+                if(projectile.State == EntityState.Dead)
                 {
                     physicsWorld.DestroyBody(body);
                     world.Destroy(entity);

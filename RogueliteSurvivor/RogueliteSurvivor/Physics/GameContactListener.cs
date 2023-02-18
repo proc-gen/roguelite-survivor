@@ -5,6 +5,7 @@ using Box2D.NetStandard.Dynamics.Contacts;
 using Box2D.NetStandard.Dynamics.World;
 using Box2D.NetStandard.Dynamics.World.Callbacks;
 using RogueliteSurvivor.Components;
+using RogueliteSurvivor.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace RogueliteSurvivor.Physics
                 else if ((a.Has<Projectile>() && b.Has<Enemy>()) || (b.Has<Projectile>() && a.Has<Enemy>()))
                 {
                     Projectile p;
-                    ProjectileState state;
+                    EntityState state;
                     Damage damage;
                     Owner owner;
                     if (!a.TryGet(out p))
@@ -58,7 +59,7 @@ namespace RogueliteSurvivor.Physics
                         setProjectileDead(a, p);
                     }
 
-                    if (state == ProjectileState.Alive)
+                    if (state == EntityState.Alive)
                     {
                         damageEnemy(a, b, damage, owner);
                     }
@@ -94,13 +95,13 @@ namespace RogueliteSurvivor.Physics
 
         private void setEnemyHealthAndState(Entity entity, Enemy enemy, Damage damage, Owner owner)
         {
-            if (enemy.State == EnemyState.Alive)
+            if (enemy.State == EntityState.Alive)
             {
                 Health health = entity.Get<Health>();
                 health.Current -= damage.Amount;
                 if (health.Current < 1)
                 {
-                    enemy.State = EnemyState.Dead;
+                    enemy.State = EntityState.Dead;
                     entity.Set(enemy);
                     KillCount killCount = owner.Entity.Get<KillCount>();
                     killCount.Count++;
@@ -117,9 +118,9 @@ namespace RogueliteSurvivor.Physics
 
         private void setProjectileDead(Entity entity, Projectile projectile)
         {
-            if (projectile.State == ProjectileState.Alive)
+            if (projectile.State == EntityState.Alive)
             {
-                projectile.State = ProjectileState.Dead;
+                projectile.State = EntityState.Dead;
                 entity.Set(projectile);
             }
         }

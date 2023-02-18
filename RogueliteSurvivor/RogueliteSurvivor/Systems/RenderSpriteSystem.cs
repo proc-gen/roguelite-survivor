@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Arch.Core.Extensions;
+using RogueliteSurvivor.Constants;
 
 namespace RogueliteSurvivor.Systems
 {
@@ -32,11 +33,11 @@ namespace RogueliteSurvivor.Systems
                 bool alive = true;
                 if(entity.TryGet(out Enemy enemy))
                 {
-                    alive = enemy.State == EnemyState.Alive;
+                    alive = enemy.State == EntityState.Alive;
                 }
                 else if(entity.TryGet(out Projectile projectile)) 
                 {
-                    alive = projectile.State == ProjectileState.Alive;
+                    alive = projectile.State == EntityState.Alive;
                 }
 
                 if (alive && MathF.Abs(position.X) < offset.X && MathF.Abs(position.Y) < offset.Y)

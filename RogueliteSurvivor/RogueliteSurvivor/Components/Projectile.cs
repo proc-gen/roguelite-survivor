@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RogueliteSurvivor.Constants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,8 @@ using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Components
 {
-    public enum ProjectileState
-    {
-        Alive,
-        Dead
-    }
-
     public struct Projectile
     {
-        public ProjectileState State { get; set; }
+        public EntityState State { get; set; }
     }
 }

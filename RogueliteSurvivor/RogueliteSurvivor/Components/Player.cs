@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RogueliteSurvivor.Constants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace RogueliteSurvivor.Components
 {
     public struct Player
     {
+        public EntityState State { get; set; }
     }
 }
