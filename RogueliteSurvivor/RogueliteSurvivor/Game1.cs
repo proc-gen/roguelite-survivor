@@ -63,9 +63,13 @@ namespace RogueliteSurvivor
             LoadingScene loadingScene = new LoadingScene(_spriteBatch, Content, _graphics);
             loadingScene.LoadContent();
 
+            GameOverScene gameOverScene = new GameOverScene(_spriteBatch, Content, _graphics);
+            gameOverScene.LoadContent();
+
             scenes.Add("game", gameScene);
             scenes.Add("main-menu", mainMenu);
             scenes.Add("loading", loadingScene);
+            scenes.Add("game-over", gameOverScene);
         }
 
         protected override void Update(GameTime gameTime)
@@ -87,6 +91,8 @@ namespace RogueliteSurvivor
                     case "game":
                         break;
                     case "main-menu":
+                        break;
+                    case "game-over":
                         break;
                     case "loading":
                         Task.Run(() => scenes["game"].LoadContent());

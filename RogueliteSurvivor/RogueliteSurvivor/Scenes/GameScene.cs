@@ -114,11 +114,13 @@ namespace RogueliteSurvivor.Scenes
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
+                Loaded = false;
                 retVal = "main-menu";
             }
             else if(player.Get<Player>().State == EntityState.Dead)
             {
-                retVal = "main-menu";
+                Loaded = false;
+                retVal = "game-over";
             }
             else
             {
