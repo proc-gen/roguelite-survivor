@@ -22,7 +22,7 @@ namespace RogueliteSurvivor.Systems
                                 .WithAny<Player, Enemy>())
         { }
 
-        public void Update(GameTime gameTime) 
+        public void Update(GameTime gameTime, float totalElapsedTime) 
         {
             world.Query(in query, (in Entity entity, ref Position pos, ref Target target) =>
             {

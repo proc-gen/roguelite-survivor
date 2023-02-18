@@ -28,6 +28,8 @@ namespace RogueliteSurvivor.Scenes
         private Dictionary<string, Texture2D> textures;
         private Dictionary<string, SpriteFont> fonts;
 
+        private float totalGameTime = 0f;
+
         public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
         {
@@ -117,6 +119,8 @@ namespace RogueliteSurvivor.Scenes
                 BodyFactory.CreateCircularBody(player, 16, physicsWorld, body, 9999)
             );
 
+            totalGameTime = 0;
+
             Task.Delay(3000);
 
             Loaded = true;
@@ -138,9 +142,11 @@ namespace RogueliteSurvivor.Scenes
             }
             else
             {
+                totalGameTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
                 foreach (var system in updateSystems)
                 {
-                    system.Update(gameTime);
+                    system.Update(gameTime, totalGameTime);
                 }
             }
 
@@ -151,7 +157,7 @@ namespace RogueliteSurvivor.Scenes
         {
             foreach (var system in renderSystems)
             {
-                system.Render(gameTime, _spriteBatch, textures, player);
+                system.Render(gameTime, _spriteBatch, textures, player, totalGameTime);
             }
         }
     }

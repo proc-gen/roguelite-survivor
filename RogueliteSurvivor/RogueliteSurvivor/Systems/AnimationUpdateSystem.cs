@@ -17,7 +17,7 @@ namespace RogueliteSurvivor.Systems
         {
         }
 
-        public void Update(GameTime gameTime) 
+        public void Update(GameTime gameTime, float totalElapsedTime) 
         {
             world.Query(in query, (ref Animation anim) =>
             {

@@ -36,7 +36,7 @@ namespace RogueliteSurvivor.Systems
             random = new Random();
         }
 
-        public void Update(GameTime gameTime) 
+        public void Update(GameTime gameTime, float totalElapsedTime) 
         {
             int numEnemies = 0;
 

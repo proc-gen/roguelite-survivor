@@ -29,7 +29,7 @@ namespace RogueliteSurvivor.Systems
             this.physicsWorld = physicsWorld;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, float totalElapsedTime)
         {
             world.Query(in query, (in Entity entity, ref Position pos, ref Target target, ref AttackSpeed attackSpeed) =>
             {

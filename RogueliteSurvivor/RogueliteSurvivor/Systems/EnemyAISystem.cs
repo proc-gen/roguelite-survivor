@@ -17,7 +17,7 @@ namespace RogueliteSurvivor.Systems
                                 .WithAll<Enemy, Position, Velocity, Speed, Target>())
         { }
 
-        public void Update(GameTime gameTime) 
+        public void Update(GameTime gameTime, float totalElapsedTime) 
         {
             world.Query(in query, (ref Position pos, ref Velocity vel, ref Speed sp, ref Target target) =>
             {
