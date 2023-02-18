@@ -105,7 +105,7 @@ namespace RogueliteSurvivor.Systems
                 .Add("VampireBat", 10)
                 .Add("GhastlyBeholder", difficulty - 1)
                 .Add("GraveRevenant", difficulty - 2)
-                .Add("BloodLich", 99);//difficulty - 3);
+                .Add("BloodLich", difficulty - 3);
         }
     
         private void createEnemy(Position? player, Vector2 offset)
