@@ -39,19 +39,19 @@ namespace RogueliteSurvivor.Scenes
         {
             textures = new Dictionary<string, Texture2D>
             {
-                { "tiles", Content.Load<Texture2D>("Maps/Tiles") },
-                { "player", Content.Load<Texture2D>("Player/Animated_Mage_Character") },
-                { "vampire_bat", Content.Load<Texture2D>("Enemies/VampireBat") },
-                { "SmallFireball", Content.Load<Texture2D>("Spells/small-fireball") },
-                { "MediumFireball", Content.Load<Texture2D>("Spells/medium-fireball") },
-                { "LargeFireball", Content.Load<Texture2D>("Spells/large-fireball") },
-                { "StatBar", Content.Load<Texture2D>("Hud/StatBar") },
-                { "HealthBar", Content.Load<Texture2D>("Hud/HealthBar") }
+                { "tiles", Content.Load<Texture2D>(Path.Combine("Maps", "Tiles")) },
+                { "player", Content.Load<Texture2D>(Path.Combine("Player", "Animated_Mage_Character")) },
+                { "vampire_bat", Content.Load<Texture2D>(Path.Combine("Enemies", "VampireBat")) },
+                { "SmallFireball", Content.Load<Texture2D>(Path.Combine("Spells", "small-fireball")) },
+                { "MediumFireball", Content.Load<Texture2D>(Path.Combine("Spells", "medium-fireball")) },
+                { "LargeFireball", Content.Load<Texture2D>(Path.Combine("Spells", "large-fireball")) },
+                { "StatBar", Content.Load<Texture2D>(Path.Combine("Hud", "StatBar")) },
+                { "HealthBar", Content.Load<Texture2D>(Path.Combine("Hud", "HealthBar")) }
             };
 
             fonts = new Dictionary<string, SpriteFont>()
             {
-                { "Font", Content.Load<SpriteFont>("Fonts/Font") },
+                { "Font", Content.Load<SpriteFont>(Path.Combine("Fonts", "Font")) },
             };
 
             if(world.CountEntities(new QueryDescription()) > 0)
