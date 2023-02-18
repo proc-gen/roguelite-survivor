@@ -96,7 +96,7 @@ namespace RogueliteSurvivor.Scenes
             };
 
             var mapEntity = world.Create<Map, MapInfo>();
-            mapEntity.SetRange(new Map(), new MapInfo(Path.Combine(Content.RootDirectory, "Maps\\\\Demo.tmx"), Content.RootDirectory + "\\\\Maps\\\\", physicsWorld, mapEntity));
+            mapEntity.SetRange(new Map(), new MapInfo(Path.Combine(Content.RootDirectory, "Maps", "Demo.tmx"), Path.Combine(Content.RootDirectory, "Maps"), physicsWorld, mapEntity));
 
             var body = new Box2D.NetStandard.Dynamics.Bodies.BodyDef();
             body.position = new System.Numerics.Vector2(384, 384);
