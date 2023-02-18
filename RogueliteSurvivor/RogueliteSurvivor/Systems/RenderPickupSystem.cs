@@ -34,11 +34,11 @@ namespace RogueliteSurvivor.Systems
                 {
                     spriteBatch.Draw(
                         textures["pickups"],
-                        position + offset,
+                        position + offset + (Vector2.UnitY * sprite.Current),
                         getSourceRectangle(sprite.Type),
                         Color.White,
                         0f,
-                        new Vector2(8, 8 + sprite.Current),
+                        new Vector2(8, 8),
                         1f,
                         SpriteEffects.None,
                         0

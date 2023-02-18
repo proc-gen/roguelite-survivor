@@ -11,15 +11,21 @@ namespace RogueliteSurvivor.Components
     {
         public PickupType Type { get; set; }
         public float PickupAmount { get; set; }
-        public float Max { get; private set; }
-        public float Min { get; private set; }
-        public float Current { get; set; }
+        public int Max { get; private set; }
+        public int Min { get; private set; }
+        public int Current { get; set; }
+        public int Increment { get; set; }
+        public float Count { get; set; }
+        public float MaxCount { get; set; }
 
         public PickupSprite()
         {
-            Max = 5f;
-            Min = -5f;
+            Max = 8;
+            Min = -8;
             Current = 0;
+            Increment = 1;
+            Count = 0;
+            MaxCount = .33f;
         }
     }
 }

@@ -9,5 +9,6 @@ namespace RogueliteSurvivor.Components
     public struct Damage
     {
         public int Amount { get; set; }
+        public int BaseAmount { get; set; }
     }
 }

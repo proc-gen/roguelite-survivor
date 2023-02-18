@@ -156,7 +156,7 @@ namespace RogueliteSurvivor.Systems
                         new SpriteSheet(textures["VampireBat"], "VampireBat", 4, 2),
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
-                        new Damage() { Amount = 2 },
+                        new Damage() { Amount = 2, BaseAmount = 2 },
                         new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
                         BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
                         createPickupForEnemy()
@@ -180,7 +180,7 @@ namespace RogueliteSurvivor.Systems
                         new SpriteSheet(textures["GhastlyBeholder"], "GhastlyBeholder", 4, 2),
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
-                        new Damage() { Amount = 2 },
+                        new Damage() { Amount = 2, BaseAmount = 2 },
                         new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
                         BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
                         createPickupForEnemy()
@@ -204,7 +204,7 @@ namespace RogueliteSurvivor.Systems
                         new SpriteSheet(textures["GraveRevenant"], "GraveRevenant", 4, 2),
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
-                        new Damage() { Amount = 2 },
+                        new Damage() { Amount = 2, BaseAmount = 2 },
                         new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
                         BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
                         createPickupForEnemy()
@@ -228,7 +228,7 @@ namespace RogueliteSurvivor.Systems
                         new SpriteSheet(textures["BloodLich"], "BloodLich", 10, 2),
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
-                        new Damage() { Amount = 2 },
+                        new Damage() { Amount = 2, BaseAmount = 2 },
                         new AttackSpeed() { BaseAttackSpeed = 0.5f, CurrentAttackSpeed = 0.5f, Cooldown = 0 },
                         BodyFactory.CreateCircularBody(entity, 32, physicsWorld, body),
                         createPickupForEnemy()

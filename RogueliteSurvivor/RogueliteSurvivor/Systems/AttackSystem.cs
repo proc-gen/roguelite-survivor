@@ -38,7 +38,7 @@ namespace RogueliteSurvivor.Systems
                 if (entity.TryGet(out Spell spell))
                 {
                     if (attackSpeed.Cooldown > attackSpeed.CurrentAttackSpeed
-                            && target.Entity.Has<Position>())
+                            && target.Entity.IsAlive() && target.Entity.Has<Position>())
                     {
                         attackSpeed.Cooldown -= attackSpeed.CurrentAttackSpeed;
 
@@ -58,7 +58,7 @@ namespace RogueliteSurvivor.Systems
                             new Speed() { speed = 32000f },
                             new Animation(0, 59, 1 / 60f, 1),
                             new SpriteSheet(textures[spell.CurrentSpell.ToString()], spell.CurrentSpell.ToString(), 60, 1, MathF.Atan2(targetPosition.Y - pos.XY.Y, targetPosition.X - pos.XY.X), 0.5f),
-                            new Damage() { Amount = 5 },
+                            new Damage() { Amount = spell.CurrentDamage, BaseAmount = spell.CurrentDamage },
                             new Owner() { Entity = entity },
                             BodyFactory.CreateCircularBody(projectile, 16, physicsWorld, body)
                         );
