@@ -162,7 +162,23 @@ namespace RogueliteSurvivor.Scenes
 
         public GameSettings GetGameSettings()
         {
-            return new GameSettings() { StartingSpell = selectedSpell };
+            var gameSettings = new GameSettings();
+            gameSettings.StartingSpell = selectedSpell;
+
+            switch (selectedSpell)
+            {
+                case AvailableSpells.SmallFireball:
+                    gameSettings.PlayerTexture = "player";
+                    break;
+                case AvailableSpells.IceShard:
+                    gameSettings.PlayerTexture = "player_blue";
+                    break;
+                case AvailableSpells.LightningBlast:
+                    gameSettings.PlayerTexture = "player_yellow";
+                    break;
+            }
+
+            return gameSettings;
         }
     }
 }

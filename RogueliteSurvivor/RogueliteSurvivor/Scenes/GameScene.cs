@@ -51,6 +51,8 @@ namespace RogueliteSurvivor.Scenes
             {
                 { "tiles", Content.Load<Texture2D>(Path.Combine("Maps", "Tiles")) },
                 { "player", Content.Load<Texture2D>(Path.Combine("Player", "Animated_Mage_Character")) },
+                { "player_blue", Content.Load<Texture2D>(Path.Combine("Player", "Animated_Mage_Character_blue")) },
+                { "player_yellow", Content.Load<Texture2D>(Path.Combine("Player", "Animated_Mage_Character_yellow")) },
                 { "VampireBat", Content.Load<Texture2D>(Path.Combine("Enemies", "VampireBat")) },
                 { "GhastlyBeholder", Content.Load<Texture2D>(Path.Combine("Enemies", "GhastlyBeholderIdleSide")) },
                 { "GraveRevenant", Content.Load<Texture2D>(Path.Combine("Enemies", "GraveRevenantIdleSide")) },
@@ -128,7 +130,7 @@ namespace RogueliteSurvivor.Scenes
                 new Velocity() { Vector = Vector2.Zero },
                 new Speed() { speed = 16000f },
                 new Animation(1, 1, .1f, 4),
-                new SpriteSheet(textures["player"], "player", 3, 8),
+                new SpriteSheet(textures[gameSettings.PlayerTexture], gameSettings.PlayerTexture, 3, 8),
                 new Target(),
                 new Spell() { CurrentSpell = gameSettings.StartingSpell, CurrentDamage = 5, BaseDamage = 5 },
                 new AttackSpeed() { BaseAttacksPerSecond = 2f, CurrentAttacksPerSecond = 2f, Cooldown = 0f },

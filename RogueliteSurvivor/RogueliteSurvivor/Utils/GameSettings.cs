@@ -10,5 +10,6 @@ namespace RogueliteSurvivor.Utils
     public struct GameSettings
     {
         public AvailableSpells StartingSpell { get; set; }
+        public string PlayerTexture { get; set; }
     }
 }
