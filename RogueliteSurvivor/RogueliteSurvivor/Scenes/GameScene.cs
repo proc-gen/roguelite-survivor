@@ -29,7 +29,9 @@ namespace RogueliteSurvivor.Scenes
         private Dictionary<string, SpriteFont> fonts;
 
         private float totalGameTime = 0f;
+
         private GameState gameState;
+        private float stateChangeTime = .11f;
 
         public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
@@ -138,9 +140,10 @@ namespace RogueliteSurvivor.Scenes
         {
             string retVal = string.Empty;
 
-            if(GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P))
+            if(stateChangeTime > .1f && (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P)))
             {
                 gameState = gameState == GameState.Running ? GameState.Paused : GameState.Running;
+                stateChangeTime = 0f;
             }
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
@@ -163,6 +166,7 @@ namespace RogueliteSurvivor.Scenes
                         system.Update(gameTime, totalGameTime);
                     }
                 }
+                stateChangeTime += (float)gameTime.ElapsedGameTime.TotalSeconds;                
             }
 
             return retVal;

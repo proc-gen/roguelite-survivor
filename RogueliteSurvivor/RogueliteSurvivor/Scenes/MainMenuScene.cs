@@ -44,7 +44,7 @@ namespace RogueliteSurvivor.Scenes
             if (!readyForInput)
             {
                 counter += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (counter > 0.5f)
+                if (counter > 0.1f)
                 {
                     counter = 0f;
                     readyForInput = true;
