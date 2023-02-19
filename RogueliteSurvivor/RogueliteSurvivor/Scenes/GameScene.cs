@@ -51,6 +51,8 @@ namespace RogueliteSurvivor.Scenes
                 { "SmallFireball", Content.Load<Texture2D>(Path.Combine("Spells", "small-fireball")) },
                 { "MediumFireball", Content.Load<Texture2D>(Path.Combine("Spells", "medium-fireball")) },
                 { "LargeFireball", Content.Load<Texture2D>(Path.Combine("Spells", "large-fireball")) },
+                { "IceShard", Content.Load<Texture2D>(Path.Combine("Spells", "ice-shard")) },
+                { "LightningBlast", Content.Load<Texture2D>(Path.Combine("Spells", "lightning-blast")) },
                 { "StatBar", Content.Load<Texture2D>(Path.Combine("Hud", "StatBar")) },
                 { "HealthBar", Content.Load<Texture2D>(Path.Combine("Hud", "HealthBar")) },
                 { "pickups", Content.Load<Texture2D>(Path.Combine("Pickups", "player-pickups")) }
@@ -121,7 +123,7 @@ namespace RogueliteSurvivor.Scenes
                 new Animation(1, 1, .1f, 4),
                 new SpriteSheet(textures["player"], "player", 3, 8),
                 new Target(),
-                new Spell() { CurrentSpell = AvailableSpells.SmallFireball, CurrentDamage = 5, BaseDamage = 5 },
+                new Spell() { CurrentSpell = AvailableSpells.LightningBlast, CurrentDamage = 5, BaseDamage = 5 },
                 new AttackSpeed() { BaseAttacksPerSecond = 2f, CurrentAttacksPerSecond = 2f, Cooldown = 0f },
                 new Health() { Current = 100, Max = 100 },
                 new KillCount() { Count = 0 },

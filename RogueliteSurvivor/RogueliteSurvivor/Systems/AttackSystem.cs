@@ -10,7 +10,6 @@ using RogueliteSurvivor.Physics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,7 +43,7 @@ namespace RogueliteSurvivor.Systems
 
                         var body = new BodyDef();
                         var targetPosition = target.Entity.Get<Position>().XY;
-                        var velocityVector = Microsoft.Xna.Framework.Vector2.Normalize(targetPosition - pos.XY);
+                        var velocityVector = Vector2.Normalize(targetPosition - pos.XY);
                         var position = pos.XY + velocityVector;
                         body.position = new System.Numerics.Vector2(position.X, position.Y);
                         body.fixedRotation = true;
@@ -56,8 +55,8 @@ namespace RogueliteSurvivor.Systems
                             new Position() { XY = new Microsoft.Xna.Framework.Vector2(body.position.X, body.position.Y) },
                             new Velocity() { Vector = velocityVector * 32000f * (float)gameTime.ElapsedGameTime.TotalSeconds },
                             new Speed() { speed = 32000f },
-                            new Animation(0, 59, 1 / 60f, 1),
-                            new SpriteSheet(textures[spell.CurrentSpell.ToString()], spell.CurrentSpell.ToString(), 60, 1, MathF.Atan2(targetPosition.Y - pos.XY.Y, targetPosition.X - pos.XY.X), 0.5f),
+                            getProjectileAnimation(spell.CurrentSpell),
+                            getProjectileSpriteSheet(spell.CurrentSpell, pos.XY, targetPosition),
                             new Damage() { Amount = spell.CurrentDamage, BaseAmount = spell.CurrentDamage },
                             new Owner() { Entity = entity },
                             BodyFactory.CreateCircularBody(projectile, 16, physicsWorld, body)
@@ -65,6 +64,54 @@ namespace RogueliteSurvivor.Systems
                     }
                 }
             });
+        }
+
+        private Animation getProjectileAnimation(AvailableSpells currentSpell)
+        {
+            Animation? animation = null;
+            switch (currentSpell)
+            {
+                case AvailableSpells.SmallFireball:
+                    animation = new Animation(0, 59, .1f, 1);
+                    break;
+                case AvailableSpells.MediumFireball:
+                    animation = new Animation(0, 59, .1f, 1);
+                    break;
+                case AvailableSpells.LargeFireball:
+                    animation = new Animation(0, 59, .1f, 1);
+                    break;
+                case AvailableSpells.IceShard:
+                    animation = new Animation(0, 9, .1f, 1);
+                    break;
+                case AvailableSpells.LightningBlast:
+                    animation = new Animation(0, 4, .1f, 1);
+                    break;
+            }
+            return animation.Value;
+        }
+
+        private SpriteSheet getProjectileSpriteSheet(AvailableSpells currentSpell, Vector2 currentPosition, Vector2 targetPosition)
+        {
+            SpriteSheet? spriteSheet = null;
+            switch (currentSpell)
+            {
+                case AvailableSpells.SmallFireball:
+                    spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 60, 1, MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X), .5f);
+                    break;
+                case AvailableSpells.MediumFireball:
+                    spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 60, 1, MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X), .5f);
+                    break;
+                case AvailableSpells.LargeFireball:
+                    spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 60, 1, MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X), .5f);
+                    break;
+                case AvailableSpells.IceShard:
+                    spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 10, 1, MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X), .5f);
+                    break;
+                case AvailableSpells.LightningBlast:
+                    spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 5, 1, MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X), .5f);
+                    break;
+            }
+            return spriteSheet.Value;
         }
     }
 }

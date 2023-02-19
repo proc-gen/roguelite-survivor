@@ -11,6 +11,8 @@ namespace RogueliteSurvivor.Components
         SmallFireball,
         MediumFireball,
         LargeFireball,
+        IceShard,
+        LightningBlast,
     }
 
     public struct Spell
