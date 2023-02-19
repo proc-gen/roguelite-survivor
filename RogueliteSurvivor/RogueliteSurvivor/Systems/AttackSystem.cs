@@ -52,7 +52,7 @@ namespace RogueliteSurvivor.Systems
 
                         projectile.SetRange(
                             new Projectile() { State = EntityState.Alive },
-                            new Position() { XY = new Microsoft.Xna.Framework.Vector2(body.position.X, body.position.Y) },
+                            new Position() { XY = new Vector2(body.position.X, body.position.Y) },
                             new Velocity() { Vector = velocityVector * 32000f * (float)gameTime.ElapsedGameTime.TotalSeconds },
                             new Speed() { speed = 32000f },
                             getProjectileAnimation(spell.CurrentSpell),

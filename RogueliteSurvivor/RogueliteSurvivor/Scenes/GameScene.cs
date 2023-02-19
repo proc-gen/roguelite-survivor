@@ -9,6 +9,7 @@ using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Physics;
 using RogueliteSurvivor.Systems;
+using RogueliteSurvivor.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,10 +33,16 @@ namespace RogueliteSurvivor.Scenes
 
         private GameState gameState;
         private float stateChangeTime = .11f;
+        private GameSettings gameSettings;
 
         public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
         {
+        }
+
+        public void SetGameSettings(GameSettings gameSettings)
+        {
+            this.gameSettings = gameSettings;
         }
 
         public override void LoadContent()
@@ -123,7 +130,7 @@ namespace RogueliteSurvivor.Scenes
                 new Animation(1, 1, .1f, 4),
                 new SpriteSheet(textures["player"], "player", 3, 8),
                 new Target(),
-                new Spell() { CurrentSpell = AvailableSpells.LightningBlast, CurrentDamage = 5, BaseDamage = 5 },
+                new Spell() { CurrentSpell = gameSettings.StartingSpell, CurrentDamage = 5, BaseDamage = 5 },
                 new AttackSpeed() { BaseAttacksPerSecond = 2f, CurrentAttacksPerSecond = 2f, Cooldown = 0f },
                 new Health() { Current = 100, Max = 100 },
                 new KillCount() { Count = 0 },

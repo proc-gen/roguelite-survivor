@@ -102,7 +102,11 @@ namespace RogueliteSurvivor
                     case "game-over":
                         break;
                     case "loading":
-                        Task.Run(() => scenes["game"].LoadContent());
+                        Task.Run(() => 
+                            {
+                                ((GameScene)scenes["game"]).SetGameSettings(((MainMenuScene)scenes["main-menu"]).GetGameSettings());
+                                scenes["game"].LoadContent(); 
+                            });
                         break;
                     case "exit":
                         Exit();
