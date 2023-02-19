@@ -51,12 +51,12 @@ namespace RogueliteSurvivor.Systems
                             vel.Vector += Vector2.UnitX;
                         }
 
-                        vel.Vector = Vector2.Normalize(vel.Vector) * sp.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        vel.Vector = Vector2.Normalize(vel.Vector) * sp.speed;
                     }
                 }
                 else if(gState.ThumbSticks.Left != Vector2.Zero)
                 {
-                    vel.Vector = Vector2.Normalize(gState.ThumbSticks.Left) * InverseY * sp.speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    vel.Vector = Vector2.Normalize(gState.ThumbSticks.Left) * InverseY * sp.speed;
                 }
             });
         }

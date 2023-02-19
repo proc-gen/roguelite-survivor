@@ -53,13 +53,13 @@ namespace RogueliteSurvivor.Systems
                         projectile.SetRange(
                             new Projectile() { State = EntityState.Alive },
                             new Position() { XY = new Vector2(body.position.X, body.position.Y) },
-                            new Velocity() { Vector = velocityVector * 32000f * (float)gameTime.ElapsedGameTime.TotalSeconds },
-                            new Speed() { speed = 32000f },
+                            new Velocity() { Vector = velocityVector * spell.CurrentProjectileSpeed},
+                            new Speed() { speed = spell.CurrentProjectileSpeed },
                             getProjectileAnimation(spell.CurrentSpell),
                             getProjectileSpriteSheet(spell.CurrentSpell, pos.XY, targetPosition),
                             new Damage() { Amount = spell.CurrentDamage, BaseAmount = spell.CurrentDamage },
                             new Owner() { Entity = entity },
-                            BodyFactory.CreateCircularBody(projectile, 16, physicsWorld, body)
+                            BodyFactory.CreateCircularBody(projectile, 16, physicsWorld, body, .1f)
                         );
                     }
                 }

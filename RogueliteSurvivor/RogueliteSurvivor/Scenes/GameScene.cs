@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RogueliteSurvivor.ComponentFactories;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Physics;
@@ -132,11 +133,11 @@ namespace RogueliteSurvivor.Scenes
                 new Animation(1, 1, .1f, 4),
                 new SpriteSheet(textures[gameSettings.PlayerTexture], gameSettings.PlayerTexture, 3, 8),
                 new Target(),
-                new Spell() { CurrentSpell = gameSettings.StartingSpell, CurrentDamage = 5, BaseDamage = 5 },
+                SpellFactory.CreateSpell(gameSettings.StartingSpell),
                 new AttackSpeed() { BaseAttacksPerSecond = 2f, CurrentAttacksPerSecond = 2f, Cooldown = 0f },
                 new Health() { Current = 100, Max = 100 },
                 new KillCount() { Count = 0 },
-                BodyFactory.CreateCircularBody(player, 16, physicsWorld, body, 9999)
+                BodyFactory.CreateCircularBody(player, 16, physicsWorld, body, 99)
             );
 
             totalGameTime = 0;

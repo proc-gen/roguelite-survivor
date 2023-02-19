@@ -27,7 +27,7 @@ namespace RogueliteSurvivor.Systems
         {
             world.Query(in query, (in Entity entity, ref Position pos, ref Velocity vel, ref Body body) =>
             {
-                if(float.IsNaN(vel.VectorPhysics.X) || float.IsNaN(vel.VectorPhysics.X))
+                if(float.IsNaN(vel.VectorPhysics.X) || float.IsNaN(vel.VectorPhysics.Y))
                 {
                     vel.Vector = Vector2.Zero;
                 }

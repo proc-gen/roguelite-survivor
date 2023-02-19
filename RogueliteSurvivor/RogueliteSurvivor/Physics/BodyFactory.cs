@@ -12,12 +12,13 @@ namespace RogueliteSurvivor.Physics
 {
     public static class BodyFactory
     {
-        public static Body CreateCircularBody(Entity entity, int width, Box2D.NetStandard.Dynamics.World.World physicsWorld, BodyDef bodyDef, float density = 1)
+        public static Body CreateCircularBody(Entity entity, int width, Box2D.NetStandard.Dynamics.World.World physicsWorld, BodyDef bodyDef, float density = 1f)
         {
-            var bodyShape = new Box2D.NetStandard.Dynamics.Fixtures.FixtureDef();
+            var bodyShape = new FixtureDef();
             bodyShape.shape = new CircleShape() { Radius = width / 2 };
             bodyShape.density = density;
             bodyShape.friction = 0.0f;
+            bodyShape.isSensor = density < 1f;
             bodyDef.type = BodyType.Dynamic;
 
             var physicsBody = physicsWorld.CreateBody(bodyDef);
