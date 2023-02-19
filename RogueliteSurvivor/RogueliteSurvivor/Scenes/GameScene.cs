@@ -29,6 +29,7 @@ namespace RogueliteSurvivor.Scenes
         private Dictionary<string, SpriteFont> fonts;
 
         private float totalGameTime = 0f;
+        private GameState gameState;
 
         public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
@@ -126,6 +127,7 @@ namespace RogueliteSurvivor.Scenes
             );
 
             totalGameTime = 0;
+            gameState = GameState.Running;
 
             Task.Delay(3000);
 
@@ -136,6 +138,10 @@ namespace RogueliteSurvivor.Scenes
         {
             string retVal = string.Empty;
 
+            if(GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P))
+            {
+                gameState = gameState == GameState.Running ? GameState.Paused : GameState.Running;
+            }
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Loaded = false;
@@ -148,11 +154,14 @@ namespace RogueliteSurvivor.Scenes
             }
             else
             {
-                totalGameTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                foreach (var system in updateSystems)
+                if (gameState == GameState.Running)
                 {
-                    system.Update(gameTime, totalGameTime);
+                    totalGameTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    foreach (var system in updateSystems)
+                    {
+                        system.Update(gameTime, totalGameTime);
+                    }
                 }
             }
 
@@ -163,7 +172,7 @@ namespace RogueliteSurvivor.Scenes
         {
             foreach (var system in renderSystems)
             {
-                system.Render(gameTime, _spriteBatch, textures, player, totalGameTime);
+                system.Render(gameTime, _spriteBatch, textures, player, totalGameTime, gameState);
             }
         }
     }

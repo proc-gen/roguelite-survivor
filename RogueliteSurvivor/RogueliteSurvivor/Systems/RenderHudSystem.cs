@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Arch.Core.Extensions;
+using RogueliteSurvivor.Constants;
 
 namespace RogueliteSurvivor.Systems
 {
@@ -27,7 +28,7 @@ namespace RogueliteSurvivor.Systems
         static Vector2 TimeLocation = new Vector2(-100, 10);
         const int Increment = 64;
 
-        public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player, float totalElapsedTime)
+        public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player, float totalElapsedTime, GameState gameState)
         {
             int counter = 0;
             world.Query(in query, (ref Health health, ref KillCount killCount) =>
@@ -79,6 +80,16 @@ namespace RogueliteSurvivor.Systems
                     TimeLocation + Vector2.UnitX * (graphics.PreferredBackBufferWidth / 3),
                     Color.White
                 );
+
+            if(gameState == GameState.Paused)
+            {
+                spriteBatch.DrawString(
+                    fonts["Font"],
+                    "Game Paused",
+                    new Vector2(graphics.PreferredBackBufferWidth / 6 - 50, graphics.PreferredBackBufferHeight / 6),
+                    Color.White
+                );
+            }
         }
     }
 }
