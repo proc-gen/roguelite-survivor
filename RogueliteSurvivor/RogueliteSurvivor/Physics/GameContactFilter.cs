@@ -20,7 +20,11 @@ namespace RogueliteSurvivor.Physics
             Entity a = (Entity)fixtureA.Body.UserData;
             Entity b = (Entity)fixtureB.Body.UserData;
 
-            if (a.Has<Enemy>() && b.Has<Enemy>())
+            if (a.Has<Map>() || b.Has<Map>())
+            {
+                retVal = true;
+            }
+            else if (a.Has<Enemy>() && b.Has<Enemy>())
             {
                 retVal = true;
             }
