@@ -2,6 +2,7 @@
 using Box2D.NetStandard.Collision.Shapes;
 using Box2D.NetStandard.Dynamics.Bodies;
 using Microsoft.Xna.Framework;
+using RogueliteSurvivor.Constants;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,13 +41,13 @@ namespace RogueliteSurvivor.Components
                             int tileY = y * Map.TileHeight + Map.TileHeight / 2;
 
                             var body = new BodyDef();
-                            body.position = new System.Numerics.Vector2(tileX, tileY);
+                            body.position = new System.Numerics.Vector2(tileX, tileY) / PhysicsConstants.PhysicsToPixelsRatio;
                             body.fixedRotation = true;
                             body.type = BodyType.Static;
 
 
                             var bodyShape = new Box2D.NetStandard.Dynamics.Fixtures.FixtureDef();
-                            bodyShape.shape = new PolygonShape(Map.TileWidth / 2, Map.TileHeight / 2);
+                            bodyShape.shape = new PolygonShape(Map.TileWidth / 2f / PhysicsConstants.PhysicsToPixelsRatio, Map.TileHeight / 2f / PhysicsConstants.PhysicsToPixelsRatio);
                             bodyShape.density = 1;
                             bodyShape.friction = 0.0f;
 

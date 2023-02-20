@@ -3,6 +3,7 @@ using Arch.Core.Extensions;
 using Box2D.NetStandard.Dynamics.Bodies;
 using Microsoft.Xna.Framework;
 using RogueliteSurvivor.Components;
+using RogueliteSurvivor.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace RogueliteSurvivor.Systems
                 {
                     vel.Vector = Vector2.Zero;
                 }
-                body.SetLinearVelocity(vel.VectorPhysics);
+                body.SetLinearVelocity(vel.VectorPhysics / PhysicsConstants.PhysicsToPixelsRatio);
             });
 
             physicsWorld.Step(1/60f, 8, 3);
@@ -39,7 +40,7 @@ namespace RogueliteSurvivor.Systems
             world.Query(in query, (in Entity entity, ref Position pos, ref Velocity vel, ref Body body) =>
             {
                 var position = body.GetPosition();
-                pos.XY = new Vector2(position.X, position.Y);
+                pos.XY = new Vector2(position.X, position.Y) * PhysicsConstants.PhysicsToPixelsRatio;
             });
 
             physicsWorld.ClearForces();

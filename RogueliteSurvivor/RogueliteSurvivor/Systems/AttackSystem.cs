@@ -45,7 +45,7 @@ namespace RogueliteSurvivor.Systems
                         var targetPosition = target.Entity.Get<Position>().XY;
                         var velocityVector = Vector2.Normalize(targetPosition - pos.XY);
                         var position = pos.XY + velocityVector;
-                        body.position = new System.Numerics.Vector2(position.X, position.Y);
+                        body.position = new System.Numerics.Vector2(position.X, position.Y) / PhysicsConstants.PhysicsToPixelsRatio;
                         body.fixedRotation = true;
 
                         var projectile = world.Create<Projectile, Position, Velocity, Speed, Animation, SpriteSheet, Damage, Owner, Body>();

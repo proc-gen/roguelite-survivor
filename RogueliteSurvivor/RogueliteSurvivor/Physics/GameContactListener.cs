@@ -98,7 +98,7 @@ namespace RogueliteSurvivor.Physics
             if (enemy.State == EntityState.Alive)
             {
                 Health health = entity.Get<Health>();
-                health.Current -= damage.Amount;
+                health.Current -= (int)damage.Amount;
                 if (health.Current < 1)
                 {
                     enemy.State = EntityState.ReadyToDie;
@@ -146,7 +146,7 @@ namespace RogueliteSurvivor.Physics
                 attackSpeed.Cooldown -= attackSpeed.CurrentAttackSpeed;
                 Health health = entity.Get<Health>();
                 Damage damage = other.Get<Damage>();
-                health.Current -= damage.Amount;
+                health.Current -= (int)damage.Amount;
                 Animation anim = entity.Get<Animation>();
                 anim.Overlay = Microsoft.Xna.Framework.Color.Red;
                 

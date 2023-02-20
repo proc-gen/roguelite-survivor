@@ -142,7 +142,7 @@ namespace RogueliteSurvivor.Systems
             var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body, Pickup>();
 
             var body = new BodyDef();
-            body.position = getSpawnPosition(player.Value.XY, offset);
+            body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
 
             entity.SetRange(
@@ -166,14 +166,14 @@ namespace RogueliteSurvivor.Systems
             var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body, Pickup>();
 
             var body = new BodyDef();
-            body.position = getSpawnPosition(player.Value.XY, offset);
+            body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
 
             entity.SetRange(
                         new Enemy() { State = EntityState.Alive },
                         new Position() { XY = new Vector2(body.position.X, body.position.Y) },
                         new Velocity() { Vector = Vector2.Zero },
-                        new Speed() { speed = 100f },
+                        new Speed() { speed = 50f },
                         new Animation(0, 3, .1f, 2),
                         new SpriteSheet(textures["GhastlyBeholder"], "GhastlyBeholder", 4, 2),
                         new Target(),
@@ -190,14 +190,14 @@ namespace RogueliteSurvivor.Systems
             var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body, Pickup>();
 
             var body = new BodyDef();
-            body.position = getSpawnPosition(player.Value.XY, offset);
+            body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
 
             entity.SetRange(
                         new Enemy() { State = EntityState.Alive },
                         new Position() { XY = new Vector2(body.position.X, body.position.Y) },
                         new Velocity() { Vector = Vector2.Zero },
-                        new Speed() { speed = 25f },
+                        new Speed() { speed = 50f },
                         new Animation(0, 3, .1f, 2),
                         new SpriteSheet(textures["GraveRevenant"], "GraveRevenant", 4, 2),
                         new Target(),
@@ -214,19 +214,19 @@ namespace RogueliteSurvivor.Systems
             var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body, Pickup>();
 
             var body = new BodyDef();
-            body.position = getSpawnPosition(player.Value.XY, offset);
+            body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
 
             entity.SetRange(
                         new Enemy() { State = EntityState.Alive },
                         new Position() { XY = new Vector2(body.position.X, body.position.Y) },
                         new Velocity() { Vector = Vector2.Zero },
-                        new Speed() { speed = 5f },
+                        new Speed() { speed = 25f },
                         new Animation(0, 9, .1f, 2),
                         new SpriteSheet(textures["BloodLich"], "BloodLich", 10, 2),
                         new Target(),
-                        new Health() { Current = 10, Max = 10 },
-                        new Damage() { Amount = 2, BaseAmount = 2 },
+                        new Health() { Current = 100, Max = 100 },
+                        new Damage() { Amount = 10, BaseAmount = 10 },
                         new AttackSpeed() { BaseAttacksPerSecond = 1f, CurrentAttacksPerSecond = 1f, Cooldown = 0 },
                         BodyFactory.CreateCircularBody(entity, 32, physicsWorld, body),
                         createPickupForEnemy()
@@ -243,10 +243,10 @@ namespace RogueliteSurvivor.Systems
                     pickup.PickupAmount = .1f;
                     break;
                 case PickupType.Damage:
-                    pickup.PickupAmount = 1f;
+                    pickup.PickupAmount = .25f;
                     break;
                 case PickupType.MoveSpeed:
-                    pickup.PickupAmount = 5000f;
+                    pickup.PickupAmount = 5f;
                     break;
                 case PickupType.Health:
                     pickup.PickupAmount = 5f;

@@ -51,7 +51,7 @@ namespace RogueliteSurvivor.Systems
                             break;
                         case PickupType.Damage:
                             var spell = player.Value.Get<Spell>();
-                            spell.CurrentDamage += (int)sprite.PickupAmount;
+                            spell.CurrentDamage += sprite.PickupAmount * spell.BaseDamage;
                             player.Value.Set(spell);
                             world.Destroy(entity);
                             break;

@@ -31,7 +31,6 @@ namespace RogueliteSurvivor.Systems
             {
                 if(projectile.State == EntityState.Dead)
                 {
-                    physicsWorld.DestroyBody(body);
                     world.Destroy(entity);
                 }
             });

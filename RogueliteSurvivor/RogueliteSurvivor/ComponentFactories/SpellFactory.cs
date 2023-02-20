@@ -18,15 +18,15 @@ namespace RogueliteSurvivor.ComponentFactories
             {
                 case Spells.Fireball:
                     spell.BaseDamage = spell.CurrentDamage = 8;
-                    spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 24000f;
+                    spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 200f;
                     break;
                 case Spells.IceShard:
                     spell.BaseDamage = spell.CurrentDamage = 5;
-                    spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 48000f;
+                    spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 300f;
                     break;
                 case Spells.LightningBlast:
                     spell.BaseDamage = spell.CurrentDamage = 3;
-                    spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 144000f;
+                    spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 400f;
                     break;
             }
 

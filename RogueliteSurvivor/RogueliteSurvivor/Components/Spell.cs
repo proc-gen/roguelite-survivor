@@ -10,8 +10,8 @@ namespace RogueliteSurvivor.Components
     public struct Spell
     {
         public Spells CurrentSpell { get; set; } 
-        public int BaseDamage { get; set; }
-        public int CurrentDamage { get; set; }
+        public float BaseDamage { get; set; }
+        public float CurrentDamage { get; set; }
         public float BaseProjectileSpeed { get; set; }
         public float CurrentProjectileSpeed { get; set; }
     }

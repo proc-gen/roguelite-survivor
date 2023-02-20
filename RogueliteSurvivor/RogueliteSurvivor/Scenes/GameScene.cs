@@ -142,7 +142,7 @@ namespace RogueliteSurvivor.Scenes
             mapEntity.SetRange(new Map(), new MapInfo(Path.Combine(Content.RootDirectory, "Maps", "Demo.tmx"), Path.Combine(Content.RootDirectory, "Maps"), physicsWorld, mapEntity));
 
             var body = new Box2D.NetStandard.Dynamics.Bodies.BodyDef();
-            body.position = new System.Numerics.Vector2(384, 384);
+            body.position = new System.Numerics.Vector2(384, 384) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
 
             player = world.Create<Player, Position, Velocity, Speed, Animation, SpriteSheet, Target, Spell, AttackSpeed, Health, KillCount, Body>();
@@ -151,7 +151,7 @@ namespace RogueliteSurvivor.Scenes
                 new Player() { State = EntityState.Alive },
                 new Position() { XY = new Vector2(384, 384) },
                 new Velocity() { Vector = Vector2.Zero },
-                new Speed() { speed = 16000f },
+                new Speed() { speed = 100f },
                 new Animation(1, 1, .1f, 4),
                 new SpriteSheet(textures[gameSettings.PlayerTexture], gameSettings.PlayerTexture, 3, 8),
                 new Target(),
@@ -164,9 +164,6 @@ namespace RogueliteSurvivor.Scenes
 
             totalGameTime = 0;
             gameState = GameState.Running;
-
-            Task.Delay(3000);
-
             Loaded = true;
         }
 
