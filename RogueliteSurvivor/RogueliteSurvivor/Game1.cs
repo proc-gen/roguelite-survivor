@@ -61,6 +61,7 @@ namespace RogueliteSurvivor
             world = World.Create();
             physicsWorld = new Box2D.NetStandard.Dynamics.World.World(gravity);
             physicsWorld.SetContactListener(new GameContactListener());
+            physicsWorld.SetContactFilter(new GameContactFilter());
 
             GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics, world, physicsWorld);
 
