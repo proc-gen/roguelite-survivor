@@ -61,9 +61,7 @@ namespace RogueliteSurvivor.Scenes
                 { "GraveRevenant", Content.Load<Texture2D>(Path.Combine("Enemies", "GraveRevenantIdleSide")) },
                 { "BloodLich", Content.Load<Texture2D>(Path.Combine("Enemies", "BloodLichIdleSIde")) },
 
-                { "SmallFireball", Content.Load<Texture2D>(Path.Combine("Spells", "small-fireball")) },
-                { "MediumFireball", Content.Load<Texture2D>(Path.Combine("Spells", "medium-fireball")) },
-                { "LargeFireball", Content.Load<Texture2D>(Path.Combine("Spells", "large-fireball")) },
+                { "Fireball", Content.Load<Texture2D>(Path.Combine("Spells", "fireball")) },
                 { "IceShard", Content.Load<Texture2D>(Path.Combine("Spells", "ice-shard")) },
                 { "LightningBlast", Content.Load<Texture2D>(Path.Combine("Spells", "lightning-blast")) },
 
@@ -88,6 +86,7 @@ namespace RogueliteSurvivor.Scenes
                 { "Blood5", Content.Load<Texture2D>(Path.Combine("Effects", "blood-5")) },
                 { "IceShardHit", Content.Load<Texture2D>(Path.Combine("Effects", "ice-shard-hit")) },
                 { "LightningBlastHit", Content.Load<Texture2D>(Path.Combine("Effects", "lightning-blast-hit")) },
+                { "FireballHit", Content.Load<Texture2D>(Path.Combine("Effects", "fireball-hit")) },
             };
 
             fonts = new Dictionary<string, SpriteFont>()

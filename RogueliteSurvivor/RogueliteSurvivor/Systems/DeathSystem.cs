@@ -39,7 +39,7 @@ namespace RogueliteSurvivor.Systems
                     projectile.State = EntityState.Dying;
                     physicsWorld.DestroyBody(body);
 
-                    animation = new Animation(0, getProjectileHitNumFrames(spriteSheet.TextureName) - 1, 1 / 60f, 1, false);
+                    animation = new Animation(0, getProjectileHitNumFrames(spriteSheet.TextureName) - 1, .03f, 1, false);
                     spriteSheet = new SpriteSheet(textures[spriteSheet.TextureName + "Hit"], spriteSheet.TextureName + "Hit", getProjectileHitNumFrames(spriteSheet.TextureName), 1, spriteSheet.Rotation, .5f);
                 }
                 else if (projectile.State == EntityState.Dying)
@@ -108,6 +108,9 @@ namespace RogueliteSurvivor.Systems
                     break;
                 case "LightningBlast":
                     retVal = 5;
+                    break;
+                case "Fireball":
+                    retVal = 6;
                     break;
             }
 

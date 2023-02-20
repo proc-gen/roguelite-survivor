@@ -25,7 +25,7 @@ namespace RogueliteSurvivor.Scenes
         private float counter = 0f;
 
         private MainMenuState state;
-        private AvailableSpells selectedSpell;
+        private Spells selectedSpell;
 
         public MainMenuScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
@@ -43,7 +43,7 @@ namespace RogueliteSurvivor.Scenes
             }
 
             state = MainMenuState.MainMenu;
-            selectedSpell = AvailableSpells.SmallFireball;
+            selectedSpell = Spells.Fireball;
             Loaded = true;
         }
 
@@ -79,21 +79,21 @@ namespace RogueliteSurvivor.Scenes
                 {
                     if (Keyboard.GetState().IsKeyDown(Keys.D1) || GamePad.GetState(PlayerIndex.One).DPad.Up == ButtonState.Pressed)
                     {
-                        selectedSpell = AvailableSpells.SmallFireball;
+                        selectedSpell = Spells.Fireball;
                         state = MainMenuState.MainMenu;
                         retVal = "loading";
                         readyForInput = false;
                     }
                     else if (Keyboard.GetState().IsKeyDown(Keys.D2) || GamePad.GetState(PlayerIndex.One).DPad.Left == ButtonState.Pressed)
                     {
-                        selectedSpell = AvailableSpells.IceShard;
+                        selectedSpell = Spells.IceShard;
                         state = MainMenuState.MainMenu;
                         retVal = "loading";
                         readyForInput = false;
                     }
                     else if (Keyboard.GetState().IsKeyDown(Keys.D3) || GamePad.GetState(PlayerIndex.One).DPad.Right == ButtonState.Pressed)
                     {
-                        selectedSpell = AvailableSpells.LightningBlast;
+                        selectedSpell = Spells.LightningBlast;
                         state = MainMenuState.MainMenu;
                         retVal = "loading";
                         readyForInput = false;
@@ -167,13 +167,13 @@ namespace RogueliteSurvivor.Scenes
 
             switch (selectedSpell)
             {
-                case AvailableSpells.SmallFireball:
+                case Spells.Fireball:
                     gameSettings.PlayerTexture = "player";
                     break;
-                case AvailableSpells.IceShard:
+                case Spells.IceShard:
                     gameSettings.PlayerTexture = "player_blue";
                     break;
-                case AvailableSpells.LightningBlast:
+                case Spells.LightningBlast:
                     gameSettings.PlayerTexture = "player_yellow";
                     break;
             }

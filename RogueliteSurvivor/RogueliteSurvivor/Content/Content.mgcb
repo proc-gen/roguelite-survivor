@@ -73,6 +73,18 @@
 /processorParam:TextureFormat=Color
 /build:Effects/blood-5.png
 
+#begin Effects/fireball-hit.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Effects/fireball-hit.png
+
 #begin Effects/ice-shard-hit.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -350,6 +362,18 @@
 /processorParam:TextureFormat=Color
 /build:Player/Animated_Mage_Character.png
 
+#begin Spells/fireball.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Spells/fireball.png
+
 #begin Spells/ice-shard.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -362,18 +386,6 @@
 /processorParam:TextureFormat=Color
 /build:Spells/ice-shard.png
 
-#begin Spells/large-fireball.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Spells/large-fireball.png
-
 #begin Spells/lightning-blast.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -385,28 +397,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Spells/lightning-blast.png
-
-#begin Spells/medium-fireball.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Spells/medium-fireball.png
-
-#begin Spells/small-fireball.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Spells/small-fireball.png
 

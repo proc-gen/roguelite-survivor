@@ -66,48 +66,36 @@ namespace RogueliteSurvivor.Systems
             });
         }
 
-        private Animation getProjectileAnimation(AvailableSpells currentSpell)
+        private Animation getProjectileAnimation(Spells currentSpell)
         {
             Animation? animation = null;
             switch (currentSpell)
             {
-                case AvailableSpells.SmallFireball:
-                    animation = new Animation(0, 59, .1f, 1);
+                case Spells.Fireball:
+                    animation = new Animation(0, 3, .1f, 1);
                     break;
-                case AvailableSpells.MediumFireball:
-                    animation = new Animation(0, 59, .1f, 1);
-                    break;
-                case AvailableSpells.LargeFireball:
-                    animation = new Animation(0, 59, .1f, 1);
-                    break;
-                case AvailableSpells.IceShard:
+                case Spells.IceShard:
                     animation = new Animation(0, 9, .1f, 1);
                     break;
-                case AvailableSpells.LightningBlast:
+                case Spells.LightningBlast:
                     animation = new Animation(0, 4, .1f, 1);
                     break;
             }
             return animation.Value;
         }
 
-        private SpriteSheet getProjectileSpriteSheet(AvailableSpells currentSpell, Vector2 currentPosition, Vector2 targetPosition)
+        private SpriteSheet getProjectileSpriteSheet(Spells currentSpell, Vector2 currentPosition, Vector2 targetPosition)
         {
             SpriteSheet? spriteSheet = null;
             switch (currentSpell)
             {
-                case AvailableSpells.SmallFireball:
-                    spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 60, 1, MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X), .5f);
+                case Spells.Fireball:
+                    spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 4, 1, MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X), .5f);
                     break;
-                case AvailableSpells.MediumFireball:
-                    spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 60, 1, MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X), .5f);
-                    break;
-                case AvailableSpells.LargeFireball:
-                    spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 60, 1, MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X), .5f);
-                    break;
-                case AvailableSpells.IceShard:
+                case Spells.IceShard:
                     spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 10, 1, MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X), .5f);
                     break;
-                case AvailableSpells.LightningBlast:
+                case Spells.LightningBlast:
                     spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 5, 1, MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X), .5f);
                     break;
             }

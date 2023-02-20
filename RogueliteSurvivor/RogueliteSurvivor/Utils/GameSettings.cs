@@ -1,4 +1,5 @@
 ﻿using RogueliteSurvivor.Components;
+using RogueliteSurvivor.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace RogueliteSurvivor.Utils
 {
     public struct GameSettings
     {
-        public AvailableSpells StartingSpell { get; set; }
+        public Spells StartingSpell { get; set; }
         public string PlayerTexture { get; set; }
     }
 }

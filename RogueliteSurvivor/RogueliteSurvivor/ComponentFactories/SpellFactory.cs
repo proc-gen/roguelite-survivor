@@ -1,4 +1,5 @@
 ﻿using RogueliteSurvivor.Components;
+using RogueliteSurvivor.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,21 +10,21 @@ namespace RogueliteSurvivor.ComponentFactories
 {
     public static class SpellFactory
     {
-        public static Spell CreateSpell(AvailableSpells selectedSpell)
+        public static Spell CreateSpell(Spells selectedSpell)
         {
             Spell spell = new Spell() { CurrentSpell = selectedSpell };
 
             switch(selectedSpell)
             {
-                case AvailableSpells.SmallFireball:
+                case Spells.Fireball:
                     spell.BaseDamage = spell.CurrentDamage = 8;
                     spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 24000f;
                     break;
-                case AvailableSpells.IceShard:
+                case Spells.IceShard:
                     spell.BaseDamage = spell.CurrentDamage = 5;
                     spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 48000f;
                     break;
-                case AvailableSpells.LightningBlast:
+                case Spells.LightningBlast:
                     spell.BaseDamage = spell.CurrentDamage = 3;
                     spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 144000f;
                     break;
