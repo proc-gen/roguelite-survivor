@@ -17,22 +17,25 @@ namespace RogueliteSurvivor.Components
         public float Max { get; private set; }
         public int NumDirections { get; private set; }
         public Color Overlay { get; set; }
+        public bool Repeatable { get; private set; }
 
-        public Animation(int firstFrame, int lastFrame, float max, int numDirections)
+        public Animation(int firstFrame, int lastFrame, float max, int numDirections, bool repeatable = true)
         {
             Max = max;
             NumDirections = numDirections;
             Overlay = Color.White;
-            Reset(firstFrame, lastFrame);
+            Reset(firstFrame, lastFrame, repeatable);
         }
 
-        public void Reset(int firstFrame, int lastFrame)
+        public void Reset(int firstFrame, int lastFrame, bool repeatable = true)
         {
             FirstFrame = firstFrame;
             LastFrame = lastFrame;
             CurrentFrame = firstFrame;
             NumFrames = lastFrame - firstFrame + 1;
+            Repeatable = repeatable;
             Count = 0;
         }
+
     }
 }

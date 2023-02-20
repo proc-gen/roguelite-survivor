@@ -25,7 +25,14 @@ namespace RogueliteSurvivor.Systems
                 if (anim.Count > anim.Max)
                 {
                     anim.Count = 0;
-                    anim.CurrentFrame = anim.CurrentFrame == anim.LastFrame ? anim.FirstFrame : anim.CurrentFrame + 1;
+                    if (anim.Repeatable)
+                    {
+                        anim.CurrentFrame = anim.CurrentFrame == anim.LastFrame ? anim.FirstFrame : anim.CurrentFrame + 1;
+                    }
+                    else
+                    {
+                        anim.CurrentFrame = anim.CurrentFrame == anim.LastFrame ? anim.LastFrame : anim.CurrentFrame + 1;
+                    }
                     anim.Overlay = Color.White;
                 }
             });

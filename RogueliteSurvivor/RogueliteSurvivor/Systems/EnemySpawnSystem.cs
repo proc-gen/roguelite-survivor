@@ -61,7 +61,7 @@ namespace RogueliteSurvivor.Systems
                 }
             });
 
-            world.Query(in query, (in Entity entity, ref Enemy enemy, ref Pickup pickup, ref Body body, ref Position position) =>
+            world.Query(in query, (in Entity entity, ref Enemy enemy, ref Pickup pickup, ref Position position) =>
             {
                 if(enemy.State == EntityState.Dead)
                 {
@@ -69,8 +69,6 @@ namespace RogueliteSurvivor.Systems
                     {
                         createPickup(pickup, position);
                     }
-
-                    physicsWorld.DestroyBody(body);
                     world.Destroy(entity);
                 }
                 else

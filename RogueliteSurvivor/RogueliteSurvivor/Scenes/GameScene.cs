@@ -51,21 +51,41 @@ namespace RogueliteSurvivor.Scenes
             textures = new Dictionary<string, Texture2D>
             {
                 { "tiles", Content.Load<Texture2D>(Path.Combine("Maps", "Tiles")) },
+
                 { "player", Content.Load<Texture2D>(Path.Combine("Player", "Animated_Mage_Character")) },
                 { "player_blue", Content.Load<Texture2D>(Path.Combine("Player", "Animated_Mage_Character_blue")) },
                 { "player_yellow", Content.Load<Texture2D>(Path.Combine("Player", "Animated_Mage_Character_yellow")) },
+
                 { "VampireBat", Content.Load<Texture2D>(Path.Combine("Enemies", "VampireBat")) },
                 { "GhastlyBeholder", Content.Load<Texture2D>(Path.Combine("Enemies", "GhastlyBeholderIdleSide")) },
                 { "GraveRevenant", Content.Load<Texture2D>(Path.Combine("Enemies", "GraveRevenantIdleSide")) },
                 { "BloodLich", Content.Load<Texture2D>(Path.Combine("Enemies", "BloodLichIdleSIde")) },
+
                 { "SmallFireball", Content.Load<Texture2D>(Path.Combine("Spells", "small-fireball")) },
                 { "MediumFireball", Content.Load<Texture2D>(Path.Combine("Spells", "medium-fireball")) },
                 { "LargeFireball", Content.Load<Texture2D>(Path.Combine("Spells", "large-fireball")) },
                 { "IceShard", Content.Load<Texture2D>(Path.Combine("Spells", "ice-shard")) },
                 { "LightningBlast", Content.Load<Texture2D>(Path.Combine("Spells", "lightning-blast")) },
+
                 { "StatBar", Content.Load<Texture2D>(Path.Combine("Hud", "StatBar")) },
                 { "HealthBar", Content.Load<Texture2D>(Path.Combine("Hud", "HealthBar")) },
-                { "pickups", Content.Load<Texture2D>(Path.Combine("Pickups", "player-pickups")) }
+
+                { "pickups", Content.Load<Texture2D>(Path.Combine("Pickups", "player-pickups")) },
+
+                { "MiniBlood1", Content.Load<Texture2D>(Path.Combine("Effects", "mini-blood-1")) },
+                { "MiniBlood2", Content.Load<Texture2D>(Path.Combine("Effects", "mini-blood-2")) },
+                { "MiniBlood3", Content.Load<Texture2D>(Path.Combine("Effects", "mini-blood-3")) },
+                { "MiniBlood4", Content.Load<Texture2D>(Path.Combine("Effects", "mini-blood-4")) },
+                { "MiniBlood5", Content.Load<Texture2D>(Path.Combine("Effects", "mini-blood-5")) },
+                { "MiniBlood6", Content.Load<Texture2D>(Path.Combine("Effects", "mini-blood-6")) },
+                { "MiniBlood7", Content.Load<Texture2D>(Path.Combine("Effects", "mini-blood-7")) },
+                { "MiniBlood8", Content.Load<Texture2D>(Path.Combine("Effects", "mini-blood-8")) },
+                { "MiniBlood9", Content.Load<Texture2D>(Path.Combine("Effects", "mini-blood-9")) },
+                { "Blood1", Content.Load<Texture2D>(Path.Combine("Effects", "blood-1")) },
+                { "Blood2", Content.Load<Texture2D>(Path.Combine("Effects", "blood-2")) },
+                { "Blood3", Content.Load<Texture2D>(Path.Combine("Effects", "blood-3")) },
+                { "Blood4", Content.Load<Texture2D>(Path.Combine("Effects", "blood-4")) },
+                { "Blood5", Content.Load<Texture2D>(Path.Combine("Effects", "blood-5")) },
             };
 
             fonts = new Dictionary<string, SpriteFont>()
@@ -106,13 +126,14 @@ namespace RogueliteSurvivor.Scenes
                 new EnemySpawnSystem(world, textures, physicsWorld, _graphics),
                 new AttackSystem(world, textures, physicsWorld),
                 new ProjectileCleanupSystem(world, physicsWorld),
+                new DeathSystem(world, textures, physicsWorld),
             };
 
             renderSystems = new List<IRenderSystem>
             {
                 new RenderMapSystem(world, _graphics),
-                new RenderSpriteSystem(world, _graphics),
                 new RenderPickupSystem(world, _graphics),
+                new RenderSpriteSystem(world, _graphics),
                 new RenderHudSystem(world, _graphics, fonts),
             };
 

@@ -101,7 +101,7 @@ namespace RogueliteSurvivor.Physics
                 health.Current -= damage.Amount;
                 if (health.Current < 1)
                 {
-                    enemy.State = EntityState.Dead;
+                    enemy.State = EntityState.ReadyToDie;
                     entity.Set(enemy);
                     KillCount killCount = owner.Entity.Get<KillCount>();
                     killCount.Count++;

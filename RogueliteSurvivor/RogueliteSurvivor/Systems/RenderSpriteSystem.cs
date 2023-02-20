@@ -30,17 +30,17 @@ namespace RogueliteSurvivor.Systems
             {
                 Vector2 position = pos.XY - playerPosition;
                 
-                bool alive = true;
+                bool displaySprite = true;
                 if(entity.TryGet(out Enemy enemy))
                 {
-                    alive = enemy.State == EntityState.Alive;
+                    displaySprite = enemy.State != EntityState.Dead;
                 }
                 else if(entity.TryGet(out Projectile projectile)) 
                 {
-                    alive = projectile.State == EntityState.Alive;
+                    displaySprite = projectile.State != EntityState.Dead;
                 }
 
-                if (alive && MathF.Abs(position.X) < offset.X && MathF.Abs(position.Y) < offset.Y)
+                if (displaySprite && MathF.Abs(position.X) < offset.X && MathF.Abs(position.Y) < offset.Y)
                 {
                     spriteBatch.Draw(
                         textures[sprite.TextureName],

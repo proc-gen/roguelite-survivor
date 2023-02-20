@@ -9,6 +9,8 @@ namespace RogueliteSurvivor.Constants
     public enum EntityState
     {
         Alive,
-        Dead
+        ReadyToDie,
+        Dying,
+        Dead,
     }
 }
