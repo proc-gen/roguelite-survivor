@@ -105,17 +105,17 @@ namespace RogueliteSurvivor.Systems
             enemyCount = 20 * difficulty;
 
             enemyTable = new RandomTable<string>()
-                .Add("VampireBat", 10)
+                .Add("VampireBat", 10 + difficulty)
                 .Add("GhastlyBeholder", difficulty - 1)
                 .Add("GraveRevenant", difficulty - 2)
                 .Add("BloodLich", difficulty - 3);
 
             pickupTable = new RandomTable<PickupType>()
-                .Add(PickupType.None, 20)
+                .Add(PickupType.None, 20 + difficulty)
                 .Add(PickupType.AttackSpeed, difficulty)
                 .Add(PickupType.Damage, difficulty)
                 .Add(PickupType.MoveSpeed, difficulty)
-                .Add(PickupType.Health, 2 * difficulty);
+                .Add(PickupType.Health, difficulty);
         }
     
         private void createEnemy(Position? player, Vector2 offset)
