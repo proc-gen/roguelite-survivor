@@ -32,9 +32,23 @@ namespace RogueliteSurvivor.Systems
 
         public void Update(GameTime gameTime, float totalElapsedTime) 
         {
-            world.Query(in projectileQuery, (ref Projectile projectile, ref SpriteSheet spriteSheet, ref Animation animation) =>
+            world.Query(in projectileQuery, (ref Projectile projectile, ref SpriteSheet spriteSheet, ref Animation animation, ref Body body) =>
             {
-                             
+                if (projectile.State == EntityState.ReadyToDie)
+                {
+                    projectile.State = EntityState.Dying;
+                    physicsWorld.DestroyBody(body);
+
+                    animation = new Animation(0, getProjectileHitNumFrames(spriteSheet.TextureName) - 1, 1 / 60f, 1, false);
+                    spriteSheet = new SpriteSheet(textures[spriteSheet.TextureName + "Hit"], spriteSheet.TextureName + "Hit", getProjectileHitNumFrames(spriteSheet.TextureName), 1, spriteSheet.Rotation, .5f);
+                }
+                else if (projectile.State == EntityState.Dying)
+                {
+                    if (animation.CurrentFrame == animation.LastFrame)
+                    {
+                        projectile.State = EntityState.Dead;
+                    }
+                }
             });
 
             world.Query(in enemyQuery, (ref Enemy enemy, ref SpriteSheet spriteSheet, ref Animation animation, ref Body body) =>
@@ -80,6 +94,23 @@ namespace RogueliteSurvivor.Systems
                     retVal = 22;
                     break;
             }
+            return retVal;
+        }
+
+        private int getProjectileHitNumFrames(string projectile)
+        {
+            int retVal = 0;
+
+            switch (projectile)
+            {
+                case "IceShard":
+                    retVal = 7;
+                    break;
+                case "LightningBlast":
+                    retVal = 5;
+                    break;
+            }
+
             return retVal;
         }
     }

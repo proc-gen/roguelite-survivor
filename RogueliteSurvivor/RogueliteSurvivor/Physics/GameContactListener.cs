@@ -120,7 +120,7 @@ namespace RogueliteSurvivor.Physics
         {
             if (projectile.State == EntityState.Alive)
             {
-                projectile.State = EntityState.Dead;
+                projectile.State = EntityState.ReadyToDie;
                 entity.Set(projectile);
             }
         }

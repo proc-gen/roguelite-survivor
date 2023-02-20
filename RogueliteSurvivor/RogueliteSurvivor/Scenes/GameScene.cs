@@ -86,6 +86,8 @@ namespace RogueliteSurvivor.Scenes
                 { "Blood3", Content.Load<Texture2D>(Path.Combine("Effects", "blood-3")) },
                 { "Blood4", Content.Load<Texture2D>(Path.Combine("Effects", "blood-4")) },
                 { "Blood5", Content.Load<Texture2D>(Path.Combine("Effects", "blood-5")) },
+                { "IceShardHit", Content.Load<Texture2D>(Path.Combine("Effects", "ice-shard-hit")) },
+                { "LightningBlastHit", Content.Load<Texture2D>(Path.Combine("Effects", "lightning-blast-hit")) },
             };
 
             fonts = new Dictionary<string, SpriteFont>()
