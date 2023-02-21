@@ -12,6 +12,6 @@ namespace RogueliteSurvivor.Systems
 {
     internal interface IRenderSystem
     {
-        abstract void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player, float totalElapsedTime, GameState gameState);
+        abstract void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player, float totalElapsedTime, GameState gameState, int layer);
     }
 }

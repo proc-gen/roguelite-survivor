@@ -205,13 +205,15 @@ namespace RogueliteSurvivor.Scenes
 
         public override void Draw(GameTime gameTime, Matrix transformMatrix, params object[] values)
         {
-
-            foreach (var system in renderSystems)
+            for (int layer = 1; layer < 3; layer++)
             {
-                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, blendState: BlendState.AlphaBlend, transformMatrix: transformMatrix);
-                system.Render(gameTime, _spriteBatch, textures, player, totalGameTime, gameState);
-                _spriteBatch.End();
+                foreach (var system in renderSystems)
+                {
+                    _spriteBatch.Begin(samplerState: SamplerState.PointClamp, blendState: BlendState.AlphaBlend, transformMatrix: transformMatrix);
+                    system.Render(gameTime, _spriteBatch, textures, player, totalGameTime, gameState, layer);
+                    _spriteBatch.End();
 
+                }
             }
         }
     }

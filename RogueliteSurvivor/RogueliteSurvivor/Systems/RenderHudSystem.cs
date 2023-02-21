@@ -28,7 +28,7 @@ namespace RogueliteSurvivor.Systems
         static Vector2 TimeLocation = new Vector2(-100, 10);
         const int Increment = 64;
 
-        public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player, float totalElapsedTime, GameState gameState)
+        public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player, float totalElapsedTime, GameState gameState, int layer)
         {
             int counter = 0;
             world.Query(in query, (ref Health health, ref KillCount killCount) =>

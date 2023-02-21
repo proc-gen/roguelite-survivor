@@ -23,29 +23,29 @@ namespace RogueliteSurvivor.Systems
             this.graphics = graphics;
         }
 
-        public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player, float totalElapsedTime, GameState gameState)
+        public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player, float totalElapsedTime, GameState gameState, int layer)
         {
             Vector2 playerPosition = player.Get<Position>().XY;
             Vector2 offset = new Vector2(graphics.PreferredBackBufferWidth / 6, graphics.PreferredBackBufferHeight / 6);
 
             world.Query(in query, (ref MapInfo map) =>
             {
-                var tileLayers = map.Map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
+                var tileLayer = map.Map.Layers.Where(x => x.type == TiledLayerType.TileLayer && x.id == layer).FirstOrDefault();
 
-                foreach (var layer in tileLayers)
+                if(tileLayer != null)
                 {
                     int minY, maxY, minX, maxX;
                     minY = (int)MathF.Max((playerPosition.Y - graphics.PreferredBackBufferHeight / 2) / 16f, 0);
-                    maxY = (int)MathF.Min((playerPosition.Y + graphics.PreferredBackBufferHeight / 2) / 16f, layer.height);
+                    maxY = (int)MathF.Min((playerPosition.Y + graphics.PreferredBackBufferHeight / 2) / 16f, tileLayer.height);
                     minX = (int)MathF.Max((playerPosition.X - graphics.PreferredBackBufferWidth / 2) / 16f, 0);
-                    maxX = (int)MathF.Min((playerPosition.X + graphics.PreferredBackBufferWidth / 2) / 16f, layer.width);
+                    maxX = (int)MathF.Min((playerPosition.X + graphics.PreferredBackBufferWidth / 2) / 16f, tileLayer.width);
 
                     for (var y = minY; y < maxY; y++)
                     {
                         for (var x = minX; x < maxX; x++)
                         {
-                            var index = (y * layer.width) + x;
-                            var gid = layer.data[index];
+                            var index = (y * tileLayer.width) + x;
+                            var gid = tileLayer.data[index];
                             var tileX = x * map.Map.TileWidth;
                             var tileY = y * map.Map.TileHeight;
 
@@ -66,7 +66,7 @@ namespace RogueliteSurvivor.Systems
                             SpriteEffects effects = SpriteEffects.None;
                             double rotation = 0f;
 
-                            spriteBatch.Draw(textures["tiles"], new Vector2(tileX + offset.X, tileY + offset.Y), source, Color.White, (float)rotation, playerPosition, 1f, effects, .05f);
+                            spriteBatch.Draw(textures["tiles"], new Vector2(tileX + offset.X, tileY + offset.Y), source, Color.White, (float)rotation, playerPosition, 1f, effects, .05f * layer);
                         }
                     }
                 }

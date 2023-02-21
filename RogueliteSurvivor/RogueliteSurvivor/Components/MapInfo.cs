@@ -35,7 +35,7 @@ namespace RogueliteSurvivor.Components
                     {
                         var tile = getTile(layer, x, y);
 
-                        if (tile.properties[0].value == "false")
+                        if (tile != null && tile.properties[0].value == "false")
                         {
                             int tileX = x * Map.TileWidth + Map.TileWidth / 2;
                             int tileY = y * Map.TileHeight + Map.TileHeight / 2;
