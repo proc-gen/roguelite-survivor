@@ -124,19 +124,15 @@ namespace RogueliteSurvivor
         {
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
-
             switch (currentScene)
             {
                 case "loading":
-                    scenes[currentScene].Draw(gameTime, scenes["game"].Loaded);
+                    scenes[currentScene].Draw(gameTime, transformMatrix, scenes["game"].Loaded);
                     break;
                 default:
-                    scenes[currentScene].Draw(gameTime);
+                    scenes[currentScene].Draw(gameTime, transformMatrix);
                     break;
             }
-
-            _spriteBatch.End();
 
             base.Draw(gameTime);
         }

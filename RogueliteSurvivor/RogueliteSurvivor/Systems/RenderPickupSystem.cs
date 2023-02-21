@@ -41,7 +41,7 @@ namespace RogueliteSurvivor.Systems
                         new Vector2(8, 8),
                         1f,
                         SpriteEffects.None,
-                        0
+                        .1f
                     );
                 }
             });

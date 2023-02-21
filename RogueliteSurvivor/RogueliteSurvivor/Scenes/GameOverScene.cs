@@ -50,8 +50,10 @@ namespace RogueliteSurvivor.Scenes
             return retVal;
         }
 
-        public override void Draw(GameTime gameTime, params object[] values)
+        public override void Draw(GameTime gameTime, Matrix transformMatrix, params object[] values)
         {
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, blendState: BlendState.AlphaBlend, transformMatrix: transformMatrix);
+
             _spriteBatch.DrawString(
                 fonts["Font"],
                "Oh snap, the bats killed you!",
@@ -73,6 +75,8 @@ namespace RogueliteSurvivor.Scenes
                 new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 96),
                 Color.White
             );
+
+            _spriteBatch.End();
         }
 
         private KillCount getPlayerKillCount()

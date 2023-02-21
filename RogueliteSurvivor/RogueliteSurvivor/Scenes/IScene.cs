@@ -11,6 +11,6 @@ namespace RogueliteSurvivor.Scenes
     {
         void LoadContent();
         string Update(GameTime gameTime, params object[] values);
-        void Draw(GameTime gameTime, params object[] values);
+        void Draw(GameTime gameTime, Matrix transform, params object[] values);
     }
 }

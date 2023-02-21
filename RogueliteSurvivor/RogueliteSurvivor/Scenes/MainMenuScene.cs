@@ -110,8 +110,10 @@ namespace RogueliteSurvivor.Scenes
             return retVal;
         }
 
-        public override void Draw(GameTime gameTime, params object[] values)
+        public override void Draw(GameTime gameTime, Matrix transformMatrix, params object[] values)
         {
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, blendState: BlendState.AlphaBlend, transformMatrix: transformMatrix);
+
             if (state == MainMenuState.MainMenu)
             {
                 _spriteBatch.DrawString(
@@ -158,6 +160,8 @@ namespace RogueliteSurvivor.Scenes
                     Color.White
                 );
             }
+
+            _spriteBatch.End();
         }
 
         public GameSettings GetGameSettings()

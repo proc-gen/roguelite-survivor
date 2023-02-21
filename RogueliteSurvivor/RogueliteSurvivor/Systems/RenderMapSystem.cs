@@ -66,7 +66,7 @@ namespace RogueliteSurvivor.Systems
                             SpriteEffects effects = SpriteEffects.None;
                             double rotation = 0f;
 
-                            spriteBatch.Draw(textures["tiles"], new Vector2(tileX + offset.X, tileY + offset.Y), source, Color.White, (float)rotation, playerPosition, 1f, effects, 0);
+                            spriteBatch.Draw(textures["tiles"], new Vector2(tileX + offset.X, tileY + offset.Y), source, Color.White, (float)rotation, playerPosition, 1f, effects, .05f);
                         }
                     }
                 }

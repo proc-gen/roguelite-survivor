@@ -33,7 +33,7 @@ namespace RogueliteSurvivor.Scenes
             Loaded = false;
         }
 
-        public abstract void Draw(GameTime gameTime, params object[] values);
+        public abstract void Draw(GameTime gameTime, Matrix transform, params object[] values);
         public abstract void LoadContent();
         public abstract string Update(GameTime gameTime, params object[] values);
     }
