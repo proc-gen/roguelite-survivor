@@ -155,6 +155,13 @@ namespace RogueliteSurvivor.Scenes
 
             if (state == MainMenuState.MainMenu)
             {
+                _spriteBatch.DrawString(
+                    fonts["Font"],
+                    "Roguelite Survivor",
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 62, _graphics.PreferredBackBufferHeight / 6 - 64),
+                    Color.White
+                );
+
                 _spriteBatch.Draw(
                     textures["MainMenuButtons"],
                     new Vector2(_graphics.PreferredBackBufferWidth / 6, _graphics.PreferredBackBufferHeight / 6),
@@ -193,6 +200,13 @@ namespace RogueliteSurvivor.Scenes
             }
             else
             {
+                _spriteBatch.DrawString(
+                    fonts["Font"],
+                    "Choose your wizard:",
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 70, _graphics.PreferredBackBufferHeight / 6 - 64),
+                    Color.White
+                );
+
                 _spriteBatch.Draw(
                     textures["CharacterSelectButtons"],
                     new Vector2(_graphics.PreferredBackBufferWidth / 6 - 80, _graphics.PreferredBackBufferHeight / 6),
@@ -232,7 +246,7 @@ namespace RogueliteSurvivor.Scenes
                 _spriteBatch.DrawString(
                     fonts["Font"],
                     "Press Esc on the keyboard or Back on the controller to exit",
-                    new Vector2(10, _graphics.PreferredBackBufferHeight / 6 + 128),
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 200, _graphics.PreferredBackBufferHeight / 6 + 64),
                     Color.White
                 );
             }
