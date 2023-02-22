@@ -26,6 +26,8 @@ namespace RogueliteSurvivor.Scenes
 
         private MainMenuState state;
         private Spells selectedSpell;
+        private int selectedButton = 1;
+
 
         public MainMenuScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
@@ -34,6 +36,14 @@ namespace RogueliteSurvivor.Scenes
 
         public override void LoadContent()
         {
+            if (textures == null) {
+                textures = new Dictionary<string, Texture2D>
+                {
+                    { "MainMenuButtons", Content.Load<Texture2D>(Path.Combine("UI", "main-menu-buttons")) },
+                    { "CharacterSelectButtons", Content.Load<Texture2D>(Path.Combine("UI", "character-selection-buttons")) },
+                };
+            }
+
             if (fonts == null)
             {
                 fonts = new Dictionary<string, SpriteFont>()
@@ -62,45 +72,74 @@ namespace RogueliteSurvivor.Scenes
             }
             else if (readyForInput)
             {
+                var kState = Keyboard.GetState();
+                var gState = GamePad.GetState(PlayerIndex.One);
+
                 if(state == MainMenuState.MainMenu) 
                 {
-                    if (Keyboard.GetState().IsKeyDown(Keys.Space) || GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed)
+                    if(kState.IsKeyDown(Keys.Enter) || gState.Buttons.A == ButtonState.Pressed)
                     {
-                        state = MainMenuState.SpellSelection;
+                        switch(selectedButton)
+                        {
+                            case 1:
+                                state = MainMenuState.SpellSelection;
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                retVal = "exit";
+                                break;
+                        }
+
                         readyForInput = false;
                     }
-                    else if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    else if (kState.IsKeyDown(Keys.Up) || gState.DPad.Up == ButtonState.Pressed || gState.ThumbSticks.Left.Y > 0.5f)
                     {
-                        retVal = "exit";
+                        selectedButton = int.Max(selectedButton - 1, 1);
+                        readyForInput = false;
+                    }
+                    else if (kState.IsKeyDown(Keys.Down) || gState.DPad.Down == ButtonState.Pressed || gState.ThumbSticks.Left.Y < -0.5f)
+                    {
+                        selectedButton = int.Min(selectedButton + 1, 3);
                         readyForInput = false;
                     }
                 }
                 else
                 {
-                    if (Keyboard.GetState().IsKeyDown(Keys.D1) || GamePad.GetState(PlayerIndex.One).DPad.Up == ButtonState.Pressed)
+                    if (kState.IsKeyDown(Keys.Enter) || gState.Buttons.A == ButtonState.Pressed)
                     {
-                        selectedSpell = Spells.Fireball;
+                        switch (selectedButton)
+                        {
+                            case 1:
+                                selectedSpell = Spells.Fireball;
+                                break;
+                            case 2:
+                                selectedSpell = Spells.IceShard;
+                                break;
+                            case 3:
+                                selectedSpell = Spells.LightningBlast;
+                                break;
+                        }
+
                         state = MainMenuState.MainMenu;
                         retVal = "loading";
                         readyForInput = false;
+                        selectedButton = 1;
                     }
-                    else if (Keyboard.GetState().IsKeyDown(Keys.D2) || GamePad.GetState(PlayerIndex.One).DPad.Left == ButtonState.Pressed)
+                    else if (kState.IsKeyDown(Keys.Left) || gState.DPad.Left == ButtonState.Pressed || gState.ThumbSticks.Left.X < -0.5f)
                     {
-                        selectedSpell = Spells.IceShard;
-                        state = MainMenuState.MainMenu;
-                        retVal = "loading";
+                        selectedButton = int.Max(selectedButton - 1, 1);
                         readyForInput = false;
                     }
-                    else if (Keyboard.GetState().IsKeyDown(Keys.D3) || GamePad.GetState(PlayerIndex.One).DPad.Right == ButtonState.Pressed)
+                    else if (kState.IsKeyDown(Keys.Right) || gState.DPad.Right == ButtonState.Pressed || gState.ThumbSticks.Left.X > 0.5f)
                     {
-                        selectedSpell = Spells.LightningBlast;
-                        state = MainMenuState.MainMenu;
-                        retVal = "loading";
+                        selectedButton = int.Min(selectedButton + 1, 3);
                         readyForInput = false;
                     }
-                    else if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    else if (gState.Buttons.B == ButtonState.Pressed || kState.IsKeyDown(Keys.Escape))
                     {
                         state = MainMenuState.MainMenu;
+                        selectedButton = 1;
                         readyForInput = false;
                     }
                 }
@@ -116,41 +155,78 @@ namespace RogueliteSurvivor.Scenes
 
             if (state == MainMenuState.MainMenu)
             {
-                _spriteBatch.DrawString(
-                    fonts["Font"],
-                    "Press Space on the keyboard or Start on the controller to select a starting spell",
-                    new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6),
-                    Color.White
+                _spriteBatch.Draw(
+                    textures["MainMenuButtons"],
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6, _graphics.PreferredBackBufferHeight / 6),
+                    new Rectangle(0 + selectedButton == 1 ? 128 : 0, 32, 128, 32),
+                    Color.White,
+                    0f,
+                    new Vector2(64, 16),
+                    1f,
+                    SpriteEffects.None,
+                    0f
                 );
 
-                _spriteBatch.DrawString(
-                    fonts["Font"],
-                    "Press Esc on the keyboard or Back on the controller to exit",
-                    new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 32),
-                    Color.White
+                _spriteBatch.Draw(
+                    textures["MainMenuButtons"],
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6, _graphics.PreferredBackBufferHeight / 6 + 48),
+                    new Rectangle(0 + selectedButton == 2 ? 128 : 0, 64, 128, 32),
+                    Color.White,
+                    0f,
+                    new Vector2(64, 16),
+                    1f,
+                    SpriteEffects.None,
+                    0f
+                );
+
+                _spriteBatch.Draw(
+                    textures["MainMenuButtons"],
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6, _graphics.PreferredBackBufferHeight / 6 + 96),
+                    new Rectangle(0 + selectedButton == 3 ? 128 : 0, 96, 128, 32),
+                    Color.White,
+                    0f,
+                    new Vector2(64, 16),
+                    1f,
+                    SpriteEffects.None,
+                    0f
                 );
             }
             else
             {
-                _spriteBatch.DrawString(
-                    fonts["Font"],
-                    "Press 1 on the keyboard or up on the controller direction pad to select fireball",
-                    new Vector2(10, _graphics.PreferredBackBufferHeight / 6),
-                    Color.White
+                _spriteBatch.Draw(
+                    textures["CharacterSelectButtons"],
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 80, _graphics.PreferredBackBufferHeight / 6),
+                    new Rectangle(0 + selectedButton == 1 ? 64 : 0, 64, 64, 64),
+                    Color.White,
+                    0f,
+                    new Vector2(32, 32),
+                    1f,
+                    SpriteEffects.None,
+                    0f
                 );
 
-                _spriteBatch.DrawString(
-                    fonts["Font"],
-                    "Press 2 on the keyboard or left on the controller direction pad to select ice shard",
-                    new Vector2(10, _graphics.PreferredBackBufferHeight / 6 + 32),
-                    Color.White
+                _spriteBatch.Draw(
+                    textures["CharacterSelectButtons"],
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6, _graphics.PreferredBackBufferHeight / 6),
+                    new Rectangle(0 + selectedButton == 2 ? 64 : 0, 128, 64, 64),
+                    Color.White,
+                    0f,
+                    new Vector2(32, 32),
+                    1f,
+                    SpriteEffects.None,
+                    0f
                 );
 
-                _spriteBatch.DrawString(
-                    fonts["Font"],
-                    "Press 3 on the keyboard or right on the controller direction pad to select lightning blast",
-                    new Vector2(10, _graphics.PreferredBackBufferHeight / 6 + 64),
-                    Color.White
+                _spriteBatch.Draw(
+                    textures["CharacterSelectButtons"],
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 + 80, _graphics.PreferredBackBufferHeight / 6),
+                    new Rectangle(0 + selectedButton == 3 ? 64 : 0, 192, 64, 64),
+                    Color.White,
+                    0f,
+                    new Vector2(32, 32),
+                    1f,
+                    SpriteEffects.None,
+                    0f
                 );
 
                 _spriteBatch.DrawString(
