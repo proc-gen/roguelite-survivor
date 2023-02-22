@@ -245,7 +245,7 @@ namespace RogueliteSurvivor.Scenes
 
                 _spriteBatch.DrawString(
                     fonts["Font"],
-                    "Press Esc on the keyboard or Back on the controller to exit",
+                    "Press Esc on the keyboard or B on the controller to go back",
                     new Vector2(_graphics.PreferredBackBufferWidth / 6 - 200, _graphics.PreferredBackBufferHeight / 6 + 64),
                     Color.White
                 );
