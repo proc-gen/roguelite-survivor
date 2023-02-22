@@ -12,6 +12,7 @@ namespace RogueliteSurvivor.Constants
         Damage,
         AttackSpeed,
         MoveSpeed,
-        Health
+        Health,
+        SpellEffectChance,
     }
 }

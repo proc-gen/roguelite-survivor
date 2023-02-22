@@ -109,14 +109,15 @@ namespace RogueliteSurvivor.Systems
                 .Add("VampireBat", 10 + difficulty)
                 .Add("GhastlyBeholder", difficulty - 1)
                 .Add("GraveRevenant", difficulty - 2)
-                .Add("BloodLich", 99); // difficulty - 3);
+                .Add("BloodLich", difficulty - 3);
 
             pickupTable = new RandomTable<PickupType>()
                 .Add(PickupType.None, 20 + difficulty)
                 .Add(PickupType.AttackSpeed, difficulty)
                 .Add(PickupType.Damage, difficulty)
                 .Add(PickupType.MoveSpeed, difficulty)
-                .Add(PickupType.Health, difficulty);
+                .Add(PickupType.Health, difficulty)
+                .Add(PickupType.SpellEffectChance, difficulty);
         }
     
         private void createEnemy(Position? player, Vector2 offset)
@@ -251,6 +252,9 @@ namespace RogueliteSurvivor.Systems
                     break;
                 case PickupType.Health:
                     pickup.PickupAmount = 5f;
+                    break;
+                case PickupType.SpellEffectChance:
+                    pickup.PickupAmount = .25f;
                     break;
             }
 

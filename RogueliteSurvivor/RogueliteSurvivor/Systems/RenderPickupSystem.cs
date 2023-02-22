@@ -69,6 +69,10 @@ namespace RogueliteSurvivor.Systems
                     x = 208;
                     y = 224;
                     break;
+                case PickupType.SpellEffectChance:
+                    x = 80;
+                    y = 320;
+                    break;
             }
 
             return new Rectangle(x, y, 16, 16);
