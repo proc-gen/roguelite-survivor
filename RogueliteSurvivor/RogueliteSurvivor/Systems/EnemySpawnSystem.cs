@@ -3,6 +3,7 @@ using Arch.Core.Extensions;
 using Box2D.NetStandard.Dynamics.Bodies;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RogueliteSurvivor.ComponentFactories;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Physics;
@@ -139,7 +140,7 @@ namespace RogueliteSurvivor.Systems
 
         private void createVampireBat(Position? player, Vector2 offset)
         {
-            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body, Pickup>();
+            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell, Body, Pickup>();
 
             var body = new BodyDef();
             body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
@@ -155,7 +156,7 @@ namespace RogueliteSurvivor.Systems
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
                         new Damage() { Amount = 2, BaseAmount = 2 },
-                        new AttackSpeed() { BaseAttacksPerSecond = 1f, CurrentAttacksPerSecond = 1f, Cooldown = 0 },
+                        SpellFactory.CreateSpell(Spells.EnemyMelee),
                         BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
                         createPickupForEnemy()
                     );
@@ -163,7 +164,7 @@ namespace RogueliteSurvivor.Systems
 
         private void createGhastlyBeholder(Position? player, Vector2 offset)
         {
-            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body, Pickup>();
+            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell, Body, Pickup>();
 
             var body = new BodyDef();
             body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
@@ -179,7 +180,7 @@ namespace RogueliteSurvivor.Systems
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
                         new Damage() { Amount = 2, BaseAmount = 2 },
-                        new AttackSpeed() { BaseAttacksPerSecond = 1f, CurrentAttacksPerSecond = 1f, Cooldown = 0 },
+                        SpellFactory.CreateSpell(Spells.EnemyMelee),
                         BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
                         createPickupForEnemy()
                     );
@@ -187,7 +188,7 @@ namespace RogueliteSurvivor.Systems
 
         private void createGraveRevenant(Position? player, Vector2 offset)
         {
-            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body, Pickup>();
+            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell, Body, Pickup>();
 
             var body = new BodyDef();
             body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
@@ -203,7 +204,7 @@ namespace RogueliteSurvivor.Systems
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
                         new Damage() { Amount = 2, BaseAmount = 2 },
-                        new AttackSpeed() { BaseAttacksPerSecond = 1f, CurrentAttacksPerSecond = 1f, Cooldown = 0 },
+                        SpellFactory.CreateSpell(Spells.EnemyMelee),
                         BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
                         createPickupForEnemy()
                     );
@@ -211,7 +212,7 @@ namespace RogueliteSurvivor.Systems
 
         private void createBloodLich(Position? player, Vector2 offset)
         {
-            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, AttackSpeed, Body, Pickup>();
+            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell, Body, Pickup>();
 
             var body = new BodyDef();
             body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
@@ -227,7 +228,7 @@ namespace RogueliteSurvivor.Systems
                         new Target(),
                         new Health() { Current = 100, Max = 100 },
                         new Damage() { Amount = 10, BaseAmount = 10 },
-                        new AttackSpeed() { BaseAttacksPerSecond = 1f, CurrentAttacksPerSecond = 1f, Cooldown = 0 },
+                        SpellFactory.CreateSpell(Spells.EnemyMelee),
                         BodyFactory.CreateCircularBody(entity, 32, physicsWorld, body),
                         createPickupForEnemy()
                     );

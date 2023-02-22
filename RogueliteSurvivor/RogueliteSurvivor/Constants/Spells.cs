@@ -11,5 +11,6 @@ namespace RogueliteSurvivor.Constants
         Fireball,
         IceShard,
         LightningBlast,
+        EnemyMelee,
     }
 }

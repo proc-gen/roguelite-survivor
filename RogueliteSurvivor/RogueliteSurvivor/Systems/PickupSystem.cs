@@ -44,7 +44,7 @@ namespace RogueliteSurvivor.Systems
                     switch(sprite.Type)
                     {
                         case PickupType.AttackSpeed:
-                            var attackSpeed = player.Value.Get<AttackSpeed>();
+                            var attackSpeed = player.Value.Get<Spell>();
                             attackSpeed.CurrentAttacksPerSecond += sprite.PickupAmount * attackSpeed.BaseAttacksPerSecond;
                             player.Value.Set(attackSpeed);
                             world.Destroy(entity);

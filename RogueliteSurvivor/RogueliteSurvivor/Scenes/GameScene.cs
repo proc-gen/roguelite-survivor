@@ -145,7 +145,7 @@ namespace RogueliteSurvivor.Scenes
             body.position = new System.Numerics.Vector2(384, 384) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
 
-            player = world.Create<Player, Position, Velocity, Speed, Animation, SpriteSheet, Target, Spell, AttackSpeed, Health, KillCount, Body>();
+            player = world.Create<Player, Position, Velocity, Speed, Animation, SpriteSheet, Target, Spell, Health, KillCount, Body>();
 
             player.SetRange(
                 new Player() { State = EntityState.Alive },
@@ -156,7 +156,6 @@ namespace RogueliteSurvivor.Scenes
                 new SpriteSheet(textures[gameSettings.PlayerTexture], gameSettings.PlayerTexture, 3, 8),
                 new Target(),
                 SpellFactory.CreateSpell(gameSettings.StartingSpell),
-                new AttackSpeed() { BaseAttacksPerSecond = 2f, CurrentAttacksPerSecond = 2f, Cooldown = 0f },
                 new Health() { Current = 100, Max = 100 },
                 new KillCount() { Count = 0 },
                 BodyFactory.CreateCircularBody(player, 16, physicsWorld, body, 99)
