@@ -32,6 +32,14 @@ namespace RogueliteSurvivor.Systems
                 {
                     vel.Vector = Vector2.Zero;
                 }
+                else if (entity.Has<Slow>())
+                {
+                    vel.Vector *= 0.5f;
+                }
+                else if (entity.Has<Shock>())
+                {
+                    vel.Vector = Vector2.Zero;
+                }
                 body.SetLinearVelocity(vel.VectorPhysics / PhysicsConstants.PhysicsToPixelsRatio);
             });
 

@@ -117,6 +117,7 @@ namespace RogueliteSurvivor.Scenes
 
             updateSystems = new List<IUpdateSystem>
             {
+                new SpellEffectSystem(world),
                 new PlayerInputSystem(world),
                 new TargetingSystem(world),
                 new EnemyAISystem(world),

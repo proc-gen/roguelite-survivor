@@ -117,13 +117,34 @@ namespace RogueliteSurvivor.Physics
                         switch(damage.SpellEffect)
                         {
                             case SpellEffects.Burn:
-                                entity.Add<Burn>();
+                                if (entity.Has<Burn>())
+                                {
+                                    entity.Set(new Burn() { TimeLeft = 5f, TickRate = .5f, NextTick = .5f });
+                                }
+                                else
+                                {
+                                    entity.Add(new Burn() { TimeLeft = 5f, TickRate = .5f, NextTick = .5f });
+                                }
                                 break;
                             case SpellEffects.Slow:
-                                entity.Add<Slow>();
+                                if (entity.Has<Slow>())
+                                {
+                                    entity.Set(new Slow() { TimeLeft = 5f });
+                                }
+                                else
+                                {
+                                    entity.Add(new Slow() { TimeLeft = 5f });
+                                }
                                 break;
                             case SpellEffects.Shock:
-                                entity.Add<Shock>();
+                                if (entity.Has<Shock>())
+                                {
+                                    entity.Set(new Shock() { TimeLeft = 1f });
+                                }
+                                else
+                                {
+                                    entity.Add(new Shock() { TimeLeft = 1f });
+                                }
                                 break;
                         }
                     }

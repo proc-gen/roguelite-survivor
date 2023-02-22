@@ -109,7 +109,7 @@ namespace RogueliteSurvivor.Systems
                 .Add("VampireBat", 10 + difficulty)
                 .Add("GhastlyBeholder", difficulty - 1)
                 .Add("GraveRevenant", difficulty - 2)
-                .Add("BloodLich", difficulty - 3);
+                .Add("BloodLich", 99); // difficulty - 3);
 
             pickupTable = new RandomTable<PickupType>()
                 .Add(PickupType.None, 20 + difficulty)
