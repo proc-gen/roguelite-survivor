@@ -117,34 +117,25 @@ namespace RogueliteSurvivor.Physics
                         switch(damage.SpellEffect)
                         {
                             case SpellEffects.Burn:
-                                if (entity.Has<Burn>())
+                                if (!entity.Has<Burn>())
                                 {
-                                    entity.Set(new Burn() { TimeLeft = 5f, TickRate = .5f, NextTick = .5f });
+                                    entity.Add<Burn>();
                                 }
-                                else
-                                {
-                                    entity.Add(new Burn() { TimeLeft = 5f, TickRate = .5f, NextTick = .5f });
-                                }
+                                entity.Set(new Burn() { TimeLeft = 5f, TickRate = .5f, NextTick = .5f });
                                 break;
                             case SpellEffects.Slow:
-                                if (entity.Has<Slow>())
+                                if (!entity.Has<Slow>())
                                 {
-                                    entity.Set(new Slow() { TimeLeft = 5f });
+                                    entity.Add<Slow>();
                                 }
-                                else
-                                {
-                                    entity.Add(new Slow() { TimeLeft = 5f });
-                                }
+                                entity.Set(new Slow() { TimeLeft = 5f });
                                 break;
                             case SpellEffects.Shock:
-                                if (entity.Has<Shock>())
+                                if (!entity.Has<Shock>())
                                 {
-                                    entity.Set(new Shock() { TimeLeft = 1f });
+                                    entity.Add<Shock>();
                                 }
-                                else
-                                {
-                                    entity.Add(new Shock() { TimeLeft = 1f });
-                                }
+                                entity.Set(new Shock() { TimeLeft = 1f });
                                 break;
                         }
                     }

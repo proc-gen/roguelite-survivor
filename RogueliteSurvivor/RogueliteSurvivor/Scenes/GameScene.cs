@@ -117,13 +117,13 @@ namespace RogueliteSurvivor.Scenes
 
             updateSystems = new List<IUpdateSystem>
             {
-                new SpellEffectSystem(world),
                 new PlayerInputSystem(world),
                 new TargetingSystem(world),
                 new EnemyAISystem(world),
                 new AnimationSetSystem(world),
                 new AnimationUpdateSystem(world),
                 new CollisionSystem(world, physicsWorld),
+                new SpellEffectSystem(world),
                 new PickupSystem(world),
                 new EnemySpawnSystem(world, textures, physicsWorld, _graphics),
                 new AttackSystem(world, textures, physicsWorld),
