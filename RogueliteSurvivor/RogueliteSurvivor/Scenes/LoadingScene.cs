@@ -19,6 +19,10 @@ namespace RogueliteSurvivor.Scenes
         private Dictionary<string, Texture2D> textures;
         private Dictionary<string, SpriteFont> fonts;
 
+        private float counter = 0f;
+        private string[] dots = new string[4] { "", ".", "..", "..." };
+        private int doot = 0;
+
         public LoadingScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
         {
@@ -40,9 +44,20 @@ namespace RogueliteSurvivor.Scenes
 
             if ((bool)values[0])
             {
-                if (Keyboard.GetState().IsKeyDown(Keys.Space) || GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed)
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter) || GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed)
                 {
                     retVal = "game";
+                    doot = 0;
+                    counter = 0f;
+                }
+            }
+            else
+            {
+                counter += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (counter > 0.33f)
+                {
+                    counter = 0f;
+                    doot = (doot + 1) % 4;
                 }
             }
 
@@ -55,17 +70,37 @@ namespace RogueliteSurvivor.Scenes
 
             _spriteBatch.DrawString(
                 fonts["Font"],
-                (bool)values[0] ? "Time to kill the bats!" : "Loading...",
-                new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6),
+                "Roguelite Survivor",
+                new Vector2(_graphics.PreferredBackBufferWidth / 6 - 62, _graphics.PreferredBackBufferHeight / 6 - 64),
                 Color.White
             );
 
             if ((bool)values[0])
             {
                 _spriteBatch.DrawString(
+                fonts["Font"],
+                "Time to kill the bats!",
+                new Vector2(_graphics.PreferredBackBufferWidth / 6 - 66, _graphics.PreferredBackBufferHeight / 6),
+                Color.White
+            );
+            }
+            else
+            {
+                _spriteBatch.DrawString(
+                fonts["Font"],
+                "Loading" + dots[doot],
+                new Vector2(_graphics.PreferredBackBufferWidth / 6 - 30, _graphics.PreferredBackBufferHeight / 6),
+                Color.White
+            );
+            }
+            
+
+            if ((bool)values[0])
+            {
+                _spriteBatch.DrawString(
                     fonts["Font"],
-                    "Press Space on the keyboard or Start on the controller to start",
-                    new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 32),
+                    "Press Enter on the keyboard or A on the controller to start",
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 200, _graphics.PreferredBackBufferHeight / 6 + 32),
                     Color.White
                 );
             }

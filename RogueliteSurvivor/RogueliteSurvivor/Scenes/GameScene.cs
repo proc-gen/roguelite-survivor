@@ -164,6 +164,7 @@ namespace RogueliteSurvivor.Scenes
 
             totalGameTime = 0;
             gameState = GameState.Running;
+
             Loaded = true;
         }
 

@@ -153,15 +153,15 @@ namespace RogueliteSurvivor.Scenes
         {
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp, blendState: BlendState.AlphaBlend, transformMatrix: transformMatrix);
 
+            _spriteBatch.DrawString(
+                fonts["Font"],
+                "Roguelite Survivor",
+                new Vector2(_graphics.PreferredBackBufferWidth / 6 - 62, _graphics.PreferredBackBufferHeight / 6 - 64),
+                Color.White
+            );
+
             if (state == MainMenuState.MainMenu)
             {
-                _spriteBatch.DrawString(
-                    fonts["Font"],
-                    "Roguelite Survivor",
-                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 62, _graphics.PreferredBackBufferHeight / 6 - 64),
-                    Color.White
-                );
-
                 _spriteBatch.Draw(
                     textures["MainMenuButtons"],
                     new Vector2(_graphics.PreferredBackBufferWidth / 6, _graphics.PreferredBackBufferHeight / 6),
@@ -203,13 +203,13 @@ namespace RogueliteSurvivor.Scenes
                 _spriteBatch.DrawString(
                     fonts["Font"],
                     "Choose your wizard:",
-                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 70, _graphics.PreferredBackBufferHeight / 6 - 64),
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 70, _graphics.PreferredBackBufferHeight / 6 - 32),
                     Color.White
                 );
 
                 _spriteBatch.Draw(
                     textures["CharacterSelectButtons"],
-                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 80, _graphics.PreferredBackBufferHeight / 6),
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 80, _graphics.PreferredBackBufferHeight / 6 + 32),
                     new Rectangle(0 + selectedButton == 1 ? 64 : 0, 64, 64, 64),
                     Color.White,
                     0f,
@@ -221,7 +221,7 @@ namespace RogueliteSurvivor.Scenes
 
                 _spriteBatch.Draw(
                     textures["CharacterSelectButtons"],
-                    new Vector2(_graphics.PreferredBackBufferWidth / 6, _graphics.PreferredBackBufferHeight / 6),
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6, _graphics.PreferredBackBufferHeight / 6 + 32),
                     new Rectangle(0 + selectedButton == 2 ? 64 : 0, 128, 64, 64),
                     Color.White,
                     0f,
@@ -233,7 +233,7 @@ namespace RogueliteSurvivor.Scenes
 
                 _spriteBatch.Draw(
                     textures["CharacterSelectButtons"],
-                    new Vector2(_graphics.PreferredBackBufferWidth / 6 + 80, _graphics.PreferredBackBufferHeight / 6),
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 + 80, _graphics.PreferredBackBufferHeight / 6 + 32),
                     new Rectangle(0 + selectedButton == 3 ? 64 : 0, 192, 64, 64),
                     Color.White,
                     0f,
@@ -246,7 +246,7 @@ namespace RogueliteSurvivor.Scenes
                 _spriteBatch.DrawString(
                     fonts["Font"],
                     "Press Esc on the keyboard or B on the controller to go back",
-                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 200, _graphics.PreferredBackBufferHeight / 6 + 64),
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 200, _graphics.PreferredBackBufferHeight / 6 + 96),
                     Color.White
                 );
             }
