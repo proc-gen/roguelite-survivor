@@ -112,6 +112,21 @@ namespace RogueliteSurvivor.Physics
                     Animation anim = entity.Get<Animation>();
                     anim.Overlay = Microsoft.Xna.Framework.Color.Red;
                     entity.SetRange(health, anim);
+                    if(damage.SpellEffect != SpellEffects.None)
+                    {
+                        switch(damage.SpellEffect)
+                        {
+                            case SpellEffects.Burn:
+                                entity.Add<Burn>();
+                                break;
+                            case SpellEffects.Slow:
+                                entity.Add<Slow>();
+                                break;
+                            case SpellEffects.Shock:
+                                entity.Add<Shock>();
+                                break;
+                        }
+                    }
                 }
             }
         }

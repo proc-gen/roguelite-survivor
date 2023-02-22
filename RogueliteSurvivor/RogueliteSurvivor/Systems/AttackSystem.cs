@@ -19,6 +19,7 @@ namespace RogueliteSurvivor.Systems
     {
         Dictionary<string, Texture2D> textures;
         Box2D.NetStandard.Dynamics.World.World physicsWorld;
+        Random random;
 
         public AttackSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld)
             : base(world, new QueryDescription()
@@ -26,12 +27,13 @@ namespace RogueliteSurvivor.Systems
         {
             this.textures = textures;
             this.physicsWorld = physicsWorld;
+            random = new Random();
         }
 
         public void Update(GameTime gameTime, float totalElapsedTime)
         {
             world.Query(in query, (in Entity entity, ref Position pos, ref Target target, ref Spell spell) =>
-{
+            {
                 spell.Cooldown += (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
 
                 if (spell.BaseProjectileSpeed > 0 
@@ -50,6 +52,15 @@ namespace RogueliteSurvivor.Systems
 
                     var projectile = world.Create<Projectile, Position, Velocity, Speed, Animation, SpriteSheet, Damage, Owner, Body>();
 
+                    SpellEffects projectileEffect = SpellEffects.None;
+                    if(spell.Effect != SpellEffects.None)
+                    {
+                        if(random.Next(1000) < (spell.CurrentEffectChance * 1000))
+                        {
+                            projectileEffect = spell.Effect;
+                        }
+                    }
+
                     projectile.SetRange(
                         new Projectile() { State = EntityState.Alive },
                         new Position() { XY = new Vector2(body.position.X, body.position.Y) },
@@ -57,7 +68,7 @@ namespace RogueliteSurvivor.Systems
                         new Speed() { speed = spell.CurrentProjectileSpeed },
                         getProjectileAnimation(spell.CurrentSpell),
                         getProjectileSpriteSheet(spell.CurrentSpell, pos.XY, targetPosition),
-                        new Damage() { Amount = spell.CurrentDamage, BaseAmount = spell.CurrentDamage },
+                        new Damage() { Amount = spell.CurrentDamage, BaseAmount = spell.CurrentDamage, SpellEffect = projectileEffect },
                         new Owner() { Entity = entity },
                         BodyFactory.CreateCircularBody(projectile, 16, physicsWorld, body, .1f)
                     );

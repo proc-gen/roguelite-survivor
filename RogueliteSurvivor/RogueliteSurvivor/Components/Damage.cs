@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RogueliteSurvivor.Constants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,6 @@ namespace RogueliteSurvivor.Components
     {
         public float Amount { get; set; }
         public float BaseAmount { get; set; }
+        public SpellEffects SpellEffect { get; set; }
     }
 }
