@@ -44,7 +44,7 @@ namespace RogueliteSurvivor.Systems
             Vector2 targetPos = new Vector2(9999, 9999);
             world.Query(in targetQuery, (in Entity other, ref Position otherPos) =>
             {
-                if (!other.Has<Enemy>() || other.Get<Enemy>().State != Constants.EntityState.Dead)
+                if (other.IsAlive() && (!other.Has<Enemy>() || other.Get<Enemy>().State != Constants.EntityState.Dead))
                 {
                     if (!target.HasValue)
                     {

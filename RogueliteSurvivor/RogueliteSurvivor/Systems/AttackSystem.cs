@@ -36,15 +36,18 @@ namespace RogueliteSurvivor.Systems
         {
             world.Query(in query, (in Entity entity, ref Position pos, ref Target target) =>
             {
-                if (entity.TryGet(out Spell1 spell1))
+                if (entity.IsAlive())
                 {
-                    spell1.Cooldown = processSpell(gameTime, entity, pos, target, spell1.ToSpell());
-                    entity.Set(spell1);
-                }
-                if (entity.TryGet(out Spell2 spell2))
-                {
-                    spell2.Cooldown = processSpell(gameTime, entity, pos, target, spell2.ToSpell());
-                    entity.Set(spell2);
+                    if (entity.TryGet(out Spell1 spell1))
+                    {
+                        spell1.Cooldown = processSpell(gameTime, entity, pos, target, spell1.ToSpell());
+                        entity.Set(spell1);
+                    }
+                    if (entity.TryGet(out Spell2 spell2))
+                    {
+                        spell2.Cooldown = processSpell(gameTime, entity, pos, target, spell2.ToSpell());
+                        entity.Set(spell2);
+                    }
                 }
             });
         }
