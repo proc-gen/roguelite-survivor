@@ -26,6 +26,7 @@ namespace RogueliteSurvivor.Scenes
 
         private MainMenuState state;
         private Spells selectedSpell;
+        private Spells selectedSecondarySpell;
         private int selectedButton = 1;
 
 
@@ -111,13 +112,16 @@ namespace RogueliteSurvivor.Scenes
                         switch (selectedButton)
                         {
                             case 1:
-                                selectedSpell = Spells.FireExplosion;
+                                selectedSpell = Spells.Fireball;
+                                selectedSecondarySpell = Spells.FireExplosion;
                                 break;
                             case 2:
-                                selectedSpell = Spells.IceSpikes;
+                                selectedSpell = Spells.IceShard;
+                                selectedSecondarySpell = Spells.IceSpikes;
                                 break;
                             case 3:
-                                selectedSpell = Spells.LightningStrike;
+                                selectedSpell = Spells.LightningBlast;
+                                selectedSecondarySpell = Spells.LightningStrike;
                                 break;
                         }
 
@@ -258,6 +262,7 @@ namespace RogueliteSurvivor.Scenes
         {
             var gameSettings = new GameSettings();
             gameSettings.StartingSpell = selectedSpell;
+            gameSettings.SecondarySpell = selectedSecondarySpell;
 
             switch (selectedSpell)
             {

@@ -24,7 +24,8 @@ namespace RogueliteSurvivor.Systems
 
         public AttackSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld)
             : base(world, new QueryDescription()
-                                .WithAll<Target, Spell>())
+                                .WithAll<Target>()
+                                .WithAny<Spell1, Spell2>())
         {
             this.textures = textures;
             this.physicsWorld = physicsWorld;
@@ -33,37 +34,52 @@ namespace RogueliteSurvivor.Systems
 
         public void Update(GameTime gameTime, float totalElapsedTime)
         {
-            world.Query(in query, (in Entity entity, ref Position pos, ref Target target, ref Spell spell) =>
+            world.Query(in query, (in Entity entity, ref Position pos, ref Target target) =>
             {
-                spell.Cooldown += (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
-
-                if (spell.Type != SpellType.None 
-                        && spell.Cooldown > spell.CurrentAttackSpeed
-                        && target.Entity.IsAlive() 
-                        && target.Entity.Has<Position>())
+                if (entity.TryGet(out Spell1 spell1))
                 {
-                    spell.Cooldown -= spell.CurrentAttackSpeed;
+                    spell1.Cooldown = processSpell(gameTime, entity, pos, target, spell1.ToSpell());
+                    entity.Set(spell1);
+                }
+                if (entity.TryGet(out Spell2 spell2))
+                {
+                    spell2.Cooldown = processSpell(gameTime, entity, pos, target, spell2.ToSpell());
+                    entity.Set(spell2);
+                }
+            });
+        }
 
-                    SpellEffects effect = SpellEffects.None;
-                    if(spell.Effect != SpellEffects.None)
-                    {
-                        if(random.Next(1000) < (spell.CurrentEffectChance * 1000))
-                        {
-                            effect = spell.Effect;
-                        }
-                    }
+        private float processSpell(GameTime gameTime, Entity entity, Position pos, Target target, Spell spell)
+        {
+            spell.Cooldown += (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
 
-                    if(spell.Type == SpellType.Projectile)
+            if (spell.Type != SpellType.None
+                    && spell.Cooldown > spell.CurrentAttackSpeed
+                    && target.Entity.IsAlive()
+                    && target.Entity.Has<Position>())
+            {
+                spell.Cooldown -= spell.CurrentAttackSpeed;
+
+                SpellEffects effect = SpellEffects.None;
+                if (spell.Effect != SpellEffects.None)
+                {
+                    if (random.Next(1000) < (spell.CurrentEffectChance * 1000))
                     {
-                        createProjectile(entity, spell, target, pos, effect);
-                    }
-                    else if(spell.Type == SpellType.SingleTarget)
-                    {
-                        createSingleTarget(entity, spell, target, pos, effect);
+                        effect = spell.Effect;
                     }
                 }
-                
-            });
+
+                if (spell.Type == SpellType.Projectile)
+                {
+                    createProjectile(entity, spell, target, pos, effect);
+                }
+                else if (spell.Type == SpellType.SingleTarget)
+                {
+                    createSingleTarget(entity, spell, target, pos, effect);
+                }
+            }
+
+            return spell.Cooldown;
         }
 
         private void createProjectile(Entity entity, Spell spell, Target target, Position pos, SpellEffects effect)

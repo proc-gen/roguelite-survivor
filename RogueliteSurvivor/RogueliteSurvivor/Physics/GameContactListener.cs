@@ -186,7 +186,7 @@ namespace RogueliteSurvivor.Physics
 
         private void setPlayerHealthAndState(Entity entity, Entity other, Player player)
         {   
-            Spell attackSpeed = other.Get<Spell>();
+            var attackSpeed = other.Get<Spell1>();
             if(attackSpeed.Cooldown > attackSpeed.CurrentAttackSpeed)
             {
                 attackSpeed.Cooldown -= attackSpeed.CurrentAttackSpeed;
