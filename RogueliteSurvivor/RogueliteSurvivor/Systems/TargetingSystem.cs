@@ -26,12 +26,15 @@ namespace RogueliteSurvivor.Systems
         {
             world.Query(in query, (in Entity entity, ref Position pos, ref Target target) =>
             {
-                Entity? targetEntity = findTarget(entity.Has<Enemy>() ? playerQuery : enemyQuery, pos.XY);
-
-                if(targetEntity.HasValue)
+                if (entity.IsAlive())
                 {
-                    target.Entity = targetEntity.Value;
-                }                
+                    Entity? targetEntity = findTarget(entity.Has<Enemy>() ? playerQuery : enemyQuery, pos.XY);
+
+                    if (targetEntity.HasValue)
+                    {
+                        target.Entity = targetEntity.Value;
+                    }
+                }
             });
         }
 

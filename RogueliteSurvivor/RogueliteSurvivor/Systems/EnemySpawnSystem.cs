@@ -70,7 +70,10 @@ namespace RogueliteSurvivor.Systems
                     {
                         createPickup(pickup, position);
                     }
-                    world.Destroy(entity);
+                    if (entity.IsAlive())
+                    {
+                        world.Destroy(entity);
+                    }
                 }
                 else
                 {

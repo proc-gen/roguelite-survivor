@@ -107,7 +107,7 @@ namespace RogueliteSurvivor.ComponentFactories
                     animation = new Animation(0, 4, .1f, 1);
                     break;
                 case Spells.LightningStrike:
-                    animation = new Animation(0, 12, .1f, 1, false);
+                    animation = new Animation(0, 12, .05f, 1, false);
                     break;
             }
             return animation.Value;
@@ -154,8 +154,8 @@ namespace RogueliteSurvivor.ComponentFactories
                     target.DamageEndDelay = .5f;
                     break;
                 case Spells.LightningStrike:
-                    target.DamageStartDelay = .5f;
-                    target.DamageEndDelay = .8f;
+                    target.DamageStartDelay = .25f;
+                    target.DamageEndDelay = .4f;
                     break;
             }
             return target;
