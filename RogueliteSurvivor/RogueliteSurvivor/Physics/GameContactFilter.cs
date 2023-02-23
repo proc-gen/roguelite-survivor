@@ -32,6 +32,10 @@ namespace RogueliteSurvivor.Physics
             {
                retVal = true;
             }
+            else if ((a.Has<SingleTarget>() && fixtureA.Body.IsAwake() && b.Has<Enemy>()) || (b.Has<SingleTarget>() && fixtureB.Body.IsAwake() && a.Has<Enemy>()))
+            {
+                retVal = true;
+            }
             else if ((a.Has<Player>() && b.Has<Enemy>()) || (b.Has<Player>() && a.Has<Enemy>()))
             {
                retVal = true;

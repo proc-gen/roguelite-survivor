@@ -17,6 +17,8 @@ namespace RogueliteSurvivor.Systems
     public class CollisionSystem : ArchSystem, IUpdateSystem
     {
         Box2D.NetStandard.Dynamics.World.World physicsWorld;
+        QueryDescription singleTargetQuery = new QueryDescription()
+                                                    .WithAll<SingleTarget, Body>();
         public CollisionSystem(World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
             : base(world, new QueryDescription()
                                 .WithAll<Position, Velocity, Body>())
@@ -41,6 +43,21 @@ namespace RogueliteSurvivor.Systems
                     vel.Vector = Vector2.Zero;
                 }
                 body.SetLinearVelocity(vel.VectorPhysics / PhysicsConstants.PhysicsToPixelsRatio);
+            });
+
+            world.Query(in singleTargetQuery, (ref SingleTarget single, ref Body body) =>
+            {
+                single.DamageStartDelay -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                single.DamageEndDelay -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if(single.DamageStartDelay < 0 && !body.IsAwake())
+                {
+                    body.SetAwake(true);
+                }
+                else if(single.DamageEndDelay < 0 && body.IsAwake())
+                {
+                    body.SetAwake(false);
+                }
             });
 
             physicsWorld.Step(1/60f, 8, 3);

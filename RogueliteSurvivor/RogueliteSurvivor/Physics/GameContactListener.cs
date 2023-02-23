@@ -64,6 +64,25 @@ namespace RogueliteSurvivor.Physics
                         damageEnemy(a, b, damage, owner);
                     }
                 }
+                else if ((a.Has<SingleTarget>() && b.Has<Enemy>()) || (b.Has<SingleTarget>() && a.Has<Enemy>()))
+                {
+                    SingleTarget p;
+                    Damage damage;
+                    Owner owner;
+                    if (!a.TryGet(out p))
+                    {
+                        b.TryGet(out p);
+                        damage = b.Get<Damage>();
+                        owner = b.Get<Owner>();
+                    }
+                    else
+                    {
+                        damage = a.Get<Damage>();
+                        owner = a.Get<Owner>();
+                    }
+
+                    damageEnemy(a, b, damage, owner);
+                }
                 else if ((a.Has<Projectile>() && b.Has<Map>()) || (b.Has<Projectile>() && a.Has<Map>()))
                 {
                     if (!a.TryGet(out Projectile p))

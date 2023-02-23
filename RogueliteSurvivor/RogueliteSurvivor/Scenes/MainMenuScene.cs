@@ -111,13 +111,13 @@ namespace RogueliteSurvivor.Scenes
                         switch (selectedButton)
                         {
                             case 1:
-                                selectedSpell = Spells.Fireball;
+                                selectedSpell = Spells.FireExplosion;
                                 break;
                             case 2:
-                                selectedSpell = Spells.IceShard;
+                                selectedSpell = Spells.IceSpikes;
                                 break;
                             case 3:
-                                selectedSpell = Spells.LightningBlast;
+                                selectedSpell = Spells.LightningStrike;
                                 break;
                         }
 
@@ -262,12 +262,15 @@ namespace RogueliteSurvivor.Scenes
             switch (selectedSpell)
             {
                 case Spells.Fireball:
+                case Spells.FireExplosion:
                     gameSettings.PlayerTexture = "player";
                     break;
                 case Spells.IceShard:
+                case Spells.IceSpikes:
                     gameSettings.PlayerTexture = "player_blue";
                     break;
                 case Spells.LightningBlast:
+                case Spells.LightningStrike:
                     gameSettings.PlayerTexture = "player_yellow";
                     break;
             }

@@ -21,6 +21,8 @@ namespace RogueliteSurvivor.Systems
                                             .WithAll<Enemy, Position, SpriteSheet, Animation>();
         QueryDescription projectileQuery = new QueryDescription()
                                             .WithAll<Projectile, Position, SpriteSheet, Animation>();
+        QueryDescription singleTargetQuery = new QueryDescription()
+                                            .WithAll<SingleTarget, Position, SpriteSheet, Animation>();
 
         public RenderSpriteSystem(World world, GraphicsDeviceManager graphics)
             : base(world, new QueryDescription()
@@ -54,6 +56,15 @@ namespace RogueliteSurvivor.Systems
                 world.Query(in projectileQuery, (ref Projectile projectile, ref Position pos, ref Animation anim, ref SpriteSheet sprite) =>
                 {
                     if (projectile.State != EntityState.Dead)
+                    {
+                        Vector2 position = pos.XY - playerPosition;
+                        renderEntity(spriteBatch, textures, sprite, anim, position, offset);
+                    }
+                });
+
+                world.Query(in singleTargetQuery, (ref SingleTarget single, ref Position pos, ref Animation anim, ref SpriteSheet sprite) =>
+                {
+                    if (single.State != EntityState.Dead)
                     {
                         Vector2 position = pos.XY - playerPosition;
                         renderEntity(spriteBatch, textures, sprite, anim, position, offset);

@@ -11,6 +11,7 @@ namespace RogueliteSurvivor.Components
     {
         public Spells CurrentSpell { get; set; }
         public SpellEffects Effect { get; set; }
+        public SpellType Type { get; set; }
         public float BaseEffectChance { get; set; }
         public float CurrentEffectChance { get; set; }
         public float BaseDamage { get; set; }

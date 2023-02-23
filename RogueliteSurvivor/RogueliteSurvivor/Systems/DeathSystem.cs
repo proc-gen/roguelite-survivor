@@ -19,6 +19,9 @@ namespace RogueliteSurvivor.Systems
                                             .WithAll<Projectile>();
         QueryDescription enemyQuery = new QueryDescription()
                                             .WithAll<Enemy>();
+        QueryDescription singleTargetQuery = new QueryDescription()
+                                            .WithAll<SingleTarget>();
+
         Dictionary<string, Texture2D> textures;
         Box2D.NetStandard.Dynamics.World.World physicsWorld;
         Random random;
@@ -66,6 +69,22 @@ namespace RogueliteSurvivor.Systems
                     if(animation.CurrentFrame == animation.LastFrame)
                     {
                         enemy.State = EntityState.Dead;
+                    }
+                }
+            });
+
+            world.Query(in singleTargetQuery, (ref SingleTarget single, ref Animation animation, ref Body body) =>
+            {
+                if (single.State == EntityState.Alive && single.DamageEndDelay < 0)
+                {
+                    single.State = EntityState.Dying;
+                    physicsWorld.DestroyBody(body);
+                }
+                else if (single.State == EntityState.Dying)
+                {
+                    if (animation.CurrentFrame == animation.LastFrame)
+                    {
+                        single.State = EntityState.Dead;
                     }
                 }
             });

@@ -362,6 +362,18 @@
 /processorParam:TextureFormat=Color
 /build:Player/Animated_Mage_Character.png
 
+#begin Spells/fire-explosion.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Spells/fire-explosion.png
+
 #begin Spells/fireball.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -386,6 +398,18 @@
 /processorParam:TextureFormat=Color
 /build:Spells/ice-shard.png
 
+#begin Spells/ice-spikes.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Spells/ice-spikes.png
+
 #begin Spells/lightning-blast.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -397,6 +421,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Spells/lightning-blast.png
+
+#begin Spells/lightning-strike.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Spells/lightning-strike.png
 
 #begin UI/character-selection-buttons.png
 /importer:TextureImporter
