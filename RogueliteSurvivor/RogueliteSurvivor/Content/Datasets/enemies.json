@@ -1,0 +1,78 @@
+[
+  {
+    "type": "enemy",
+    "name": "VampireBat",
+    "health": 10,
+    "damage": 2,
+    "speed": 50,
+    "spell": "EnemyMelee",
+    "width": 16,
+    "animation": {
+      "firstFrame": 0,
+      "lastFrame": 3,
+      "playbackSpeed": 0.1,
+      "numDirections": 2
+    },
+    "spriteSheet": {
+      "framesPerRow": 4,
+      "framesPerColumn": 2
+    }
+  },
+  {
+    "type": "enemy",
+    "name": "GhastlyBeholder",
+    "health": 10,
+    "damage": 2,
+    "speed": 50,
+    "spell": "EnemyMelee",
+    "width": 16,
+    "animation": {
+      "firstFrame": 0,
+      "lastFrame": 3,
+      "playbackSpeed": 0.1,
+      "numDirections": 2
+    },
+    "spriteSheet": {
+      "framesPerRow": 4,
+      "framesPerColumn": 2
+    }
+  },
+  {
+    "type": "enemy",
+    "name": "GraveRevenant",
+    "health": 10,
+    "damage": 2,
+    "speed": 50,
+    "spell": "EnemyMelee",
+    "width": 16,
+    "animation": {
+      "firstFrame": 0,
+      "lastFrame": 3,
+      "playbackSpeed": 0.1,
+      "numDirections": 2
+    },
+    "spriteSheet": {
+      "framesPerRow": 4,
+      "framesPerColumn": 2
+    }
+  },
+  {
+    "type": "enemy",
+    "name": "BloodLich",
+    "health": 100,
+    "damage": 10,
+    "speed": 25,
+    "spell": "EnemyMelee",
+    "width": 32,
+    "animation": {
+      "firstFrame": 0,
+      "lastFrame": 9,
+      "playbackSpeed": 0.1,
+      "numDirections": 2
+    },
+    "spriteSheet": {
+      "framesPerRow": 10,
+      "framesPerColumn": 2
+    }
+  }
+]

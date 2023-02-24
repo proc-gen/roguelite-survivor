@@ -13,6 +13,9 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Datasets/enemies.json
+/copy:Datasets/enemies.json
+
 #begin Effects/blood-1.png
 /importer:TextureImporter
 /processor:TextureProcessor
