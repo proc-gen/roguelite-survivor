@@ -20,29 +20,32 @@ namespace RogueliteSurvivor.Physics
             Entity a = (Entity)fixtureA.Body.UserData;
             Entity b = (Entity)fixtureB.Body.UserData;
 
-            if (a.Has<Map>() || b.Has<Map>())
+            if (a.IsAlive() && b.IsAlive())
             {
-                retVal = true;
-            }
-            else if (a.Has<Enemy>() && b.Has<Enemy>())
-            {
-                retVal = true;
-            }
-            else if ((a.Has<Projectile>() && b.Has<Enemy>()) || (b.Has<Projectile>() && a.Has<Enemy>()))
-            {
-               retVal = true;
-            }
-            else if ((a.Has<SingleTarget>() && fixtureA.Body.IsAwake() && b.Has<Enemy>()) || (b.Has<SingleTarget>() && fixtureB.Body.IsAwake() && a.Has<Enemy>()))
-            {
-                retVal = true;
-            }
-            else if ((a.Has<Player>() && b.Has<Enemy>()) || (b.Has<Player>() && a.Has<Enemy>()))
-            {
-               retVal = true;
-            }
-            else if ((a.Has<Player>() && b.Has<Pickup>()) || (b.Has<Player>() && a.Has<Pickup>()))
-            {
-                retVal = true;
+                if (a.Has<Map>() || b.Has<Map>())
+                {
+                    retVal = true;
+                }
+                else if (a.Has<Enemy>() && b.Has<Enemy>())
+                {
+                    retVal = true;
+                }
+                else if ((a.Has<Projectile>() && b.Has<Enemy>()) || (b.Has<Projectile>() && a.Has<Enemy>()))
+                {
+                    retVal = true;
+                }
+                else if ((a.Has<SingleTarget>() && fixtureA.Body.IsAwake() && b.Has<Enemy>()) || (b.Has<SingleTarget>() && fixtureB.Body.IsAwake() && a.Has<Enemy>()))
+                {
+                    retVal = true;
+                }
+                else if ((a.Has<Player>() && b.Has<Enemy>()) || (b.Has<Player>() && a.Has<Enemy>()))
+                {
+                    retVal = true;
+                }
+                else if ((a.Has<Player>() && b.Has<Pickup>()) || (b.Has<Player>() && a.Has<Pickup>()))
+                {
+                    retVal = true;
+                }
             }
 
             return retVal;

@@ -27,53 +27,62 @@ namespace RogueliteSurvivor.Systems
         {
             world.Query(in burnQuery, (in Entity entity, ref Burn burn, ref Health health, ref Animation anim) =>
             {
-                burn.TimeLeft -= (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
-                burn.NextTick -= (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
-
-                if(burn.NextTick < 0)
+                if (entity.IsAlive())
                 {
-                    health.Current -= 1;
-                    burn.NextTick += burn.TickRate;
-                    anim.Overlay = Color.Red;
+                    burn.TimeLeft -= (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
+                    burn.NextTick -= (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
 
-                    if(health.Current < 1) 
+                    if (burn.NextTick < 0)
                     {
-                        if(entity.TryGet(out Player player))
+                        health.Current -= 1;
+                        burn.NextTick += burn.TickRate;
+                        anim.Overlay = Color.Red;
+
+                        if (health.Current < 1)
                         {
-                            player.State = Constants.EntityState.Dead;
-                            entity.Set(player);
-                        }
-                        else if(entity.TryGet(out Enemy enemy))
-                        {
-                            enemy.State = Constants.EntityState.ReadyToDie;
-                            entity.Set(enemy);
+                            if (entity.TryGet(out Player player))
+                            {
+                                player.State = Constants.EntityState.Dead;
+                                entity.Set(player);
+                            }
+                            else if (entity.TryGet(out Enemy enemy))
+                            {
+                                enemy.State = Constants.EntityState.ReadyToDie;
+                                entity.Set(enemy);
+                            }
                         }
                     }
-                }
 
-                if (burn.TimeLeft < 0)
-                {
-                    entity.Remove<Burn>();
+                    if (burn.TimeLeft < 0)
+                    {
+                        entity.Remove<Burn>();
+                    }
                 }
             });
 
             world.Query(in slowQuery, (in Entity entity, ref Slow slow) =>
             {
-                slow.TimeLeft -= (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
-
-                if (slow.TimeLeft < 0)
+                if (entity.IsAlive())
                 {
-                    entity.Remove<Slow>();
+                    slow.TimeLeft -= (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
+
+                    if (slow.TimeLeft < 0)
+                    {
+                        entity.Remove<Slow>();
+                    }
                 }
             });
 
             world.Query(in shockQuery, (in Entity entity, ref Shock shock) =>
             {
-                shock.TimeLeft -= (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
-
-                if (shock.TimeLeft < 0)
+                if (entity.IsAlive())
                 {
-                    entity.Remove<Shock>();
+                    shock.TimeLeft -= (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
+
+                    if (shock.TimeLeft < 0)
+                    {
+                        entity.Remove<Shock>();
+                    }
                 }
             });
         }

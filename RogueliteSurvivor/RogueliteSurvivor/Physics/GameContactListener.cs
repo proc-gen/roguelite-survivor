@@ -33,66 +33,69 @@ namespace RogueliteSurvivor.Physics
                 Entity a = (Entity)contact.GetFixtureA().Body.UserData;
                 Entity b = (Entity)contact.GetFixtureB().Body.UserData;
 
-                if ((a.Has<Player>() && b.Has<Enemy>()) || (b.Has<Player>() && a.Has<Enemy>()))
+                if (a.IsAlive() && b.IsAlive())
                 {
-                    damagePlayer(a, b);
-                }
-                else if ((a.Has<Projectile>() && b.Has<Enemy>()) || (b.Has<Projectile>() && a.Has<Enemy>()))
-                {
-                    Projectile p;
-                    EntityState state;
-                    Damage damage;
-                    Owner owner;
-                    if (!a.TryGet(out p))
+                    if ((a.Has<Player>() && b.Has<Enemy>()) || (b.Has<Player>() && a.Has<Enemy>()))
                     {
-                        b.TryGet(out p);
-                        state = p.State;
-                        damage = b.Get<Damage>();
-                        owner = b.Get<Owner>();
-                        setProjectileDead(b, p);
+                        damagePlayer(a, b);
                     }
-                    else
+                    else if ((a.Has<Projectile>() && b.Has<Enemy>()) || (b.Has<Projectile>() && a.Has<Enemy>()))
                     {
-                        state = p.State;
-                        damage = a.Get<Damage>();
-                        owner = a.Get<Owner>();
-                        setProjectileDead(a, p);
-                    }
+                        Projectile p;
+                        EntityState state;
+                        Damage damage;
+                        Owner owner;
+                        if (!a.TryGet(out p))
+                        {
+                            b.TryGet(out p);
+                            state = p.State;
+                            damage = b.Get<Damage>();
+                            owner = b.Get<Owner>();
+                            setProjectileDead(b, p);
+                        }
+                        else
+                        {
+                            state = p.State;
+                            damage = a.Get<Damage>();
+                            owner = a.Get<Owner>();
+                            setProjectileDead(a, p);
+                        }
 
-                    if (state == EntityState.Alive)
+                        if (state == EntityState.Alive)
+                        {
+                            damageEnemy(a, b, damage, owner);
+                        }
+                    }
+                    else if ((a.Has<SingleTarget>() && b.Has<Enemy>()) || (b.Has<SingleTarget>() && a.Has<Enemy>()))
                     {
+                        SingleTarget p;
+                        Damage damage;
+                        Owner owner;
+                        if (!a.TryGet(out p))
+                        {
+                            b.TryGet(out p);
+                            damage = b.Get<Damage>();
+                            owner = b.Get<Owner>();
+                        }
+                        else
+                        {
+                            damage = a.Get<Damage>();
+                            owner = a.Get<Owner>();
+                        }
+
                         damageEnemy(a, b, damage, owner);
                     }
-                }
-                else if ((a.Has<SingleTarget>() && b.Has<Enemy>()) || (b.Has<SingleTarget>() && a.Has<Enemy>()))
-                {
-                    SingleTarget p;
-                    Damage damage;
-                    Owner owner;
-                    if (!a.TryGet(out p))
+                    else if ((a.Has<Projectile>() && b.Has<Map>()) || (b.Has<Projectile>() && a.Has<Map>()))
                     {
-                        b.TryGet(out p);
-                        damage = b.Get<Damage>();
-                        owner = b.Get<Owner>();
-                    }
-                    else
-                    {
-                        damage = a.Get<Damage>();
-                        owner = a.Get<Owner>();
-                    }
-
-                    damageEnemy(a, b, damage, owner);
-                }
-                else if ((a.Has<Projectile>() && b.Has<Map>()) || (b.Has<Projectile>() && a.Has<Map>()))
-                {
-                    if (!a.TryGet(out Projectile p))
-                    {
-                        b.TryGet(out p);
-                        setProjectileDead(b, p);
-                    }
-                    else
-                    {
-                        setProjectileDead(a, p);
+                        if (!a.TryGet(out Projectile p))
+                        {
+                            b.TryGet(out p);
+                            setProjectileDead(b, p);
+                        }
+                        else
+                        {
+                            setProjectileDead(a, p);
+                        }
                     }
                 }
             }

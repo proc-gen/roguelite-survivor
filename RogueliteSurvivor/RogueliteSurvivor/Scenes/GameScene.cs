@@ -5,9 +5,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json.Linq;
 using RogueliteSurvivor.ComponentFactories;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
+using RogueliteSurvivor.Containers;
 using RogueliteSurvivor.Physics;
 using RogueliteSurvivor.Systems;
 using RogueliteSurvivor.Utils;
@@ -36,6 +38,8 @@ namespace RogueliteSurvivor.Scenes
         private float stateChangeTime = .11f;
         private GameSettings gameSettings;
 
+        private List<EnemyContainer> enemyContainers;
+
         public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
         {
@@ -47,6 +51,21 @@ namespace RogueliteSurvivor.Scenes
         }
 
         public override void LoadContent()
+        {
+            loadTexturesAndFonts();
+            loadEnemies();
+            resetWorld();
+            initializeSystems();
+            loadMap();
+            placePlayer();
+            
+            totalGameTime = 0;
+            gameState = GameState.Running;
+
+            Loaded = true;
+        }
+
+        private void loadTexturesAndFonts()
         {
             textures = new Dictionary<string, Texture2D>
             {
@@ -96,28 +115,65 @@ namespace RogueliteSurvivor.Scenes
             {
                 { "Font", Content.Load<SpriteFont>(Path.Combine("Fonts", "Font")) },
             };
+        }
 
-            if(world.CountEntities(new QueryDescription()) > 0)
+        private void loadEnemies()
+        {
+            JObject enemies = JObject.Parse(File.ReadAllText(Path.Combine(Content.RootDirectory, "Datasets", "enemies.json")));
+            enemyContainers = new List<EnemyContainer>();
+            
+            foreach (var enemy in enemies["data"])
+            {
+                enemyContainers.Add(new EnemyContainer()
+                {
+                    Name = (string)enemy["name"],
+                    Health = (int)enemy["health"],
+                    Damage = (int)enemy["damage"],
+                    Speed = (float)enemy["speed"],
+                    Spell = ((string)enemy["spell"]).GetSpellFromString(),
+                    Width = (int)enemy["width"],
+                    Animation = new AnimationContainer()
+                    {
+                        FirstFrame = (int)enemy["animation"]["firstFrame"],
+                        LastFrame = (int)enemy["animation"]["lastFrame"],
+                        PlaybackSpeed = (float)enemy["animation"]["playbackSpeed"],
+                        NumDirections = (int)enemy["animation"]["numDirections"],
+                    },
+                    SpriteSheet = new SpriteSheetContainer()
+                    {
+                        FramesPerRow = (int)enemy["spriteSheet"]["framesPerRow"],
+                        FramesPerColumn = (int)enemy["spriteSheet"]["framesPerColumn"],
+                    }
+                });
+            }
+        }
+
+        private void resetWorld()
+        {
+            if (world.CountEntities(new QueryDescription()) > 0)
             {
                 List<Entity> entities = new List<Entity>();
                 world.GetEntities(new QueryDescription(), entities);
-                foreach(var entity in entities)
+                foreach (var entity in entities)
                 {
                     world.Destroy(entity);
                 }
             }
 
-            if(physicsWorld.GetBodyCount() > 0)
+            if (physicsWorld.GetBodyCount() > 0)
             {
                 var physicsBody = physicsWorld.GetBodyList();
-                while(physicsBody != null) 
+                while (physicsBody != null)
                 {
                     var nextPhysicsBody = physicsBody.GetNext();
                     physicsWorld.DestroyBody(physicsBody);
                     physicsBody = nextPhysicsBody;
                 };
             }
+        }
 
+        private void initializeSystems()
+        {
             updateSystems = new List<IUpdateSystem>
             {
                 new PlayerInputSystem(world),
@@ -141,10 +197,16 @@ namespace RogueliteSurvivor.Scenes
                 new RenderSpriteSystem(world, _graphics),
                 new RenderHudSystem(world, _graphics, fonts),
             };
+        }
 
+        private void loadMap()
+        {
             var mapEntity = world.Create<Map, MapInfo>();
             mapEntity.SetRange(new Map(), new MapInfo(Path.Combine(Content.RootDirectory, "Maps", "Demo.tmx"), Path.Combine(Content.RootDirectory, "Maps"), physicsWorld, mapEntity));
+        }
 
+        private void placePlayer()
+        {
             var body = new BodyDef();
             body.position = new System.Numerics.Vector2(384, 384) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
@@ -165,11 +227,6 @@ namespace RogueliteSurvivor.Scenes
                 new KillCount() { Count = 0 },
                 BodyFactory.CreateCircularBody(player, 16, physicsWorld, body, 99)
             );
-
-            totalGameTime = 0;
-            gameState = GameState.Running;
-
-            Loaded = true;
         }
 
         public override string Update(GameTime gameTime, params object[] values)

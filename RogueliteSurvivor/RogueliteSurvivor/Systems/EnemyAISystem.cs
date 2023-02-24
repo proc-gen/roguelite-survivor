@@ -19,12 +19,15 @@ namespace RogueliteSurvivor.Systems
 
         public void Update(GameTime gameTime, float totalElapsedTime) 
         {
-            world.Query(in query, (ref Position pos, ref Velocity vel, ref Speed sp, ref Target target) =>
+            world.Query(in query, (in Entity entity, ref Position pos, ref Velocity vel, ref Speed sp, ref Target target) =>
             {
-                if (target.Entity.Has<Position>())
+                if (entity.IsAlive())
                 {
-                    var targetPosition = target.Entity.Get<Position>();
-                    vel.Vector = Vector2.Normalize(targetPosition.XY - pos.XY) * sp.speed;
+                    if (target.Entity.Has<Position>())
+                    {
+                        var targetPosition = target.Entity.Get<Position>();
+                        vel.Vector = Vector2.Normalize(targetPosition.XY - pos.XY) * sp.speed;
+                    }
                 }
             });
         }
