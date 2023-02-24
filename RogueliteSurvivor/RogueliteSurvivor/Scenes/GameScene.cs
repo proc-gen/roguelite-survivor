@@ -10,6 +10,7 @@ using RogueliteSurvivor.ComponentFactories;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Containers;
+using RogueliteSurvivor.Extensions;
 using RogueliteSurvivor.Physics;
 using RogueliteSurvivor.Systems;
 using RogueliteSurvivor.Utils;
@@ -38,7 +39,8 @@ namespace RogueliteSurvivor.Scenes
         private float stateChangeTime = .11f;
         private GameSettings gameSettings;
 
-        private List<EnemyContainer> enemyContainers;
+        private Dictionary<string, EnemyContainer> enemyContainers;
+        private Dictionary<string, SpellContainer> spellContainers;
 
         public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
@@ -54,6 +56,7 @@ namespace RogueliteSurvivor.Scenes
         {
             loadTexturesAndFonts();
             loadEnemies();
+            loadSpells();
             resetWorld();
             initializeSystems();
             loadMap();
@@ -120,31 +123,28 @@ namespace RogueliteSurvivor.Scenes
         private void loadEnemies()
         {
             JObject enemies = JObject.Parse(File.ReadAllText(Path.Combine(Content.RootDirectory, "Datasets", "enemies.json")));
-            enemyContainers = new List<EnemyContainer>();
+            enemyContainers = new Dictionary<string, EnemyContainer>();
             
             foreach (var enemy in enemies["data"])
             {
-                enemyContainers.Add(new EnemyContainer()
-                {
-                    Name = (string)enemy["name"],
-                    Health = (int)enemy["health"],
-                    Damage = (int)enemy["damage"],
-                    Speed = (float)enemy["speed"],
-                    Spell = ((string)enemy["spell"]).GetSpellFromString(),
-                    Width = (int)enemy["width"],
-                    Animation = new AnimationContainer()
-                    {
-                        FirstFrame = (int)enemy["animation"]["firstFrame"],
-                        LastFrame = (int)enemy["animation"]["lastFrame"],
-                        PlaybackSpeed = (float)enemy["animation"]["playbackSpeed"],
-                        NumDirections = (int)enemy["animation"]["numDirections"],
-                    },
-                    SpriteSheet = new SpriteSheetContainer()
-                    {
-                        FramesPerRow = (int)enemy["spriteSheet"]["framesPerRow"],
-                        FramesPerColumn = (int)enemy["spriteSheet"]["framesPerColumn"],
-                    }
-                });
+                enemyContainers.Add(
+                    EnemyContainer.EnemyContainerName(enemy), 
+                    EnemyContainer.ToEnemyContainer(enemy)
+                );
+            }
+        }
+
+        private void loadSpells()
+        {
+            JObject spells = JObject.Parse(File.ReadAllText(Path.Combine(Content.RootDirectory, "Datasets", "spells.json")));
+            spellContainers = new Dictionary<string, SpellContainer>();
+
+            foreach (var spell in spells["data"])
+            {
+                spellContainers.Add(
+                    SpellContainer.SpellContainerName(spell),
+                    SpellContainer.ToSpellContainer(spell)
+                );
             }
         }
 
@@ -156,7 +156,7 @@ namespace RogueliteSurvivor.Scenes
                 world.GetEntities(new QueryDescription(), entities);
                 foreach (var entity in entities)
                 {
-                    world.Destroy(entity);
+                    world.TryDestroy(entity);
                 }
             }
 
@@ -184,7 +184,7 @@ namespace RogueliteSurvivor.Scenes
                 new CollisionSystem(world, physicsWorld),
                 new SpellEffectSystem(world),
                 new PickupSystem(world),
-                new EnemySpawnSystem(world, textures, physicsWorld, _graphics),
+                new EnemySpawnSystem(world, textures, physicsWorld, _graphics, enemyContainers),
                 new AttackSystem(world, textures, physicsWorld),
                 new AttackSpellCleanupSystem(world),
                 new DeathSystem(world, textures, physicsWorld),

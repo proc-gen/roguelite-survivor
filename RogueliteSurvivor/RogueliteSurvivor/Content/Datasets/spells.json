@@ -1,0 +1,236 @@
+{
+  "data": [
+    {
+      "spell": "Fireball",
+      "effect": "Burn",
+      "type": "Projectile",
+      "baseEffectChance": 0.1,
+      "currentEffectChance": 0.1,
+      "baseDamage": 8,
+      "currentDamage": 8,
+      "baseProjectileSpeed": 200,
+      "currentProjectileSpeed": 200,
+      "baseAttacksPerSecond": 2,
+      "currentAttacksPerSecond": 2,
+      "damageStartDelay": 0,
+      "damageEndDelay": 0,
+      "aliveAnimation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 1,
+        "repeatable": true
+      },
+      "aliveSpriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 1,
+        "rotation": "target",
+        "scale": 0.5
+      },
+      "hitAnimation": {
+        "firstFrame": 0,
+        "lastFrame": 5,
+        "playbackSpeed": 0.03,
+        "numDirections": 1,
+        "repeatable": false
+      },
+      "hitSpriteSheet": {
+        "framesPerRow": 6,
+        "framesPerColumn": 1,
+        "rotation": "equal",
+        "scale": 0.5
+      }
+    },
+    {
+      "spell": "FireExplosion",
+      "effect": "Burn",
+      "type": "SingleTarget",
+      "baseEffectChance": 0.3,
+      "currentEffectChance": 0.3,
+      "baseDamage": 10,
+      "currentDamage": 10,
+      "baseProjectileSpeed": 0,
+      "currentProjectileSpeed": 0,
+      "baseAttacksPerSecond": 0.5,
+      "currentAttacksPerSecond": 0.5,
+      "damageStartDelay": 0.2,
+      "damageEndDelay": 0.7,
+      "aliveAnimation": {
+        "firstFrame": 0,
+        "lastFrame": 11,
+        "playbackSpeed": 0.1,
+        "numDirections": 1,
+        "repeatable": false
+      },
+      "aliveSpriteSheet": {
+        "framesPerRow": 12,
+        "framesPerColumn": 1,
+        "rotation": "none",
+        "scale": 1
+      },
+      "hitAnimation": null,
+      "hitSpriteSheet": null
+    },
+    {
+      "spell": "IceShard",
+      "effect": "Slow",
+      "type": "Projectile",
+      "baseEffectChance": 0.1,
+      "currentEffectChance": 0.1,
+      "baseDamage": 5,
+      "currentDamage": 5,
+      "baseProjectileSpeed": 300,
+      "currentProjectileSpeed": 300,
+      "baseAttacksPerSecond": 3,
+      "currentAttacksPerSecond": 3,
+      "damageStartDelay": 0,
+      "damageEndDelay": 0,
+      "aliveAnimation": {
+        "firstFrame": 0,
+        "lastFrame": 9,
+        "playbackSpeed": 0.1,
+        "numDirections": 1,
+        "repeatable": true
+      },
+      "aliveSpriteSheet": {
+        "framesPerRow": 10,
+        "framesPerColumn": 1,
+        "rotation": "target",
+        "scale": 0.5
+      },
+      "hitAnimation": {
+        "firstFrame": 0,
+        "lastFrame": 6,
+        "playbackSpeed": 0.03,
+        "numDirections": 1,
+        "repeatable": false
+      },
+      "hitSpriteSheet": {
+        "framesPerRow": 7,
+        "framesPerColumn": 1,
+        "rotation": "equal",
+        "scale": 0.5
+      }
+    },
+    {
+      "spell": "IceSpikes",
+      "effect": "Slow",
+      "type": "SingleTarget",
+      "baseEffectChance": 0.3,
+      "currentEffectChance": 0.3,
+      "baseDamage": 10,
+      "currentDamage": 10,
+      "baseProjectileSpeed": 0,
+      "currentProjectileSpeed": 0,
+      "baseAttacksPerSecond": 0.5,
+      "currentAttacksPerSecond": 0.5,
+      "damageStartDelay": 0.1,
+      "damageEndDelay": 0.5,
+      "aliveAnimation": {
+        "firstFrame": 0,
+        "lastFrame": 25,
+        "playbackSpeed": 0.05,
+        "numDirections": 1,
+        "repeatable": false
+      },
+      "aliveSpriteSheet": {
+        "framesPerRow": 26,
+        "framesPerColumn": 1,
+        "rotation": "none",
+        "scale": 1
+      },
+      "hitAnimation": null,
+      "hitSpriteSheet": null
+    },
+    {
+      "spell": "LightningBlast",
+      "effect": "Shock",
+      "type": "Projectile",
+      "baseEffectChance": 0.1,
+      "currentEffectChance": 0.1,
+      "baseDamage": 3,
+      "currentDamage": 3,
+      "baseProjectileSpeed": 400,
+      "currentProjectileSpeed": 400,
+      "baseAttacksPerSecond": 5,
+      "currentAttacksPerSecond": 5,
+      "damageStartDelay": 0,
+      "damageEndDelay": 0,
+      "aliveAnimation": {
+        "firstFrame": 0,
+        "lastFrame": 4,
+        "playbackSpeed": 0.1,
+        "numDirections": 1,
+        "repeatable": true
+      },
+      "aliveSpriteSheet": {
+        "framesPerRow": 5,
+        "framesPerColumn": 1,
+        "rotation": "target",
+        "scale": 0.5
+      },
+      "hitAnimation": {
+        "firstFrame": 0,
+        "lastFrame": 4,
+        "playbackSpeed": 0.03,
+        "numDirections": 1,
+        "repeatable": false
+      },
+      "hitSpriteSheet": {
+        "framesPerRow": 5,
+        "framesPerColumn": 1,
+        "rotation": "equal",
+        "scale": 0.5
+      }
+    },
+    {
+      "spell": "LightningStrike",
+      "effect": "Shock",
+      "type": "SingleTarget",
+      "baseEffectChance": 0.3,
+      "currentEffectChance": 0.3,
+      "baseDamage": 10,
+      "currentDamage": 10,
+      "baseProjectileSpeed": 0,
+      "currentProjectileSpeed": 0,
+      "baseAttacksPerSecond": 0.5,
+      "currentAttacksPerSecond": 0.5,
+      "damageStartDelay": 0.25,
+      "damageEndDelay": 0.4,
+      "aliveAnimation": {
+        "firstFrame": 0,
+        "lastFrame": 12,
+        "playbackSpeed": 0.05,
+        "numDirections": 1,
+        "repeatable": false
+      },
+      "aliveSpriteSheet": {
+        "framesPerRow": 13,
+        "framesPerColumn": 1,
+        "rotation": "none",
+        "scale": 1
+      },
+      "hitAnimation": null,
+      "hitSpriteSheet": null
+    },
+    {
+      "spell": "EnemyMelee",
+      "effect": "None",
+      "type": "None",
+      "baseEffectChance": 0,
+      "currentEffectChance": 0,
+      "baseDamage": 3,
+      "currentDamage": 3,
+      "baseProjectileSpeed": 0,
+      "currentProjectileSpeed": 0,
+      "baseAttacksPerSecond": 0.5,
+      "currentAttacksPerSecond": 0.5,
+      "damageStartDelay": 0,
+      "damageEndDelay": 0,
+      "aliveAnimation": null,
+      "aliveSpriteSheet": null,
+      "hitAnimation": null,
+      "hitSpriteSheet": null
+    }
+  ]
+}

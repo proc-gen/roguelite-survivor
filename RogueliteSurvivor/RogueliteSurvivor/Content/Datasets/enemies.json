@@ -11,11 +11,13 @@
         "firstFrame": 0,
         "lastFrame": 3,
         "playbackSpeed": 0.1,
-        "numDirections": 2
+        "numDirections": 2,
+        "repeatable": true,
       },
       "spriteSheet": {
         "framesPerRow": 4,
-        "framesPerColumn": 2
+        "framesPerColumn": 2,
+        "rotation": "none"
       }
     },
     {
@@ -29,11 +31,13 @@
         "firstFrame": 0,
         "lastFrame": 3,
         "playbackSpeed": 0.1,
-        "numDirections": 2
+        "numDirections": 2,
+        "repeatable": true
       },
       "spriteSheet": {
         "framesPerRow": 4,
-        "framesPerColumn": 2
+        "framesPerColumn": 2,
+        "rotation": "none"
       }
     },
     {
@@ -47,11 +51,13 @@
         "firstFrame": 0,
         "lastFrame": 3,
         "playbackSpeed": 0.1,
-        "numDirections": 2
+        "numDirections": 2,
+        "repeatable": true
       },
       "spriteSheet": {
         "framesPerRow": 4,
-        "framesPerColumn": 2
+        "framesPerColumn": 2,
+        "rotation": "none"
       }
     },
     {
@@ -65,11 +71,13 @@
         "firstFrame": 0,
         "lastFrame": 9,
         "playbackSpeed": 0.1,
-        "numDirections": 2
+        "numDirections": 2,
+        "repeatable": true
       },
       "spriteSheet": {
         "framesPerRow": 10,
-        "framesPerColumn": 2
+        "framesPerColumn": 2,
+        "rotation": "none"
       }
     }
   ]

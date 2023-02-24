@@ -9,7 +9,7 @@ namespace RogueliteSurvivor.Components
 {
     public interface ISpell
     {
-        public Spells CurrentSpell { get; set; }
+        public Spells Spell { get; set; }
         public SpellEffects Effect { get; set; }
         public SpellType Type { get; set; }
         public float BaseEffectChance { get; set; }
@@ -31,7 +31,7 @@ namespace RogueliteSurvivor.Components
 
     public struct Spell1 : ISpell
     {
-        public Spells CurrentSpell { get; set; }
+        public Spells Spell { get; set; }
         public SpellEffects Effect { get; set; }
         public SpellType Type { get; set; }
         public float BaseEffectChance { get; set; }
@@ -53,7 +53,7 @@ namespace RogueliteSurvivor.Components
 
     public struct Spell2 : ISpell
     {
-        public Spells CurrentSpell { get; set; }
+        public Spells Spell { get; set; }
         public SpellEffects Effect { get; set; }
         public SpellType Type { get; set; }
         public float BaseEffectChance { get; set; }

@@ -101,8 +101,8 @@ namespace RogueliteSurvivor.Systems
                 new Position() { XY = new Vector2(body.position.X, body.position.Y) },
                 new Velocity() { Vector = velocityVector * spell.CurrentProjectileSpeed },
                 new Speed() { speed = spell.CurrentProjectileSpeed },
-                SpellFactory.GetSpellAnimation(spell.CurrentSpell),
-                SpellFactory.GetSpellSpriteSheet(textures, spell.CurrentSpell, pos.XY, targetPosition),
+                SpellFactory.GetSpellAnimation(spell.Spell),
+                SpellFactory.GetSpellSpriteSheet(textures, spell.Spell, pos.XY, targetPosition),
                 new Damage() { Amount = spell.CurrentDamage, BaseAmount = spell.CurrentDamage, SpellEffect = effect },
                 new Owner() { Entity = entity },
                 BodyFactory.CreateCircularBody(projectile, 16, physicsWorld, body, .1f)
@@ -119,11 +119,11 @@ namespace RogueliteSurvivor.Systems
             body.fixedRotation = true;
 
             singleTarget.SetRange(
-                SpellFactory.CreateSingleTargetSpell(spell.CurrentSpell),
+                SpellFactory.CreateSingleTargetSpell(spell.Spell),
                 new Position() { XY = new Vector2(targetPosition.X, targetPosition.Y) },
                 new Speed() { speed = spell.CurrentProjectileSpeed },
-                SpellFactory.GetSpellAnimation(spell.CurrentSpell),
-                SpellFactory.GetSpellSpriteSheet(textures, spell.CurrentSpell, pos.XY, targetPosition),
+                SpellFactory.GetSpellAnimation(spell.Spell),
+                SpellFactory.GetSpellSpriteSheet(textures, spell.Spell, pos.XY, targetPosition),
                 new Damage() { Amount = spell.CurrentDamage, BaseAmount = spell.CurrentDamage, SpellEffect = effect },
                 new Owner() { Entity = entity },
                 BodyFactory.CreateCircularBody(singleTarget, 32, physicsWorld, body, .1f, false)

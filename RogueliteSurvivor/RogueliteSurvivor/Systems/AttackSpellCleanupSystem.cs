@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
+using RogueliteSurvivor.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace RogueliteSurvivor.Systems
             {
                 if(projectile.State == EntityState.Dead)
                 {
-                    world.Destroy(entity);
+                    world.TryDestroy(entity);
                 }
             });
 
@@ -39,7 +40,7 @@ namespace RogueliteSurvivor.Systems
             {
                 if (single.State == EntityState.Dead)
                 {
-                    world.Destroy(entity);
+                    world.TryDestroy(entity);
                 }
             });
         }

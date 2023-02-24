@@ -1,4 +1,5 @@
-﻿using RogueliteSurvivor.Constants;
+﻿using Newtonsoft.Json.Linq;
+using RogueliteSurvivor.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,26 @@ namespace RogueliteSurvivor.Containers
         public int Width { get; set; }
         public SpriteSheetContainer SpriteSheet { get; set; }
         public AnimationContainer Animation { get; set; }
+
+
+        public static string EnemyContainerName(JToken enemy)
+        {
+            return (string)enemy["name"];
+        }
+
+        public static EnemyContainer ToEnemyContainer(JToken enemy)
+        {
+            return new EnemyContainer()
+            {
+                Name = (string)enemy["name"],
+                Health = (int)enemy["health"],
+                Damage = (int)enemy["damage"],
+                Speed = (float)enemy["speed"],
+                Spell = ((string)enemy["spell"]).GetSpellFromString(),
+                Width = (int)enemy["width"],
+                Animation = AnimationContainer.ToAnimationContainer(enemy["animation"]),
+                SpriteSheet = SpriteSheetContainer.ToSpriteSheetContainer(enemy["spriteSheet"])
+            };
+        }
     }
 }

@@ -4,6 +4,7 @@ using Box2D.NetStandard.Dynamics.Bodies;
 using Microsoft.Xna.Framework;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
+using RogueliteSurvivor.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +57,7 @@ namespace RogueliteSurvivor.Systems
                             var moveSpeed = player.Value.Get<Speed>();
                             moveSpeed.speed += sprite.PickupAmount;
                             player.Value.Set(moveSpeed);
-                            world.Destroy(entity);
+                            world.TryDestroy(entity);
                             break;
                         case PickupType.Health:
                             var health = player.Value.Get<Health>();
@@ -64,7 +65,7 @@ namespace RogueliteSurvivor.Systems
                             {
                                 health.Current = int.Min(health.Max, (int)sprite.PickupAmount + health.Current);
                                 player.Value.Set(health);
-                                world.Destroy(entity);
+                                world.TryDestroy(entity);
                             }
                             break;
                     }
@@ -98,7 +99,7 @@ namespace RogueliteSurvivor.Systems
                 spell2.CurrentAttacksPerSecond += sprite.PickupAmount * spell2.BaseAttacksPerSecond;
                 player.Value.Set(spell2);
             }
-            world.Destroy(entity);
+            world.TryDestroy(entity);
         }
 
         private void processDamage(Entity entity, Entity? player, PickupSprite sprite)
@@ -113,7 +114,7 @@ namespace RogueliteSurvivor.Systems
                 spell2.CurrentDamage += sprite.PickupAmount * spell2.BaseDamage;
                 player.Value.Set(spell2);
             }
-            world.Destroy(entity);
+            world.TryDestroy(entity);
         }
 
         private void processSpellEffectChance(Entity entity, Entity? player, PickupSprite sprite)
@@ -128,7 +129,7 @@ namespace RogueliteSurvivor.Systems
                 spell2.CurrentEffectChance += sprite.PickupAmount * spell2.BaseEffectChance;
                 player.Value.Set(spell2);
             }
-            world.Destroy(entity);
+            world.TryDestroy(entity);
         }
     }
 }

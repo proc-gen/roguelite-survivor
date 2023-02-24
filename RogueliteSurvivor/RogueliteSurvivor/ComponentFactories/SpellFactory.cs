@@ -15,7 +15,7 @@ namespace RogueliteSurvivor.ComponentFactories
         public static T CreateSpell<T>(Spells selectedSpell) 
             where T : ISpell, new()
         {
-            T spell = new T() { CurrentSpell = selectedSpell };
+            T spell = new T() { Spell = selectedSpell };
 
             switch (selectedSpell)
             {

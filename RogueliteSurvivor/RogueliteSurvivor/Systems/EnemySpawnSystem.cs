@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.ComponentFactories;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
+using RogueliteSurvivor.Containers;
+using RogueliteSurvivor.Extensions;
 using RogueliteSurvivor.Physics;
 using RogueliteSurvivor.Utils;
 using System;
@@ -26,18 +28,20 @@ namespace RogueliteSurvivor.Systems
         GraphicsDeviceManager graphics;
         RandomTable<string> enemyTable;
         RandomTable<PickupType> pickupTable;
+        Dictionary<string, EnemyContainer> enemyContainers;
 
         int enemyCount = 20;
         int difficulty = 1;
         int increaseAfterSeconds = 15;
 
-        public EnemySpawnSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, GraphicsDeviceManager graphics)
+        public EnemySpawnSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, GraphicsDeviceManager graphics, Dictionary<string, EnemyContainer> enemyContainers)
             : base(world, new QueryDescription()
                                 .WithAll<Enemy>())
         { 
             this.textures = textures;
             this.physicsWorld = physicsWorld;
             this.graphics = graphics;
+            this.enemyContainers = enemyContainers;
 
             random = new Random();
             setDifficulty(0);
@@ -72,7 +76,7 @@ namespace RogueliteSurvivor.Systems
                     }
                     if (entity.IsAlive())
                     {
-                        world.Destroy(entity);
+                        world.TryDestroy(entity);
                     }
                 }
                 else
@@ -125,117 +129,36 @@ namespace RogueliteSurvivor.Systems
     
         private void createEnemy(Position? player, Vector2 offset)
         {
-            switch (enemyTable.Roll(random))
+            createEnemyFromContainer(enemyTable.Roll(random), player, offset);
+        }
+
+        private void createEnemyFromContainer(string enemyType, Position? player, Vector2 offset)
+        {
+            if (!string.IsNullOrEmpty(enemyType))
             {
-                case "VampireBat":
-                    createVampireBat(player, offset);
-                    break;
-                case "GhastlyBeholder":
-                    createGhastlyBeholder(player, offset);
-                    break;
-                case "GraveRevenant":
-                    createGraveRevenant(player, offset);
-                    break;
-                case "BloodLich":
-                    createBloodLich(player, offset);
-                    break;
+                EnemyContainer container = enemyContainers[enemyType];
+
+                var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell1, Body, Pickup>();
+
+                var body = new BodyDef();
+                body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
+                body.fixedRotation = true;
+
+                entity.SetRange(
+                            new Enemy() { State = EntityState.Alive },
+                            new Position() { XY = new Vector2(body.position.X, body.position.Y) },
+                            new Velocity() { Vector = Vector2.Zero },
+                            new Speed() { speed = container.Speed },
+                            new Animation(container.Animation.FirstFrame, container.Animation.LastFrame, container.Animation.PlaybackSpeed, container.Animation.NumDirections),
+                            new SpriteSheet(textures[container.Name], container.Name, container.SpriteSheet.FramesPerRow, container.SpriteSheet.FramesPerColumn),
+                            new Target(),
+                            new Health() { Current = container.Health, Max = container.Health },
+                            new Damage() { Amount = container.Damage, BaseAmount = container.Damage },
+                            SpellFactory.CreateSpell<Spell1>(container.Spell),
+                            BodyFactory.CreateCircularBody(entity, container.Width, physicsWorld, body),
+                            createPickupForEnemy()
+                        );
             }
-        }
-
-        private void createVampireBat(Position? player, Vector2 offset)
-        {
-            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell1, Body, Pickup>();
-
-            var body = new BodyDef();
-            body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
-            body.fixedRotation = true;
-
-            entity.SetRange(
-                        new Enemy() { State = EntityState.Alive },
-                        new Position() { XY = new Vector2(body.position.X, body.position.Y) },
-                        new Velocity() { Vector = Vector2.Zero },
-                        new Speed() { speed = 50f },
-                        new Animation(0, 3, .1f, 2),
-                        new SpriteSheet(textures["VampireBat"], "VampireBat", 4, 2),
-                        new Target(),
-                        new Health() { Current = 10, Max = 10 },
-                        new Damage() { Amount = 2, BaseAmount = 2 },
-                        SpellFactory.CreateSpell<Spell1>(Spells.EnemyMelee),
-                        BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
-                        createPickupForEnemy()
-                    );
-        }
-
-        private void createGhastlyBeholder(Position? player, Vector2 offset)
-        {
-            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell1, Body, Pickup>();
-
-            var body = new BodyDef();
-            body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
-            body.fixedRotation = true;
-
-            entity.SetRange(
-                        new Enemy() { State = EntityState.Alive },
-                        new Position() { XY = new Vector2(body.position.X, body.position.Y) },
-                        new Velocity() { Vector = Vector2.Zero },
-                        new Speed() { speed = 50f },
-                        new Animation(0, 3, .1f, 2),
-                        new SpriteSheet(textures["GhastlyBeholder"], "GhastlyBeholder", 4, 2),
-                        new Target(),
-                        new Health() { Current = 10, Max = 10 },
-                        new Damage() { Amount = 2, BaseAmount = 2 },
-                        SpellFactory.CreateSpell<Spell1>(Spells.EnemyMelee),
-                        BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
-                        createPickupForEnemy()
-                    );
-        }
-
-        private void createGraveRevenant(Position? player, Vector2 offset)
-        {
-            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell1, Body, Pickup>();
-
-            var body = new BodyDef();
-            body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
-            body.fixedRotation = true;
-
-            entity.SetRange(
-                        new Enemy() { State = EntityState.Alive },
-                        new Position() { XY = new Vector2(body.position.X, body.position.Y) },
-                        new Velocity() { Vector = Vector2.Zero },
-                        new Speed() { speed = 50f },
-                        new Animation(0, 3, .1f, 2),
-                        new SpriteSheet(textures["GraveRevenant"], "GraveRevenant", 4, 2),
-                        new Target(),
-                        new Health() { Current = 10, Max = 10 },
-                        new Damage() { Amount = 2, BaseAmount = 2 },
-                        SpellFactory.CreateSpell<Spell1>(Spells.EnemyMelee),
-                        BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
-                        createPickupForEnemy()
-                    );
-        }
-
-        private void createBloodLich(Position? player, Vector2 offset)
-        {
-            var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell1, Body, Pickup>();
-
-            var body = new BodyDef();
-            body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
-            body.fixedRotation = true;
-
-            entity.SetRange(
-                        new Enemy() { State = EntityState.Alive },
-                        new Position() { XY = new Vector2(body.position.X, body.position.Y) },
-                        new Velocity() { Vector = Vector2.Zero },
-                        new Speed() { speed = 25f },
-                        new Animation(0, 9, .1f, 2),
-                        new SpriteSheet(textures["BloodLich"], "BloodLich", 10, 2),
-                        new Target(),
-                        new Health() { Current = 100, Max = 100 },
-                        new Damage() { Amount = 10, BaseAmount = 10 },
-                        SpellFactory.CreateSpell<Spell1>(Spells.EnemyMelee),
-                        BodyFactory.CreateCircularBody(entity, 32, physicsWorld, body),
-                        createPickupForEnemy()
-                    );
         }
 
         private Pickup createPickupForEnemy()
