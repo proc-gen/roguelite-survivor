@@ -12,21 +12,12 @@ namespace RogueliteSurvivor.ComponentFactories
 {
     public static class SpellFactory
     {
-        public static Spell1 CreateSpell1(Spells selectedSpell)
+        public static T CreateSpell<T>(Spells selectedSpell) 
+            where T : ISpell, new()
         {
-            return CreateSpell(selectedSpell).ToSpell1();
-        }
+            T spell = new T() { CurrentSpell = selectedSpell };
 
-        public static Spell2 CreateSpell2(Spells selectedSpell)
-        {
-            return CreateSpell(selectedSpell).ToSpell2();
-        }
-
-        private static Spell CreateSpell(Spells selectedSpell)
-        {
-            Spell spell = new Spell() { CurrentSpell = selectedSpell };
-
-            switch(selectedSpell)
+            switch (selectedSpell)
             {
                 case Spells.Fireball:
                     spell.BaseDamage = spell.CurrentDamage = 8;

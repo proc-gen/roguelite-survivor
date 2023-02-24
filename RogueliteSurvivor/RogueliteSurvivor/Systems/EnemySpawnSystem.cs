@@ -160,7 +160,7 @@ namespace RogueliteSurvivor.Systems
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
                         new Damage() { Amount = 2, BaseAmount = 2 },
-                        SpellFactory.CreateSpell1(Spells.EnemyMelee),
+                        SpellFactory.CreateSpell<Spell1>(Spells.EnemyMelee),
                         BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
                         createPickupForEnemy()
                     );
@@ -184,7 +184,7 @@ namespace RogueliteSurvivor.Systems
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
                         new Damage() { Amount = 2, BaseAmount = 2 },
-                        SpellFactory.CreateSpell1(Spells.EnemyMelee),
+                        SpellFactory.CreateSpell<Spell1>(Spells.EnemyMelee),
                         BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
                         createPickupForEnemy()
                     );
@@ -208,7 +208,7 @@ namespace RogueliteSurvivor.Systems
                         new Target(),
                         new Health() { Current = 10, Max = 10 },
                         new Damage() { Amount = 2, BaseAmount = 2 },
-                        SpellFactory.CreateSpell1(Spells.EnemyMelee),
+                        SpellFactory.CreateSpell<Spell1>(Spells.EnemyMelee),
                         BodyFactory.CreateCircularBody(entity, 16, physicsWorld, body),
                         createPickupForEnemy()
                     );
@@ -232,7 +232,7 @@ namespace RogueliteSurvivor.Systems
                         new Target(),
                         new Health() { Current = 100, Max = 100 },
                         new Damage() { Amount = 10, BaseAmount = 10 },
-                        SpellFactory.CreateSpell1(Spells.EnemyMelee),
+                        SpellFactory.CreateSpell<Spell1>(Spells.EnemyMelee),
                         BodyFactory.CreateCircularBody(entity, 32, physicsWorld, body),
                         createPickupForEnemy()
                     );

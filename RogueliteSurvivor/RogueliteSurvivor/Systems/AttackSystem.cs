@@ -40,19 +40,19 @@ namespace RogueliteSurvivor.Systems
                 {
                     if (entity.TryGet(out Spell1 spell1))
                     {
-                        spell1.Cooldown = processSpell(gameTime, entity, pos, target, spell1.ToSpell());
+                        spell1.Cooldown = processSpell(gameTime, entity, pos, target, spell1);
                         entity.Set(spell1);
                     }
                     if (entity.TryGet(out Spell2 spell2))
                     {
-                        spell2.Cooldown = processSpell(gameTime, entity, pos, target, spell2.ToSpell());
+                        spell2.Cooldown = processSpell(gameTime, entity, pos, target, spell2);
                         entity.Set(spell2);
                     }
                 }
             });
         }
 
-        private float processSpell(GameTime gameTime, Entity entity, Position pos, Target target, Spell spell)
+        private float processSpell(GameTime gameTime, Entity entity, Position pos, Target target, ISpell spell)
         {
             spell.Cooldown += (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
 
@@ -85,7 +85,7 @@ namespace RogueliteSurvivor.Systems
             return spell.Cooldown;
         }
 
-        private void createProjectile(Entity entity, Spell spell, Target target, Position pos, SpellEffects effect)
+        private void createProjectile(Entity entity, ISpell spell, Target target, Position pos, SpellEffects effect)
         {
             var projectile = world.Create<Projectile, Position, Velocity, Speed, Animation, SpriteSheet, Damage, Owner, Body>();
 
@@ -109,7 +109,7 @@ namespace RogueliteSurvivor.Systems
             );
         }
 
-        private void createSingleTarget(Entity entity, Spell spell, Target target, Position pos, SpellEffects effect)
+        private void createSingleTarget(Entity entity, ISpell spell, Target target, Position pos, SpellEffects effect)
         {
             var singleTarget = world.Create<SingleTarget, Position, Speed, Animation, SpriteSheet, Damage, Owner, Body>();
 
