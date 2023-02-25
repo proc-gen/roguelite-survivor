@@ -16,6 +16,9 @@
 #begin Datasets/enemies.json
 /copy:Datasets/enemies.json
 
+#begin Datasets/player-characters.json
+/copy:Datasets/player-characters.json
+
 #begin Datasets/spells.json
 /copy:Datasets/spells.json
 

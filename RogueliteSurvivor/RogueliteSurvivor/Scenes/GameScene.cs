@@ -41,10 +41,12 @@ namespace RogueliteSurvivor.Scenes
 
         private Dictionary<string, EnemyContainer> enemyContainers;
         private Dictionary<Spells, SpellContainer> spellContainers;
+        private Dictionary<string, PlayerContainer> playerContainers;
 
-        public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
+        public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
         {
+            this.playerContainers = playerContainers;
         }
 
         public void SetGameSettings(GameSettings gameSettings)
@@ -217,13 +219,13 @@ namespace RogueliteSurvivor.Scenes
                 new Player() { State = EntityState.Alive },
                 new Position() { XY = new Vector2(384, 384) },
                 new Velocity() { Vector = Vector2.Zero },
-                new Speed() { speed = 100f },
-                new Animation(1, 1, .1f, 4),
-                new SpriteSheet(textures[gameSettings.PlayerTexture], gameSettings.PlayerTexture, 3, 8),
+                new Speed() { speed = playerContainers[gameSettings.PlayerName].Speed },
+                PlayerFactory.GetPlayerAnimation(playerContainers[gameSettings.PlayerName]),
+                PlayerFactory.GetPlayerSpriteSheet(playerContainers[gameSettings.PlayerName], textures),
                 new Target(),
-                SpellFactory.CreateSpell<Spell1>(spellContainers[gameSettings.StartingSpell]),
-                SpellFactory.CreateSpell<Spell2>(spellContainers[gameSettings.SecondarySpell]),
-                new Health() { Current = 100, Max = 100 },
+                SpellFactory.CreateSpell<Spell1>(spellContainers[playerContainers[gameSettings.PlayerName].StartingSpell]),
+                SpellFactory.CreateSpell<Spell2>(spellContainers[playerContainers[gameSettings.PlayerName].SecondarySpell]),
+                new Health() { Current = playerContainers[gameSettings.PlayerName].Health, Max = playerContainers[gameSettings.PlayerName].Health },
                 new KillCount() { Count = 0 },
                 BodyFactory.CreateCircularBody(player, 16, physicsWorld, body, 99)
             );

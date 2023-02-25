@@ -17,6 +17,8 @@ using JobScheduler;
 using Box2D.NetStandard.Dynamics.Bodies;
 using RogueliteSurvivor.Scenes;
 using System.Threading.Tasks;
+using RogueliteSurvivor.Containers;
+using Newtonsoft.Json.Linq;
 
 namespace RogueliteSurvivor
 {
@@ -33,6 +35,7 @@ namespace RogueliteSurvivor
         System.Numerics.Vector2 gravity = System.Numerics.Vector2.Zero;
 
         Dictionary<string, Scene> scenes = new Dictionary<string, Scene>();
+        Dictionary<string, PlayerContainer> playerCharacters = new Dictionary<string, PlayerContainer>();
         string currentScene = "main-menu";
         string nextScene = string.Empty;
 
@@ -63,9 +66,11 @@ namespace RogueliteSurvivor
             physicsWorld.SetContactListener(new GameContactListener());
             physicsWorld.SetContactFilter(new GameContactFilter());
 
-            GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics, world, physicsWorld);
+            loadPlayerCharacters();
 
-            MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics, world, physicsWorld);
+            GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters);
+
+            MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters);
             mainMenu.LoadContent();
 
             LoadingScene loadingScene = new LoadingScene(_spriteBatch, Content, _graphics, world, physicsWorld);
@@ -78,6 +83,20 @@ namespace RogueliteSurvivor
             scenes.Add("main-menu", mainMenu);
             scenes.Add("loading", loadingScene);
             scenes.Add("game-over", gameOverScene);
+        }
+
+        private void loadPlayerCharacters()
+        {
+            JObject players = JObject.Parse(File.ReadAllText(Path.Combine(Content.RootDirectory, "Datasets", "player-characters.json")));
+            playerCharacters = new Dictionary<string, PlayerContainer>();
+
+            foreach (var player in players["data"])
+            {
+                playerCharacters.Add(
+                    PlayerContainer.GetPlayerContainerName(player),
+                    PlayerContainer.ToPlayerContainer(player)
+                );
+            }
         }
 
         protected override void Update(GameTime gameTime)

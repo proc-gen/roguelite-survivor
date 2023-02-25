@@ -1,0 +1,67 @@
+{
+  "data": [
+    {
+      "name": "Fire",
+      "texture": "player",
+      "startingSpell": "Fireball",
+      "secondarySpell": "FireExplosion",
+      "health": 100,
+      "speed": 100,
+      "animation": {
+        "firstFrame": 1,
+        "lastFrame": 1,
+        "playbackSpeed": 0.1,
+        "numDirections": 4,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 3,
+        "framesPerColumn": 8,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "Ice",
+      "texture": "player_blue",
+      "startingSpell": "IceShard",
+      "secondarySpell": "IceSpikes",
+      "health": 100,
+      "speed": 100,
+      "animation": {
+        "firstFrame": 1,
+        "lastFrame": 1,
+        "playbackSpeed": 0.1,
+        "numDirections": 4,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 3,
+        "framesPerColumn": 8,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "Lightning",
+      "texture": "player_yellow",
+      "startingSpell": "LightningBlast",
+      "secondarySpell": "LightningStrike",
+      "health": 100,
+      "speed": 100,
+      "animation": {
+        "firstFrame": 1,
+        "lastFrame": 1,
+        "playbackSpeed": 0.1,
+        "numDirections": 4,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 3,
+        "framesPerColumn": 8,
+        "rotation": "none",
+        "scale": 1
+      }
+    }
+  ]
+}

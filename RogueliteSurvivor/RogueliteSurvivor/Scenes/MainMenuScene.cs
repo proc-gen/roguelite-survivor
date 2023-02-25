@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
+using RogueliteSurvivor.Containers;
 using RogueliteSurvivor.Utils;
 using System;
 using System.Collections.Generic;
@@ -25,14 +26,16 @@ namespace RogueliteSurvivor.Scenes
         private float counter = 0f;
 
         private MainMenuState state;
-        private Spells selectedSpell;
-        private Spells selectedSecondarySpell;
+        private string selectedPlayer;
         private int selectedButton = 1;
 
+        private Dictionary<string, PlayerContainer> playerContainers;
 
-        public MainMenuScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
+
+        public MainMenuScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
         {
+            this.playerContainers = playerContainers;
         }
 
         public override void LoadContent()
@@ -54,7 +57,7 @@ namespace RogueliteSurvivor.Scenes
             }
 
             state = MainMenuState.MainMenu;
-            selectedSpell = Spells.Fireball;
+            selectedPlayer = "Fire";
             Loaded = true;
         }
 
@@ -112,16 +115,13 @@ namespace RogueliteSurvivor.Scenes
                         switch (selectedButton)
                         {
                             case 1:
-                                selectedSpell = Spells.Fireball;
-                                selectedSecondarySpell = Spells.FireExplosion;
+                                selectedPlayer = "Fire";
                                 break;
                             case 2:
-                                selectedSpell = Spells.IceShard;
-                                selectedSecondarySpell = Spells.IceSpikes;
+                                selectedPlayer = "Ice";
                                 break;
                             case 3:
-                                selectedSpell = Spells.LightningBlast;
-                                selectedSecondarySpell = Spells.LightningStrike;
+                                selectedPlayer = "Lightning";
                                 break;
                         }
 
@@ -260,25 +260,10 @@ namespace RogueliteSurvivor.Scenes
 
         public GameSettings GetGameSettings()
         {
-            var gameSettings = new GameSettings();
-            gameSettings.StartingSpell = selectedSpell;
-            gameSettings.SecondarySpell = selectedSecondarySpell;
-
-            switch (selectedSpell)
+            var gameSettings = new GameSettings()
             {
-                case Spells.Fireball:
-                case Spells.FireExplosion:
-                    gameSettings.PlayerTexture = "player";
-                    break;
-                case Spells.IceShard:
-                case Spells.IceSpikes:
-                    gameSettings.PlayerTexture = "player_blue";
-                    break;
-                case Spells.LightningBlast:
-                case Spells.LightningStrike:
-                    gameSettings.PlayerTexture = "player_yellow";
-                    break;
-            }
+                PlayerName = selectedPlayer
+            };
 
             return gameSettings;
         }
