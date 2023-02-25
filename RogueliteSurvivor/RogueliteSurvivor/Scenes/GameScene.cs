@@ -40,7 +40,7 @@ namespace RogueliteSurvivor.Scenes
         private GameSettings gameSettings;
 
         private Dictionary<string, EnemyContainer> enemyContainers;
-        private Dictionary<string, SpellContainer> spellContainers;
+        private Dictionary<Spells, SpellContainer> spellContainers;
 
         public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
@@ -137,7 +137,7 @@ namespace RogueliteSurvivor.Scenes
         private void loadSpells()
         {
             JObject spells = JObject.Parse(File.ReadAllText(Path.Combine(Content.RootDirectory, "Datasets", "spells.json")));
-            spellContainers = new Dictionary<string, SpellContainer>();
+            spellContainers = new Dictionary<Spells, SpellContainer>();
 
             foreach (var spell in spells["data"])
             {
@@ -184,7 +184,7 @@ namespace RogueliteSurvivor.Scenes
                 new CollisionSystem(world, physicsWorld),
                 new SpellEffectSystem(world),
                 new PickupSystem(world),
-                new EnemySpawnSystem(world, textures, physicsWorld, _graphics, enemyContainers),
+                new EnemySpawnSystem(world, textures, physicsWorld, _graphics, enemyContainers, spellContainers),
                 new AttackSystem(world, textures, physicsWorld),
                 new AttackSpellCleanupSystem(world),
                 new DeathSystem(world, textures, physicsWorld),
@@ -221,8 +221,8 @@ namespace RogueliteSurvivor.Scenes
                 new Animation(1, 1, .1f, 4),
                 new SpriteSheet(textures[gameSettings.PlayerTexture], gameSettings.PlayerTexture, 3, 8),
                 new Target(),
-                SpellFactory.CreateSpell<Spell1>(gameSettings.StartingSpell),
-                SpellFactory.CreateSpell<Spell2>(gameSettings.SecondarySpell),
+                SpellFactory.CreateSpell<Spell1>(spellContainers[gameSettings.StartingSpell]),
+                SpellFactory.CreateSpell<Spell2>(spellContainers[gameSettings.SecondarySpell]),
                 new Health() { Current = 100, Max = 100 },
                 new KillCount() { Count = 0 },
                 BodyFactory.CreateCircularBody(player, 16, physicsWorld, body, 99)

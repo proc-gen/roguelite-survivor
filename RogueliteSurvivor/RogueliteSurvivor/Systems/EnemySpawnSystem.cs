@@ -29,12 +29,13 @@ namespace RogueliteSurvivor.Systems
         RandomTable<string> enemyTable;
         RandomTable<PickupType> pickupTable;
         Dictionary<string, EnemyContainer> enemyContainers;
+        Dictionary<Spells, SpellContainer> spellContainers;
 
         int enemyCount = 20;
         int difficulty = 1;
         int increaseAfterSeconds = 15;
 
-        public EnemySpawnSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, GraphicsDeviceManager graphics, Dictionary<string, EnemyContainer> enemyContainers)
+        public EnemySpawnSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, GraphicsDeviceManager graphics, Dictionary<string, EnemyContainer> enemyContainers, Dictionary<Spells, SpellContainer> spellContainers)
             : base(world, new QueryDescription()
                                 .WithAll<Enemy>())
         { 
@@ -42,6 +43,7 @@ namespace RogueliteSurvivor.Systems
             this.physicsWorld = physicsWorld;
             this.graphics = graphics;
             this.enemyContainers = enemyContainers;
+            this.spellContainers = spellContainers;
 
             random = new Random();
             setDifficulty(0);
@@ -154,7 +156,7 @@ namespace RogueliteSurvivor.Systems
                             new Target(),
                             new Health() { Current = container.Health, Max = container.Health },
                             new Damage() { Amount = container.Damage, BaseAmount = container.Damage },
-                            SpellFactory.CreateSpell<Spell1>(container.Spell),
+                            SpellFactory.CreateSpell<Spell1>(spellContainers[container.Spell]),
                             BodyFactory.CreateCircularBody(entity, container.Width, physicsWorld, body),
                             createPickupForEnemy()
                         );

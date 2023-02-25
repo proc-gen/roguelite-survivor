@@ -30,9 +30,9 @@ namespace RogueliteSurvivor.Containers
         public SpriteSheetContainer HitSpriteSheet { get; set; }
 
 
-        public static string SpellContainerName(JToken spell)
+        public static Spells SpellContainerName(JToken spell)
         {
-            return (string)spell["spell"];
+            return ((string)spell["spell"]).GetSpellFromString();
         }
         public static SpellContainer ToSpellContainer(JToken spell)
         {

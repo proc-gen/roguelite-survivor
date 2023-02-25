@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
+using RogueliteSurvivor.Containers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,77 +13,23 @@ namespace RogueliteSurvivor.ComponentFactories
 {
     public static class SpellFactory
     {
-        public static T CreateSpell<T>(Spells selectedSpell) 
-            where T : ISpell, new()
+        public static T CreateSpell<T>(SpellContainer spellContainer)
+        where T : ISpell, new()
         {
-            T spell = new T() { Spell = selectedSpell };
-
-            switch (selectedSpell)
-            {
-                case Spells.Fireball:
-                    spell.BaseDamage = spell.CurrentDamage = 8;
-                    spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 200f;
-                    spell.BaseAttacksPerSecond = spell.CurrentAttacksPerSecond = 2;
-                    spell.BaseEffectChance = spell.CurrentEffectChance = .1f;
-                    spell.Cooldown = 0f;
-                    spell.Effect = SpellEffects.Burn;
-                    spell.Type = SpellType.Projectile;
-                    break;
-                case Spells.FireExplosion:
-                    spell.BaseDamage = spell.CurrentDamage = 10;
-                    spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 0f;
-                    spell.BaseAttacksPerSecond = spell.CurrentAttacksPerSecond = .5f;
-                    spell.BaseEffectChance = spell.CurrentEffectChance = .3f;
-                    spell.Cooldown = 0f;
-                    spell.Effect = SpellEffects.Burn;
-                    spell.Type = SpellType.SingleTarget;
-                    break;
-                case Spells.IceShard:
-                    spell.BaseDamage = spell.CurrentDamage = 5;
-                    spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 300f;
-                    spell.BaseAttacksPerSecond = spell.CurrentAttacksPerSecond = 3;
-                    spell.BaseEffectChance = spell.CurrentEffectChance = .1f;
-                    spell.Cooldown = 0f;
-                    spell.Effect = SpellEffects.Slow;
-                    spell.Type = SpellType.Projectile;
-                    break;
-                case Spells.IceSpikes:
-                    spell.BaseDamage = spell.CurrentDamage = 10;
-                    spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 0f;
-                    spell.BaseAttacksPerSecond = spell.CurrentAttacksPerSecond = .5f;
-                    spell.BaseEffectChance = spell.CurrentEffectChance = .3f;
-                    spell.Cooldown = 0f;
-                    spell.Effect = SpellEffects.Slow;
-                    spell.Type = SpellType.SingleTarget;
-                    break;
-                case Spells.LightningBlast:
-                    spell.BaseDamage = spell.CurrentDamage = 3;
-                    spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 400f;
-                    spell.BaseAttacksPerSecond = spell.CurrentAttacksPerSecond = 4;
-                    spell.BaseEffectChance = spell.CurrentEffectChance = .1f;
-                    spell.Cooldown = 0f;
-                    spell.Effect = SpellEffects.Shock;
-                    spell.Type = SpellType.Projectile;
-                    break;
-                case Spells.LightningStrike:
-                    spell.BaseDamage = spell.CurrentDamage = 10;
-                    spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 0f;
-                    spell.BaseAttacksPerSecond = spell.CurrentAttacksPerSecond = .5f;
-                    spell.BaseEffectChance = spell.CurrentEffectChance = .3f;
-                    spell.Cooldown = 0f;
-                    spell.Effect = SpellEffects.Shock;
-                    spell.Type = SpellType.SingleTarget;
-                    break;
-                case Spells.EnemyMelee:
-                    spell.BaseDamage = spell.CurrentDamage = 3;
-                    spell.BaseProjectileSpeed = spell.CurrentProjectileSpeed = 0f;
-                    spell.BaseAttacksPerSecond = spell.CurrentAttacksPerSecond = .5f;
-                    spell.BaseEffectChance = spell.CurrentEffectChance = 0f;
-                    spell.Cooldown = 0f;
-                    spell.Effect = SpellEffects.None;
-                    spell.Type = SpellType.None;
-                    break;
-            }
+            T spell = new T() { 
+                Spell = spellContainer.Spell,
+                BaseDamage = spellContainer.BaseDamage,
+                CurrentDamage = spellContainer.CurrentDamage,
+                BaseProjectileSpeed = spellContainer.BaseProjectileSpeed,
+                CurrentProjectileSpeed = spellContainer.CurrentProjectileSpeed,
+                BaseAttacksPerSecond = spellContainer.BaseAttacksPerSecond,
+                CurrentAttacksPerSecond = spellContainer.CurrentAttacksPerSecond,
+                BaseEffectChance = spellContainer.BaseEffectChance,
+                CurrentEffectChance = spellContainer.CurrentEffectChance,
+                Cooldown = 0f,
+                Effect = spellContainer.Effect,
+                Type = spellContainer.Type,
+            };
 
             return spell;
         }
