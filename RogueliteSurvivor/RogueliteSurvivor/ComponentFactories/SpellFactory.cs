@@ -14,7 +14,7 @@ namespace RogueliteSurvivor.ComponentFactories
     public static class SpellFactory
     {
         public static T CreateSpell<T>(SpellContainer spellContainer)
-        where T : ISpell, new()
+            where T : ISpell, new()
         {
             T spell = new T() { 
                 Spell = spellContainer.Spell,
@@ -34,79 +34,36 @@ namespace RogueliteSurvivor.ComponentFactories
             return spell;
         }
 
-        public static Animation GetSpellAnimation(Spells currentSpell)
+        public static Animation GetSpellAliveAnimation(SpellContainer spellContainer)
         {
-            Animation? animation = null;
-            switch (currentSpell)
-            {
-                case Spells.Fireball:
-                    animation = new Animation(0, 3, .1f, 1);
-                    break;
-                case Spells.FireExplosion:
-                    animation = new Animation(0, 11, .1f, 1, false);
-                    break;
-                case Spells.IceShard:
-                    animation = new Animation(0, 9, .1f, 1);
-                    break;
-                case Spells.IceSpikes:
-                    animation = new Animation(0, 25, .05f, 1, false);
-                    break;
-                case Spells.LightningBlast:
-                    animation = new Animation(0, 4, .1f, 1);
-                    break;
-                case Spells.LightningStrike:
-                    animation = new Animation(0, 12, .05f, 1, false);
-                    break;
-            }
-            return animation.Value;
+            return new Animation(
+                spellContainer.AliveAnimation.FirstFrame, 
+                spellContainer.AliveAnimation.LastFrame,
+                spellContainer.AliveAnimation.PlaybackSpeed,
+                spellContainer.AliveAnimation.NumDirections,
+                spellContainer.AliveAnimation.Repeatable);
         }
 
-        public static SpriteSheet GetSpellSpriteSheet(Dictionary<string, Texture2D> textures, Spells currentSpell, Vector2 currentPosition, Vector2 targetPosition)
+        public static SpriteSheet GetSpellAliveSpriteSheet(Dictionary<string, Texture2D> textures, SpellContainer spellContainer, Vector2 currentPosition, Vector2 targetPosition)
         {
-            SpriteSheet? spriteSheet = null;
-            switch (currentSpell)
-            {
-                case Spells.Fireball:
-                    spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 4, 1, MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X), .5f);
-                    break;
-                case Spells.FireExplosion:
-                    spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 12, 1, 0f, 1f);
-                    break;
-                case Spells.IceShard:
-                    spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 10, 1, MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X), .5f);
-                    break;
-                case Spells.IceSpikes:
-                    spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 26, 1, 0f, 1f);
-                    break;
-                case Spells.LightningBlast:
-                    spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 5, 1, MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X), .5f);
-                    break;
-                case Spells.LightningStrike:
-                    spriteSheet = new SpriteSheet(textures[currentSpell.ToString()], currentSpell.ToString(), 13, 1, 0f, 1f);
-                    break;
-            }
-            return spriteSheet.Value;
+            return new SpriteSheet(
+                textures[spellContainer.Spell.ToString()],
+                spellContainer.Spell.ToString(),
+                spellContainer.AliveSpriteSheet.FramesPerRow,
+                spellContainer.AliveSpriteSheet.FramesPerColumn,
+                spellContainer.AliveSpriteSheet.Rotation == "none" ? 0 : MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X),
+                spellContainer.AliveSpriteSheet.Scale
+            );
         }
 
-        public static SingleTarget CreateSingleTargetSpell(Spells selectedSpell)
+        public static SingleTarget CreateSingleTarget(SpellContainer spellContainer)
         {
-            SingleTarget target = new SingleTarget() { State = EntityState.Alive };
-            switch (selectedSpell)
+            return new SingleTarget()
             {
-                case Spells.FireExplosion:
-                    target.DamageStartDelay = .2f;
-                    target.DamageEndDelay = .7f;
-                    break;
-                case Spells.IceSpikes:
-                    target.DamageStartDelay = .1f;
-                    target.DamageEndDelay = .5f;
-                    break;
-                case Spells.LightningStrike:
-                    target.DamageStartDelay = .25f;
-                    target.DamageEndDelay = .4f;
-                    break;
-            }
-            return target;
+                State = EntityState.Alive,
+                DamageStartDelay = spellContainer.DamageStartDelay,
+                DamageEndDelay = spellContainer.DamageEndDelay,
+            };
         }
     }
 }
