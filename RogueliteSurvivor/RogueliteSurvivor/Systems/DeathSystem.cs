@@ -119,25 +119,5 @@ namespace RogueliteSurvivor.Systems
             }
             return retVal;
         }
-
-        private int getProjectileHitNumFrames(string projectile)
-        {
-            int retVal = 0;
-
-            switch (projectile)
-            {
-                case "IceShard":
-                    retVal = 7;
-                    break;
-                case "LightningBlast":
-                    retVal = 5;
-                    break;
-                case "Fireball":
-                    retVal = 6;
-                    break;
-            }
-
-            return retVal;
-        }
     }
 }
