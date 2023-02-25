@@ -1,4 +1,5 @@
 ﻿using Arch.Core;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace RogueliteSurvivor.Components
 {
     public struct Target
     {
-        public Entity Entity { get; set; }
+        public Vector2 TargetPosition { get; set; }
     }
 }

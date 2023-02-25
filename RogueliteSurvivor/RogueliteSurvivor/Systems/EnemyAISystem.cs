@@ -23,11 +23,7 @@ namespace RogueliteSurvivor.Systems
             {
                 if (entity.IsAlive())
                 {
-                    if (target.Entity.Has<Position>())
-                    {
-                        var targetPosition = target.Entity.Get<Position>();
-                        vel.Vector = Vector2.Normalize(targetPosition.XY - pos.XY) * sp.speed;
-                    }
+                    vel.Vector = Vector2.Normalize(target.TargetPosition - pos.XY) * sp.speed;
                 }
             });
         }

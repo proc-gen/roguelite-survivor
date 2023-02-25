@@ -24,10 +24,16 @@ namespace RogueliteSurvivor.Systems
         Random random;
         Dictionary<Spells, SpellContainer> spellContainers;
 
+        QueryDescription spell1Query = new QueryDescription()
+                                .WithAll<Target, Spell1>();
+
+        QueryDescription spell2Query = new QueryDescription()
+                                .WithAll<Target, Spell2>();
+
+
+
         public AttackSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<Spells, SpellContainer> spellContainers)
-            : base(world, new QueryDescription()
-                                .WithAll<Target>()
-                                .WithAny<Spell1, Spell2>())
+            : base(world, new QueryDescription())
         {
             this.textures = textures;
             this.physicsWorld = physicsWorld;
@@ -37,21 +43,14 @@ namespace RogueliteSurvivor.Systems
 
         public void Update(GameTime gameTime, float totalElapsedTime)
         {
-            world.Query(in query, (in Entity entity, ref Position pos, ref Target target) =>
+            world.Query(in spell1Query, (in Entity entity, ref Position pos, ref Target target, ref Spell1 spell1) =>
             {
-                if (entity.IsAlive())
-                {
-                    if (entity.TryGet(out Spell1 spell1))
-                    {
-                        spell1.Cooldown = processSpell(gameTime, entity, pos, target, spell1);
-                        entity.Set(spell1);
-                    }
-                    if (entity.TryGet(out Spell2 spell2))
-                    {
-                        spell2.Cooldown = processSpell(gameTime, entity, pos, target, spell2);
-                        entity.Set(spell2);
-                    }
-                }
+                spell1.Cooldown = processSpell(gameTime, entity, pos, target, spell1);
+            });
+
+            world.Query(in spell2Query, (in Entity entity, ref Position pos, ref Target target, ref Spell2 spell2) =>
+            {
+                spell2.Cooldown = processSpell(gameTime, entity, pos, target, spell2);
             });
         }
 
@@ -60,9 +59,7 @@ namespace RogueliteSurvivor.Systems
             spell.Cooldown += (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
 
             if (spell.Type != SpellType.None
-                    && spell.Cooldown > spell.CurrentAttackSpeed
-                    && target.Entity.IsAlive()
-                    && target.Entity.Has<Position>())
+                    && spell.Cooldown > spell.CurrentAttackSpeed)
             {
                 spell.Cooldown -= spell.CurrentAttackSpeed;
 
@@ -93,8 +90,7 @@ namespace RogueliteSurvivor.Systems
             var projectile = world.Create<Projectile, Position, Velocity, Speed, Animation, SpriteSheet, Damage, Owner, Body>();
 
             var body = new BodyDef();
-            var targetPosition = target.Entity.Get<Position>().XY;
-            var velocityVector = Vector2.Normalize(targetPosition - pos.XY);
+            var velocityVector = Vector2.Normalize(target.TargetPosition - pos.XY);
             var position = pos.XY + velocityVector;
             body.position = new System.Numerics.Vector2(position.X, position.Y) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
@@ -105,7 +101,7 @@ namespace RogueliteSurvivor.Systems
                 new Velocity() { Vector = velocityVector * spell.CurrentProjectileSpeed },
                 new Speed() { speed = spell.CurrentProjectileSpeed },
                 SpellFactory.GetSpellAliveAnimation(spellContainers[spell.Spell]),
-                SpellFactory.GetSpellAliveSpriteSheet(textures, spellContainers[spell.Spell], pos.XY, targetPosition),
+                SpellFactory.GetSpellAliveSpriteSheet(textures, spellContainers[spell.Spell], pos.XY, target.TargetPosition),
                 new Damage() { Amount = spell.CurrentDamage, BaseAmount = spell.CurrentDamage, SpellEffect = effect },
                 new Owner() { Entity = entity },
                 BodyFactory.CreateCircularBody(projectile, 16, physicsWorld, body, .1f)
@@ -117,16 +113,15 @@ namespace RogueliteSurvivor.Systems
             var singleTarget = world.Create<SingleTarget, Position, Speed, Animation, SpriteSheet, Damage, Owner, Body>();
 
             var body = new BodyDef();
-            var targetPosition = target.Entity.Get<Position>().XY;
-            body.position = new System.Numerics.Vector2(targetPosition.X, targetPosition.Y) / PhysicsConstants.PhysicsToPixelsRatio;
+            body.position = new System.Numerics.Vector2(target.TargetPosition.X, target.TargetPosition.Y) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
 
             singleTarget.SetRange(
                 SpellFactory.CreateSingleTarget(spellContainers[spell.Spell]),
-                new Position() { XY = new Vector2(targetPosition.X, targetPosition.Y) },
+                new Position() { XY = target.TargetPosition },
                 new Speed() { speed = spell.CurrentProjectileSpeed },
                 SpellFactory.GetSpellAliveAnimation(spellContainers[spell.Spell]),
-                SpellFactory.GetSpellAliveSpriteSheet(textures, spellContainers[spell.Spell], pos.XY, targetPosition),
+                SpellFactory.GetSpellAliveSpriteSheet(textures, spellContainers[spell.Spell], pos.XY, target.TargetPosition),
                 new Damage() { Amount = spell.CurrentDamage, BaseAmount = spell.CurrentDamage, SpellEffect = effect },
                 new Owner() { Entity = entity },
                 BodyFactory.CreateCircularBody(singleTarget, 32, physicsWorld, body, .1f, false)

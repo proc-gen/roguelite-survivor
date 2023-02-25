@@ -28,41 +28,26 @@ namespace RogueliteSurvivor.Systems
             {
                 if (entity.IsAlive())
                 {
-                    Entity? targetEntity = findTarget(entity.Has<Enemy>() ? playerQuery : enemyQuery, pos.XY);
-
-                    if (targetEntity.HasValue)
-                    {
-                        target.Entity = targetEntity.Value;
-                    }
+                    target.TargetPosition = findTarget(entity.Has<Enemy>() ? playerQuery : enemyQuery, pos.XY);
                 }
             });
         }
 
-        private Entity? findTarget(QueryDescription targetQuery, Vector2 sourcePosition)
+        private Vector2 findTarget(QueryDescription targetQuery, Vector2 sourcePosition)
         {
-            Entity? target = null;
             Vector2 targetPos = new Vector2(9999, 9999);
             world.Query(in targetQuery, (in Entity other, ref Position otherPos) =>
             {
                 if (other.IsAlive() && (!other.Has<Enemy>() || other.Get<Enemy>().State != Constants.EntityState.Dead))
                 {
-                    if (!target.HasValue)
+                    if (Vector2.Distance(sourcePosition, otherPos.XY) < Vector2.Distance(sourcePosition, targetPos))
                     {
                         targetPos = otherPos.XY;
-                        target = other;
-                    }
-                    else
-                    {
-                        if (Vector2.Distance(sourcePosition, otherPos.XY) < Vector2.Distance(sourcePosition, targetPos))
-                        {
-                            targetPos = otherPos.XY;
-                            target = other;
-                        }
                     }
                 }
             });
 
-            return target;
+            return targetPos;
         }
     }
 }

@@ -133,32 +133,44 @@ namespace RogueliteSurvivor.Physics
                 {
                     Animation anim = entity.Get<Animation>();
                     anim.Overlay = Microsoft.Xna.Framework.Color.Red;
-                    entity.SetRange(health, anim);
-                    if(damage.SpellEffect != SpellEffects.None)
+                    if (entity.IsAlive())
                     {
-                        switch(damage.SpellEffect)
+                        entity.SetRange(health, anim);
+                        if (damage.SpellEffect != SpellEffects.None)
                         {
-                            case SpellEffects.Burn:
-                                if (!entity.Has<Burn>())
-                                {
-                                    entity.Add<Burn>();
-                                }
-                                entity.Set(new Burn() { TimeLeft = 5f, TickRate = .5f, NextTick = .5f });
-                                break;
-                            case SpellEffects.Slow:
-                                if (!entity.Has<Slow>())
-                                {
-                                    entity.Add<Slow>();
-                                }
-                                entity.Set(new Slow() { TimeLeft = 5f });
-                                break;
-                            case SpellEffects.Shock:
-                                if (!entity.Has<Shock>())
-                                {
-                                    entity.Add<Shock>();
-                                }
-                                entity.Set(new Shock() { TimeLeft = 1f });
-                                break;
+                            switch (damage.SpellEffect)
+                            {
+                                case SpellEffects.Burn:
+                                    if (!entity.Has<Burn>())
+                                    {
+                                        entity.Add(new Burn() { TimeLeft = 5f, TickRate = .5f, NextTick = .5f });
+                                    }
+                                    else
+                                    {
+                                        entity.Set(new Burn() { TimeLeft = 5f, TickRate = .5f, NextTick = .5f });
+                                    }
+                                    break;
+                                case SpellEffects.Slow:
+                                    if (!entity.Has<Slow>())
+                                    {
+                                        entity.Add(new Slow() { TimeLeft = 5f });
+                                    }
+                                    else
+                                    {
+                                        entity.Set(new Slow() { TimeLeft = 5f });
+                                    }
+                                    break;
+                                case SpellEffects.Shock:
+                                    if (!entity.Has<Shock>())
+                                    {
+                                        entity.Add(new Shock() { TimeLeft = 1f });
+                                    }
+                                    else
+                                    {
+                                        entity.Set(new Shock() { TimeLeft = 1f });
+                                    }
+                                    break;
+                            }
                         }
                     }
                 }

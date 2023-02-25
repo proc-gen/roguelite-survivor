@@ -34,6 +34,7 @@ namespace RogueliteSurvivor.Systems
         int enemyCount = 20;
         int difficulty = 1;
         int increaseAfterSeconds = 15;
+        int lastSet = 0;
 
         public EnemySpawnSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, GraphicsDeviceManager graphics, Dictionary<string, EnemyContainer> enemyContainers, Dictionary<Spells, SpellContainer> spellContainers)
             : base(world, new QueryDescription()
@@ -53,7 +54,7 @@ namespace RogueliteSurvivor.Systems
         {
             int numEnemies = 0;
 
-            if(((int)totalElapsedTime) % increaseAfterSeconds == 0)
+            if(((int)totalElapsedTime) % increaseAfterSeconds == 0 && lastSet != (int)totalElapsedTime)
             {
                 setDifficulty((int) totalElapsedTime);
             }
@@ -72,12 +73,13 @@ namespace RogueliteSurvivor.Systems
             {
                 if(enemy.State == EntityState.Dead)
                 {
-                    if (pickup.Type != PickupType.None)
-                    {
-                        createPickup(pickup, position);
-                    }
                     if (entity.IsAlive())
                     {
+                        if (pickup.Type != PickupType.None)
+                        {
+                            createPickup(pickup, position);
+                        }
+                    
                         world.TryDestroy(entity);
                     }
                 }
@@ -110,6 +112,7 @@ namespace RogueliteSurvivor.Systems
     
         private void setDifficulty(int time)
         {
+            lastSet = time;
             difficulty = (time / increaseAfterSeconds) + 1;
 
             enemyCount = 20 * difficulty;

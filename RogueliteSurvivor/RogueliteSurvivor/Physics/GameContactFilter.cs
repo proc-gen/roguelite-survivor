@@ -42,10 +42,6 @@ namespace RogueliteSurvivor.Physics
                 {
                     retVal = true;
                 }
-                else if ((a.Has<Player>() && b.Has<Pickup>()) || (b.Has<Player>() && a.Has<Pickup>()))
-                {
-                    retVal = true;
-                }
             }
 
             return retVal;
