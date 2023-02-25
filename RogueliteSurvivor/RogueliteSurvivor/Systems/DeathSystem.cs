@@ -3,8 +3,10 @@ using Arch.Core.Extensions;
 using Box2D.NetStandard.Dynamics.Bodies;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using RogueliteSurvivor.ComponentFactories;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
+using RogueliteSurvivor.Containers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +26,14 @@ namespace RogueliteSurvivor.Systems
 
         Dictionary<string, Texture2D> textures;
         Box2D.NetStandard.Dynamics.World.World physicsWorld;
+        Dictionary<Spells, SpellContainer> spellContainers;
         Random random;
-        public DeathSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld)
+        public DeathSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<Spells, SpellContainer> spellContainers)
             : base(world, new QueryDescription())
         { 
             this.textures = textures;
             this.physicsWorld = physicsWorld;
+            this.spellContainers = spellContainers;
             random = new Random();
         }
 
@@ -41,9 +45,9 @@ namespace RogueliteSurvivor.Systems
                 {
                     projectile.State = EntityState.Dying;
                     physicsWorld.DestroyBody(body);
-
-                    animation = new Animation(0, getProjectileHitNumFrames(spriteSheet.TextureName) - 1, .03f, 1, false);
-                    spriteSheet = new SpriteSheet(textures[spriteSheet.TextureName + "Hit"], spriteSheet.TextureName + "Hit", getProjectileHitNumFrames(spriteSheet.TextureName), 1, spriteSheet.Rotation, .5f);
+                    Spells spell = spriteSheet.TextureName.GetSpellFromString();
+                    animation = SpellFactory.GetSpellHitAnimation(spellContainers[spell]);
+                    spriteSheet = SpellFactory.GetSpellHitSpriteSheet(textures, spellContainers[spell], spriteSheet.Rotation); 
                 }
                 else if (projectile.State == EntityState.Dying)
                 {

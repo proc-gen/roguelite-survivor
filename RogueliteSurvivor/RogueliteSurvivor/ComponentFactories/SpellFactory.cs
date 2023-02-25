@@ -56,6 +56,28 @@ namespace RogueliteSurvivor.ComponentFactories
             );
         }
 
+        public static Animation GetSpellHitAnimation(SpellContainer spellContainer)
+        {
+            return new Animation(
+                spellContainer.HitAnimation.FirstFrame,
+                spellContainer.HitAnimation.LastFrame,
+                spellContainer.HitAnimation.PlaybackSpeed,
+                spellContainer.HitAnimation.NumDirections,
+                spellContainer.HitAnimation.Repeatable);
+        }
+
+        public static SpriteSheet GetSpellHitSpriteSheet(Dictionary<string, Texture2D> textures, SpellContainer spellContainer, float rotation)
+        {
+            return new SpriteSheet(
+                textures[spellContainer.Spell.ToString() + "Hit"],
+                spellContainer.Spell.ToString() + "Hit",
+                spellContainer.HitSpriteSheet.FramesPerRow,
+                spellContainer.HitSpriteSheet.FramesPerColumn,
+                spellContainer.HitSpriteSheet.Rotation == "none" ? 0 : rotation,
+                spellContainer.HitSpriteSheet.Scale
+            );
+        }
+
         public static SingleTarget CreateSingleTarget(SpellContainer spellContainer)
         {
             return new SingleTarget()

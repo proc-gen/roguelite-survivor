@@ -187,7 +187,7 @@ namespace RogueliteSurvivor.Scenes
                 new EnemySpawnSystem(world, textures, physicsWorld, _graphics, enemyContainers, spellContainers),
                 new AttackSystem(world, textures, physicsWorld, spellContainers),
                 new AttackSpellCleanupSystem(world),
-                new DeathSystem(world, textures, physicsWorld),
+                new DeathSystem(world, textures, physicsWorld, spellContainers),
             };
 
             renderSystems = new List<IRenderSystem>
