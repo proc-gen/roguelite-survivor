@@ -8,7 +8,7 @@ namespace RogueliteSurvivor.Components
 {
     public struct AttackSpeed
     {
-        public AttackSpeed(float baseAttackSpeed = 1f) 
+        public AttackSpeed(float baseAttackSpeed) 
         { 
             BaseAttackSpeed = baseAttackSpeed;
             CurrentAttackSpeed = baseAttackSpeed;

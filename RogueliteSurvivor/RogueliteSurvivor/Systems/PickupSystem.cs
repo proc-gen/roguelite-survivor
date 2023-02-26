@@ -109,31 +109,41 @@ namespace RogueliteSurvivor.Systems
 
         private void processDamage(Entity entity, Entity? player, PickupSprite sprite)
         {
+            SpellDamage spellDamage = player.Value.Get<SpellDamage>();
+            spellDamage.CurrentSpellDamage += spellDamage.BaseSpellDamage * sprite.PickupAmount;
+
             if (player.Value.TryGet(out Spell1 spell1))
             {
-                spell1.CurrentDamage += sprite.PickupAmount * spell1.BaseDamage;
+                spell1.CurrentDamage = spellDamage.CurrentSpellDamage * spell1.BaseDamage;
                 player.Value.Set(spell1);
             }
             if (player.Value.TryGet(out Spell2 spell2))
             {
-                spell2.CurrentDamage += sprite.PickupAmount * spell2.BaseDamage;
+                spell2.CurrentDamage = spellDamage.CurrentSpellDamage * spell2.BaseDamage;
                 player.Value.Set(spell2);
             }
+
+            player.Value.Set(spellDamage);
             world.TryDestroy(entity);
         }
 
         private void processSpellEffectChance(Entity entity, Entity? player, PickupSprite sprite)
         {
+            SpellEffectChance spellEffectChance = player.Value.Get<SpellEffectChance>();
+            spellEffectChance.CurrentSpellEffectChance += spellEffectChance.BaseSpellEffectChance * sprite.PickupAmount;
+
             if (player.Value.TryGet(out Spell1 spell1))
             {
-                spell1.CurrentEffectChance += sprite.PickupAmount * spell1.BaseEffectChance;
+                spell1.CurrentEffectChance = spellEffectChance.CurrentSpellEffectChance * spell1.BaseEffectChance;
                 player.Value.Set(spell1);
             }
             if (player.Value.TryGet(out Spell2 spell2))
             {
-                spell2.CurrentEffectChance += sprite.PickupAmount * spell2.BaseEffectChance;
+                spell2.CurrentEffectChance = spellEffectChance.CurrentSpellEffectChance * spell2.BaseEffectChance;
                 player.Value.Set(spell2);
             }
+
+            player.Value.Set(spellEffectChance);
             world.TryDestroy(entity);
         }
     }
