@@ -89,16 +89,21 @@ namespace RogueliteSurvivor.Systems
 
         private void processAttackSpeed(Entity entity, Entity? player, PickupSprite sprite)
         {
+            AttackSpeed attackSpeed = player.Value.Get<AttackSpeed>();
+            attackSpeed.CurrentAttackSpeed += attackSpeed.BaseAttackSpeed * sprite.PickupAmount;
+
             if (player.Value.TryGet(out Spell1 spell1))
             {
-                spell1.CurrentAttacksPerSecond += sprite.PickupAmount * spell1.BaseAttacksPerSecond;
+                spell1.CurrentAttacksPerSecond = attackSpeed.CurrentAttackSpeed * spell1.BaseAttacksPerSecond;
                 player.Value.Set(spell1);
             }
             if (player.Value.TryGet(out Spell2 spell2))
             {
-                spell2.CurrentAttacksPerSecond += sprite.PickupAmount * spell2.BaseAttacksPerSecond;
+                spell2.CurrentAttacksPerSecond = attackSpeed.CurrentAttackSpeed * spell2.BaseAttacksPerSecond;
                 player.Value.Set(spell2);
             }
+
+            player.Value.Set(attackSpeed);
             world.TryDestroy(entity);
         }
 

@@ -213,7 +213,7 @@ namespace RogueliteSurvivor.Scenes
             body.position = new System.Numerics.Vector2(384, 384) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
 
-            player = world.Create<Player, EntityStatus, Position, Velocity, Speed, Animation, SpriteSheet, Target, Spell1, Spell2, Health, KillCount, Body>();
+            player = world.Create<Player, EntityStatus, Position, Velocity, Speed, AttackSpeed, Animation, SpriteSheet, Target, Spell1, Spell2, Health, KillCount, Body>();
 
             player.SetRange(
                 new Player(),
@@ -221,6 +221,7 @@ namespace RogueliteSurvivor.Scenes
                 new Position() { XY = new Vector2(384, 384) },
                 new Velocity() { Vector = Vector2.Zero },
                 new Speed() { speed = playerContainers[gameSettings.PlayerName].Speed },
+                new AttackSpeed(1f),
                 PlayerFactory.GetPlayerAnimation(playerContainers[gameSettings.PlayerName]),
                 PlayerFactory.GetPlayerSpriteSheet(playerContainers[gameSettings.PlayerName], textures),
                 new Target(),
