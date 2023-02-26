@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Utils
 {
@@ -31,14 +29,14 @@ namespace RogueliteSurvivor.Utils
         {
             T retVal = default(T);
 
-            if(_totalWeight > 0)
+            if (_totalWeight > 0)
             {
                 int roll = random.Next(0, _totalWeight);
 
                 int index = 0;
                 while (roll > 0)
                 {
-                    if(roll < _entries.ElementAt(index).Value)
+                    if (roll < _entries.ElementAt(index).Value)
                     {
                         retVal = _entries.ElementAt(index).Key;
                         roll = 0;

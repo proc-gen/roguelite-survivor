@@ -3,10 +3,6 @@ using Arch.Core.Extensions;
 using Microsoft.Xna.Framework;
 using RogueliteSurvivor.Components;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Systems
 {
@@ -18,7 +14,7 @@ namespace RogueliteSurvivor.Systems
         {
         }
 
-        public void Update(GameTime gameTime, float totalElapsedTime) 
+        public void Update(GameTime gameTime, float totalElapsedTime)
         {
             world.Query(in query, (in Entity entity, ref Animation anim) =>
             {

@@ -1,14 +1,8 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
-using Box2D.NetStandard.Dynamics.Contacts;
 using Box2D.NetStandard.Dynamics.Fixtures;
 using Box2D.NetStandard.Dynamics.World.Callbacks;
 using RogueliteSurvivor.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Physics
 {

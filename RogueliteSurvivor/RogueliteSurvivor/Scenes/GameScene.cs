@@ -14,18 +14,14 @@ using RogueliteSurvivor.Extensions;
 using RogueliteSurvivor.Physics;
 using RogueliteSurvivor.Systems;
 using RogueliteSurvivor.Utils;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Scenes
 {
     public class GameScene : Scene
     {
-        
+
         private List<IUpdateSystem> updateSystems;
         private List<IRenderSystem> renderSystems;
         private Entity player;
@@ -63,7 +59,7 @@ namespace RogueliteSurvivor.Scenes
             initializeSystems();
             loadMap();
             placePlayer();
-            
+
             totalGameTime = 0;
             gameState = GameState.Running;
 
@@ -126,11 +122,11 @@ namespace RogueliteSurvivor.Scenes
         {
             JObject enemies = JObject.Parse(File.ReadAllText(Path.Combine(Content.RootDirectory, "Datasets", "enemies.json")));
             enemyContainers = new Dictionary<string, EnemyContainer>();
-            
+
             foreach (var enemy in enemies["data"])
             {
                 enemyContainers.Add(
-                    EnemyContainer.EnemyContainerName(enemy), 
+                    EnemyContainer.EnemyContainerName(enemy),
                     EnemyContainer.ToEnemyContainer(enemy)
                 );
             }
@@ -239,7 +235,7 @@ namespace RogueliteSurvivor.Scenes
         {
             string retVal = string.Empty;
 
-            if(stateChangeTime > .1f && (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P)))
+            if (stateChangeTime > .1f && (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P)))
             {
                 gameState = gameState == GameState.Running ? GameState.Paused : GameState.Running;
                 stateChangeTime = 0f;
@@ -249,7 +245,7 @@ namespace RogueliteSurvivor.Scenes
                 Loaded = false;
                 retVal = "main-menu";
             }
-            else if(player.Get<EntityStatus>().State == State.Dead)
+            else if (player.Get<EntityStatus>().State == State.Dead)
             {
                 Loaded = false;
                 retVal = "game-over";
@@ -265,7 +261,7 @@ namespace RogueliteSurvivor.Scenes
                         system.Update(gameTime, totalGameTime);
                     }
                 }
-                stateChangeTime += (float)gameTime.ElapsedGameTime.TotalSeconds;                
+                stateChangeTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             return retVal;

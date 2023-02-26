@@ -7,8 +7,6 @@ using RogueliteSurvivor.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TiledCS;
 
 namespace RogueliteSurvivor.Systems
@@ -32,7 +30,7 @@ namespace RogueliteSurvivor.Systems
             {
                 var tileLayer = map.Map.Layers.Where(x => x.type == TiledLayerType.TileLayer && x.id == layer).FirstOrDefault();
 
-                if(tileLayer != null)
+                if (tileLayer != null)
                 {
                     int minY, maxY, minX, maxX;
                     minY = (int)MathF.Max((playerPosition.Y - graphics.PreferredBackBufferHeight / 2) / 16f, 0);

@@ -2,11 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Scenes
 {
@@ -20,7 +15,7 @@ namespace RogueliteSurvivor.Scenes
         protected Box2D.NetStandard.Dynamics.World.World physicsWorld;
         protected System.Numerics.Vector2 gravity = System.Numerics.Vector2.Zero;
 
-        public bool Loaded {  get; protected set; }
+        public bool Loaded { get; protected set; }
 
         public Scene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
         {
@@ -28,7 +23,7 @@ namespace RogueliteSurvivor.Scenes
             Content = contentManager;
             _graphics = graphics;
             this.world = world;
-            this.physicsWorld = physicsWorld; 
+            this.physicsWorld = physicsWorld;
 
             Loaded = false;
         }

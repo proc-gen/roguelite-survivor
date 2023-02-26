@@ -1,15 +1,7 @@
 ﻿using Arch.Core;
-using Arch.Core.Extensions;
-using Box2D.NetStandard.Dynamics.Bodies;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Systems
 {
@@ -20,12 +12,12 @@ namespace RogueliteSurvivor.Systems
                                 .WithAny<Projectile, SingleTarget>())
         { }
 
-        public void Update(GameTime gameTime, float totalElapsedTime) 
+        public void Update(GameTime gameTime, float totalElapsedTime)
         {
-            
+
             world.Query(in query, (in Entity entity, ref EntityStatus entityStatus) =>
             {
-                if(entityStatus.State == State.Dead)
+                if (entityStatus.State == State.Dead)
                 {
                     world.Destroy(entity);
                 }

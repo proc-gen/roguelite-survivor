@@ -2,11 +2,6 @@
 using Arch.Core.Extensions;
 using Microsoft.Xna.Framework;
 using RogueliteSurvivor.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Systems
 {
@@ -22,7 +17,7 @@ namespace RogueliteSurvivor.Systems
                                 .WithAny<Player, Enemy>())
         { }
 
-        public void Update(GameTime gameTime, float totalElapsedTime) 
+        public void Update(GameTime gameTime, float totalElapsedTime)
         {
             world.Query(in query, (in Entity entity, ref Position pos, ref Target target) =>
             {

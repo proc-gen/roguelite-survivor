@@ -9,9 +9,6 @@ using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Containers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Systems
 {
@@ -27,14 +24,14 @@ namespace RogueliteSurvivor.Systems
         public DeathSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<Spells, SpellContainer> spellContainers)
             : base(world, new QueryDescription()
                                 .WithAny<Projectile, Enemy>())
-        { 
+        {
             this.textures = textures;
             this.physicsWorld = physicsWorld;
             this.spellContainers = spellContainers;
             random = new Random();
         }
 
-        public void Update(GameTime gameTime, float totalElapsedTime) 
+        public void Update(GameTime gameTime, float totalElapsedTime)
         {
             world.Query(in query, (in Entity entity, ref EntityStatus entityStatus, ref SpriteSheet spriteSheet, ref Animation animation, ref Body body) =>
             {
@@ -55,7 +52,7 @@ namespace RogueliteSurvivor.Systems
                         animation = new Animation(0, getMiniBloodNumFrames(bloodToUse) - 1, 1 / 60f, 1, false);
                     }
                 }
-                else if(entityStatus.State == State.Dying && animation.CurrentFrame == animation.LastFrame)
+                else if (entityStatus.State == State.Dying && animation.CurrentFrame == animation.LastFrame)
                 {
                     entityStatus.State = State.Dead;
                 }
@@ -68,11 +65,11 @@ namespace RogueliteSurvivor.Systems
                     entityStatus.State = State.Dying;
                     physicsWorld.DestroyBody(body);
                 }
-                else if (entityStatus.State == State.Dying 
+                else if (entityStatus.State == State.Dying
                             && animation.CurrentFrame == animation.LastFrame)
                 {
                     entityStatus.State = State.Dead;
-                    
+
                 }
             });
         }

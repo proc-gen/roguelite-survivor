@@ -1,14 +1,9 @@
 ﻿using Arch.Core;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Arch.Core.Extensions;
 using RogueliteSurvivor.Constants;
+using System.Collections.Generic;
 
 namespace RogueliteSurvivor.Systems
 {
@@ -46,9 +41,9 @@ namespace RogueliteSurvivor.Systems
                 );
 
                 spriteBatch.DrawString(
-                    fonts["Font"], 
-                    string.Concat(health.Current, " / ", health.Max), 
-                    HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitX * 5, 
+                    fonts["Font"],
+                    string.Concat(health.Current, " / ", health.Max),
+                    HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitX * 5,
                     Color.White
                 );
 
@@ -81,7 +76,7 @@ namespace RogueliteSurvivor.Systems
                     Color.White
                 );
 
-            if(gameState == GameState.Paused)
+            if (gameState == GameState.Paused)
             {
                 spriteBatch.DrawString(
                     fonts["Font"],

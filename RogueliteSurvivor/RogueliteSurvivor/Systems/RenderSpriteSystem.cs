@@ -1,14 +1,11 @@
 ﻿using Arch.Core;
-using Microsoft.Xna.Framework.Graphics;
+using Arch.Core.Extensions;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.Components;
+using RogueliteSurvivor.Constants;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Arch.Core.Extensions;
-using RogueliteSurvivor.Constants;
 
 namespace RogueliteSurvivor.Systems
 {

@@ -3,10 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using RogueliteSurvivor.Components;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Systems
 {
@@ -33,7 +30,7 @@ namespace RogueliteSurvivor.Systems
                     var keys = kState.GetPressedKeys();
 
                     if (keys.Contains(Keys.Up) || keys.Contains(Keys.Down) || keys.Contains(Keys.Left) || keys.Contains(Keys.Right))
-                    { 
+                    {
                         if (keys.Contains(Keys.Up))
                         {
                             vel.Vector -= Vector2.UnitY;
@@ -54,7 +51,7 @@ namespace RogueliteSurvivor.Systems
                         vel.Vector = Vector2.Normalize(vel.Vector) * sp.speed;
                     }
                 }
-                else if(gState.ThumbSticks.Left != Vector2.Zero)
+                else if (gState.ThumbSticks.Left != Vector2.Zero)
                 {
                     vel.Vector = Vector2.Normalize(gState.ThumbSticks.Left) * InverseY * sp.speed;
                 }

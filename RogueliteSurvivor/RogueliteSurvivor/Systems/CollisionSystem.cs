@@ -4,13 +4,6 @@ using Box2D.NetStandard.Dynamics.Bodies;
 using Microsoft.Xna.Framework;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using TiledCS;
 
 namespace RogueliteSurvivor.Systems
 {
@@ -66,7 +59,7 @@ namespace RogueliteSurvivor.Systems
                 }
             });
 
-            physicsWorld.Step(1/60f, 8, 3);
+            physicsWorld.Step(1 / 60f, 8, 3);
 
             world.Query(in query, (in Entity entity, ref Position pos, ref Velocity vel, ref Body body) =>
             {

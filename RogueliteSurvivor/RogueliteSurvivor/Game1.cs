@@ -1,24 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Arch.Core;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using TiledCS;
-using Arch;
-using Arch.Core;
-using RogueliteSurvivor.Components;
-using RogueliteSurvivor.Systems;
-using Arch.Core.Extensions;
-using RogueliteSurvivor.Physics;
-using JobScheduler;
-using Box2D.NetStandard.Dynamics.Bodies;
-using RogueliteSurvivor.Scenes;
-using System.Threading.Tasks;
-using RogueliteSurvivor.Containers;
 using Newtonsoft.Json.Linq;
+using RogueliteSurvivor.Containers;
+using RogueliteSurvivor.Physics;
+using RogueliteSurvivor.Scenes;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace RogueliteSurvivor
 {
@@ -110,8 +99,8 @@ namespace RogueliteSurvivor
                     nextScene = scenes[currentScene].Update(gameTime);
                     break;
             }
-            
-            if(!string.IsNullOrEmpty(nextScene))
+
+            if (!string.IsNullOrEmpty(nextScene))
             {
                 switch (nextScene)
                 {
@@ -122,10 +111,10 @@ namespace RogueliteSurvivor
                     case "game-over":
                         break;
                     case "loading":
-                        Task.Run(() => 
+                        Task.Run(() =>
                             {
                                 ((GameScene)scenes["game"]).SetGameSettings(((MainMenuScene)scenes["main-menu"]).GetGameSettings());
-                                scenes["game"].LoadContent(); 
+                                scenes["game"].LoadContent();
                             });
                         break;
                     case "exit":

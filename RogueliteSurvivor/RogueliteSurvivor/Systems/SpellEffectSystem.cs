@@ -3,10 +3,6 @@ using Arch.Core.Extensions;
 using Microsoft.Xna.Framework;
 using RogueliteSurvivor.Components;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Systems
 {
@@ -23,26 +19,26 @@ namespace RogueliteSurvivor.Systems
         {
         }
 
-        public void Update(GameTime gameTime, float totalElapsedTime) 
+        public void Update(GameTime gameTime, float totalElapsedTime)
         {
             world.Query(in burnQuery, (in Entity entity, ref EntityStatus entityStatus, ref Burn burn, ref Health health, ref Animation anim) =>
             {
                 burn.TimeLeft -= (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
                 burn.NextTick -= (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
 
-                if(burn.NextTick < 0)
+                if (burn.NextTick < 0)
                 {
                     health.Current -= 1;
                     burn.NextTick += burn.TickRate;
                     anim.Overlay = Color.Red;
 
-                    if(health.Current < 1) 
+                    if (health.Current < 1)
                     {
-                        if(entity.Has<Player>())
+                        if (entity.Has<Player>())
                         {
                             entityStatus.State = Constants.State.Dead;
                         }
-                        else if(entity.Has<Enemy>())
+                        else if (entity.Has<Enemy>())
                         {
                             entityStatus.State = Constants.State.ReadyToDie;
                         }

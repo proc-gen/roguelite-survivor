@@ -1,13 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.Components;
-using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Containers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.ComponentFactories
 {
@@ -16,7 +12,8 @@ namespace RogueliteSurvivor.ComponentFactories
         public static T CreateSpell<T>(SpellContainer spellContainer)
             where T : ISpell, new()
         {
-            T spell = new T() { 
+            T spell = new T()
+            {
                 Spell = spellContainer.Spell,
                 BaseDamage = spellContainer.BaseDamage,
                 CurrentDamage = spellContainer.CurrentDamage,
@@ -37,7 +34,7 @@ namespace RogueliteSurvivor.ComponentFactories
         public static Animation GetSpellAliveAnimation(SpellContainer spellContainer)
         {
             return new Animation(
-                spellContainer.AliveAnimation.FirstFrame, 
+                spellContainer.AliveAnimation.FirstFrame,
                 spellContainer.AliveAnimation.LastFrame,
                 spellContainer.AliveAnimation.PlaybackSpeed,
                 spellContainer.AliveAnimation.NumDirections,

@@ -6,11 +6,6 @@ using Box2D.NetStandard.Dynamics.World;
 using Box2D.NetStandard.Dynamics.World.Callbacks;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Physics
 {
@@ -192,9 +187,9 @@ namespace RogueliteSurvivor.Physics
         }
 
         private void setPlayerHealthAndState(Entity entity, Entity other, EntityStatus entityStatus)
-        {   
+        {
             var attackSpeed = other.Get<Spell1>();
-            if(attackSpeed.Cooldown > attackSpeed.CurrentAttackSpeed)
+            if (attackSpeed.Cooldown > attackSpeed.CurrentAttackSpeed)
             {
                 attackSpeed.Cooldown -= attackSpeed.CurrentAttackSpeed;
                 Health health = entity.Get<Health>();
@@ -202,8 +197,8 @@ namespace RogueliteSurvivor.Physics
                 health.Current -= (int)damage.Amount;
                 Animation anim = entity.Get<Animation>();
                 anim.Overlay = Microsoft.Xna.Framework.Color.Red;
-                
-                if(health.Current < 1)
+
+                if (health.Current < 1)
                 {
                     entityStatus.State = State.Dead;
                 }
@@ -215,12 +210,12 @@ namespace RogueliteSurvivor.Physics
 
         public override void PostSolve(in Contact contact, in ContactImpulse impulse)
         {
-            
+
         }
 
         public override void PreSolve(in Contact contact, in Manifold oldManifold)
         {
-            
+
         }
     }
 }

@@ -1,17 +1,9 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
-using Box2D.NetStandard.Dynamics.Bodies;
 using Microsoft.Xna.Framework;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using TiledCS;
 
 namespace RogueliteSurvivor.Systems
 {
@@ -40,9 +32,9 @@ namespace RogueliteSurvivor.Systems
 
             world.Query(in query, (in Entity entity, ref PickupSprite sprite, ref Position pos) =>
             {
-                if(Vector2.Distance(playerPos.Value.XY, pos.XY) < 16)
+                if (Vector2.Distance(playerPos.Value.XY, pos.XY) < 16)
                 {
-                    switch(sprite.Type)
+                    switch (sprite.Type)
                     {
                         case PickupType.AttackSpeed:
                             processAttackSpeed(entity, player, sprite);
@@ -61,7 +53,7 @@ namespace RogueliteSurvivor.Systems
                             break;
                         case PickupType.Health:
                             var health = player.Value.Get<Health>();
-                            if(health.Current < health.Max)
+                            if (health.Current < health.Max)
                             {
                                 health.Current = int.Min(health.Max, (int)sprite.PickupAmount + health.Current);
                                 player.Value.Set(health);
@@ -73,12 +65,12 @@ namespace RogueliteSurvivor.Systems
                 else
                 {
                     sprite.Count += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    if(sprite.Count > sprite.MaxCount)
+                    if (sprite.Count > sprite.MaxCount)
                     {
                         sprite.Count = 0;
                         sprite.Current += sprite.Increment;
 
-                        if(sprite.Current == sprite.Max || sprite.Current == sprite.Min)
+                        if (sprite.Current == sprite.Max || sprite.Current == sprite.Min)
                         {
                             sprite.Increment *= -1;
                         }

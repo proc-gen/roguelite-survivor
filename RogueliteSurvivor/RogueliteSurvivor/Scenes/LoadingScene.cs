@@ -3,14 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using RogueliteSurvivor.Components;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Scenes
 {
@@ -93,7 +87,7 @@ namespace RogueliteSurvivor.Scenes
                 Color.White
             );
             }
-            
+
 
             if ((bool)values[0])
             {

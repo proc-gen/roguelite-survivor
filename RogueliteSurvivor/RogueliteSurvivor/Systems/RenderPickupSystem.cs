@@ -1,14 +1,11 @@
 ﻿using Arch.Core;
-using Microsoft.Xna.Framework.Graphics;
+using Arch.Core.Extensions;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.Components;
+using RogueliteSurvivor.Constants;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Arch.Core.Extensions;
-using RogueliteSurvivor.Constants;
 
 namespace RogueliteSurvivor.Systems
 {
@@ -26,7 +23,7 @@ namespace RogueliteSurvivor.Systems
         {
             Vector2 playerPosition = player.Get<Position>().XY;
             Vector2 offset = new Vector2(graphics.PreferredBackBufferWidth / 6, graphics.PreferredBackBufferHeight / 6);
-            
+
             world.Query(in query, (ref Position pos, ref PickupSprite sprite) =>
             {
                 Vector2 position = pos.XY - playerPosition;

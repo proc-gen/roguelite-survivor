@@ -1,16 +1,9 @@
 ﻿using Arch.Core;
 using Box2D.NetStandard.Collision.Shapes;
 using Box2D.NetStandard.Dynamics.Bodies;
-using Microsoft.Xna.Framework;
 using RogueliteSurvivor.Constants;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net.Mime;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 using TiledCS;
 
 namespace RogueliteSurvivor.Components
@@ -20,7 +13,7 @@ namespace RogueliteSurvivor.Components
         public TiledMap Map { get; set; }
         public Dictionary<int, TiledTileset> Tilesets { get; set; }
 
-        public MapInfo(string mapPath, string tilesetPath, Box2D.NetStandard.Dynamics.World.World physicsWorld, Entity mapEntity) 
+        public MapInfo(string mapPath, string tilesetPath, Box2D.NetStandard.Dynamics.World.World physicsWorld, Entity mapEntity)
         {
             Map = new TiledMap(mapPath);
             Tilesets = Map.GetTiledTilesets(tilesetPath);

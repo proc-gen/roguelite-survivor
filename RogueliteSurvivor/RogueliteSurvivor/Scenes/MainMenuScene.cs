@@ -3,17 +3,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Containers;
 using RogueliteSurvivor.Utils;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Scenes
 {
@@ -40,7 +34,8 @@ namespace RogueliteSurvivor.Scenes
 
         public override void LoadContent()
         {
-            if (textures == null) {
+            if (textures == null)
+            {
                 textures = new Dictionary<string, Texture2D>
                 {
                     { "MainMenuButtons", Content.Load<Texture2D>(Path.Combine("UI", "main-menu-buttons")) },
@@ -79,11 +74,11 @@ namespace RogueliteSurvivor.Scenes
                 var kState = Keyboard.GetState();
                 var gState = GamePad.GetState(PlayerIndex.One);
 
-                if(state == MainMenuState.MainMenu) 
+                if (state == MainMenuState.MainMenu)
                 {
-                    if(kState.IsKeyDown(Keys.Enter) || gState.Buttons.A == ButtonState.Pressed)
+                    if (kState.IsKeyDown(Keys.Enter) || gState.Buttons.A == ButtonState.Pressed)
                     {
-                        switch(selectedButton)
+                        switch (selectedButton)
                         {
                             case 1:
                                 state = MainMenuState.SpellSelection;
@@ -147,7 +142,7 @@ namespace RogueliteSurvivor.Scenes
                         readyForInput = false;
                     }
                 }
-                
+
             }
 
             return retVal;

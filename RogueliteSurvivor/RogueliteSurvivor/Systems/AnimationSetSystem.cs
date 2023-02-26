@@ -1,11 +1,6 @@
 ﻿using Arch.Core;
 using Microsoft.Xna.Framework;
 using RogueliteSurvivor.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Systems
 {
@@ -17,7 +12,7 @@ namespace RogueliteSurvivor.Systems
         {
         }
 
-        public void Update(GameTime gameTime, float totalElapsedTime) 
+        public void Update(GameTime gameTime, float totalElapsedTime)
         {
             world.Query(in query, (ref Animation anim, ref SpriteSheet spriteSheet, ref Velocity vel) =>
             {
@@ -59,7 +54,7 @@ namespace RogueliteSurvivor.Systems
                         }
                     }
                 }
-                else if(anim.NumDirections == 2)
+                else if (anim.NumDirections == 2)
                 {
                     if (vel.Vector.X > 0)
                     {
@@ -76,7 +71,7 @@ namespace RogueliteSurvivor.Systems
                         }
                     }
                 }
-                else if(anim.NumDirections == 1)
+                else if (anim.NumDirections == 1)
                 {
                     //Do nothing
                 }

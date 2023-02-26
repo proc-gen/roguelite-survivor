@@ -1,11 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Containers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.ComponentFactories
 {
@@ -14,10 +10,10 @@ namespace RogueliteSurvivor.ComponentFactories
         public static Animation GetPlayerAnimation(PlayerContainer player)
         {
             return new Animation(
-                player.Animation.FirstFrame, 
-                player.Animation.LastFrame, 
-                player.Animation.PlaybackSpeed, 
-                player.Animation.NumDirections, 
+                player.Animation.FirstFrame,
+                player.Animation.LastFrame,
+                player.Animation.PlaybackSpeed,
+                player.Animation.NumDirections,
                 player.Animation.Repeatable
             );
         }
@@ -25,11 +21,11 @@ namespace RogueliteSurvivor.ComponentFactories
         public static SpriteSheet GetPlayerSpriteSheet(PlayerContainer player, Dictionary<string, Texture2D> textures)
         {
             return new SpriteSheet(
-                textures[player.Texture], 
-                player.Texture, 
-                player.SpriteSheet.FramesPerRow, 
-                player.SpriteSheet.FramesPerColumn, 
-                0f, 
+                textures[player.Texture],
+                player.Texture,
+                player.SpriteSheet.FramesPerRow,
+                player.SpriteSheet.FramesPerColumn,
+                0f,
                 player.SpriteSheet.Scale
             );
         }
