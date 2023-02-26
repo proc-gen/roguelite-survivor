@@ -25,6 +25,7 @@ namespace RogueliteSurvivor
 
         Dictionary<string, Scene> scenes = new Dictionary<string, Scene>();
         Dictionary<string, PlayerContainer> playerCharacters = new Dictionary<string, PlayerContainer>();
+        Dictionary<string, MapContainer> mapContainers = new Dictionary<string, MapContainer>();
         string currentScene = "main-menu";
         string nextScene = string.Empty;
 
@@ -56,10 +57,11 @@ namespace RogueliteSurvivor
             physicsWorld.SetContactFilter(new GameContactFilter());
 
             loadPlayerCharacters();
+            loadPlayableMaps();
 
-            GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters);
+            GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers);
 
-            MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters);
+            MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers);
             mainMenu.LoadContent();
 
             LoadingScene loadingScene = new LoadingScene(_spriteBatch, Content, _graphics, world, physicsWorld);
@@ -84,6 +86,20 @@ namespace RogueliteSurvivor
                 playerCharacters.Add(
                     PlayerContainer.GetPlayerContainerName(player),
                     PlayerContainer.ToPlayerContainer(player)
+                );
+            }
+        }
+
+        private void loadPlayableMaps()
+        {
+            JObject maps = JObject.Parse(File.ReadAllText(Path.Combine(Content.RootDirectory, "Datasets", "maps.json")));
+            mapContainers = new Dictionary<string, MapContainer>();
+
+            foreach (var map in maps["data"])
+            {
+                mapContainers.Add(
+                    MapContainer.MapContainerName(map),
+                    MapContainer.ToMapContainer(map)
                 );
             }
         }

@@ -16,6 +16,9 @@
 #begin Datasets/enemies.json
 /copy:Datasets/enemies.json
 
+#begin Datasets/maps.json
+/copy:Datasets/maps.json
+
 #begin Datasets/player-characters.json
 /copy:Datasets/player-characters.json
 
@@ -305,13 +308,13 @@
 /processorParam:TextureFormat=Color
 /build:Hud/StatBar.png
 
-#begin Maps/Demo.tmx
-/copy:Maps/Demo.tmx
+#begin Maps/Demo/Demo.tmx
+/copy:Maps/Demo/Demo.tmx
 
-#begin Maps/Dungeon - Tiles.tsx
-/copy:Maps/Dungeon - Tiles.tsx
+#begin Maps/Demo/Dungeon - Tiles.tsx
+/copy:Maps/Demo/Dungeon - Tiles.tsx
 
-#begin Maps/Tiles.png
+#begin Maps/Demo/Tiles.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -321,7 +324,40 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Maps/Tiles.png
+/build:Maps/Demo/Tiles.png
+
+#begin Maps/Plateau/Forest - Props.tsx
+/copy:Maps/Plateau/Forest - Props.tsx
+
+#begin Maps/Plateau/Forest - Tiles.tsx
+/copy:Maps/Plateau/Forest - Tiles.tsx
+
+#begin Maps/Plateau/Plateau.tmx
+/copy:Maps/Plateau/Plateau.tmx
+
+#begin Maps/Plateau/Props.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Maps/Plateau/Props.png
+
+#begin Maps/Plateau/Tiles.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Maps/Plateau/Tiles.png
 
 #begin Pickups/player-pickups.png
 /importer:TextureImporter

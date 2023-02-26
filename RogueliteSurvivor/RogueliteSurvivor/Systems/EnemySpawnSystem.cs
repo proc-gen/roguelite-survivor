@@ -27,13 +27,14 @@ namespace RogueliteSurvivor.Systems
         RandomTable<PickupType> pickupTable;
         Dictionary<string, EnemyContainer> enemyContainers;
         Dictionary<Spells, SpellContainer> spellContainers;
+        MapContainer mapContainer;
 
         int enemyCount = 20;
         int difficulty = 1;
         int increaseAfterSeconds = 15;
         int lastSet = 0;
 
-        public EnemySpawnSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, GraphicsDeviceManager graphics, Dictionary<string, EnemyContainer> enemyContainers, Dictionary<Spells, SpellContainer> spellContainers)
+        public EnemySpawnSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, GraphicsDeviceManager graphics, Dictionary<string, EnemyContainer> enemyContainers, Dictionary<Spells, SpellContainer> spellContainers, MapContainer mapContainer)
             : base(world, new QueryDescription()
                                 .WithAll<Enemy>())
         {
@@ -42,6 +43,7 @@ namespace RogueliteSurvivor.Systems
             this.graphics = graphics;
             this.enemyContainers = enemyContainers;
             this.spellContainers = spellContainers;
+            this.mapContainer = mapContainer;
 
             random = new Random();
             setDifficulty(0);
@@ -100,8 +102,8 @@ namespace RogueliteSurvivor.Systems
             int x, y;
             do
             {
-                x = random.Next(64, 736);
-                y = random.Next(64, 736);
+                x = random.Next(mapContainer.SpawnMinX, mapContainer.SpawnMaxX);
+                y = random.Next(mapContainer.SpawnMinY, mapContainer.SpawnMaxY);
             } while ((x > (playerPosition.X - offset.X) && x < (playerPosition.X + offset.X)) && (y > (playerPosition.Y - offset.Y) && y < (playerPosition.Y + offset.Y)));
 
             return new System.Numerics.Vector2(x, y);

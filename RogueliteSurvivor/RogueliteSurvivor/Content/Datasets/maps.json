@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "name": "Demo",
+      "folder": "Demo",
+      "mapFilename": "Demo.tmx",
+      "tilesetImages": [ "Tiles" ],
+      "startingX": 384,
+      "startingY": 384,
+      "spawnMinX": 64,
+      "spawnMaxX": 736,
+      "spawnMinY": 64,
+      "spawnMaxY": 736
+    },
+    {
+      "name": "Plateau",
+      "folder": "Plateau",
+      "mapFilename": "Plateau.tmx",
+      "tilesetImages": [ "Tiles", "Props" ],
+      "startingX": 1600,
+      "startingY": 1600,
+      "spawnMinX": 336,
+      "spawnMaxX": 2864,
+      "spawnMinY": 336,
+      "spawnMaxY": 2864
+    }
+  ]
+}

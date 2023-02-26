@@ -38,11 +38,15 @@ namespace RogueliteSurvivor.Scenes
         private Dictionary<string, EnemyContainer> enemyContainers;
         private Dictionary<Spells, SpellContainer> spellContainers;
         private Dictionary<string, PlayerContainer> playerContainers;
+        private Dictionary<string, MapContainer> mapContainers;
 
-        public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers)
+        private MapContainer mapContainer;
+
+        public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers, Dictionary<string, MapContainer> mapContainers)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
         {
             this.playerContainers = playerContainers;
+            this.mapContainers = mapContainers;
         }
 
         public void SetGameSettings(GameSettings gameSettings)
@@ -52,12 +56,13 @@ namespace RogueliteSurvivor.Scenes
 
         public override void LoadContent()
         {
+            resetWorld();
+            loadMap();
+
             loadTexturesAndFonts();
             loadEnemies();
             loadSpells();
-            resetWorld();
             initializeSystems();
-            loadMap();
             placePlayer();
 
             totalGameTime = 0;
@@ -70,8 +75,6 @@ namespace RogueliteSurvivor.Scenes
         {
             textures = new Dictionary<string, Texture2D>
             {
-                { "tiles", Content.Load<Texture2D>(Path.Combine("Maps", "Tiles")) },
-
                 { "player", Content.Load<Texture2D>(Path.Combine("Player", "Animated_Mage_Character")) },
                 { "player_blue", Content.Load<Texture2D>(Path.Combine("Player", "Animated_Mage_Character_blue")) },
                 { "player_yellow", Content.Load<Texture2D>(Path.Combine("Player", "Animated_Mage_Character_yellow")) },
@@ -111,6 +114,11 @@ namespace RogueliteSurvivor.Scenes
                 { "LightningBlastHit", Content.Load<Texture2D>(Path.Combine("Effects", "lightning-blast-hit")) },
                 { "FireballHit", Content.Load<Texture2D>(Path.Combine("Effects", "fireball-hit")) },
             };
+
+            foreach(var tilesetImage in mapContainer.TilesetImages)
+            {
+                textures.Add(tilesetImage.ToLower(), Content.Load<Texture2D>(Path.Combine("Maps", mapContainer.Folder, tilesetImage)));
+            }
 
             fonts = new Dictionary<string, SpriteFont>()
             {
@@ -182,7 +190,7 @@ namespace RogueliteSurvivor.Scenes
                 new CollisionSystem(world, physicsWorld),
                 new SpellEffectSystem(world),
                 new PickupSystem(world),
-                new EnemySpawnSystem(world, textures, physicsWorld, _graphics, enemyContainers, spellContainers),
+                new EnemySpawnSystem(world, textures, physicsWorld, _graphics, enemyContainers, spellContainers, mapContainer),
                 new AttackSystem(world, textures, physicsWorld, spellContainers),
                 new AttackSpellCleanupSystem(world),
                 new DeathSystem(world, textures, physicsWorld, spellContainers),
@@ -199,14 +207,16 @@ namespace RogueliteSurvivor.Scenes
 
         private void loadMap()
         {
+            mapContainer = mapContainers[gameSettings.MapName];
+
             var mapEntity = world.Create<Map, MapInfo>();
-            mapEntity.SetRange(new Map(), new MapInfo(Path.Combine(Content.RootDirectory, "Maps", "Demo.tmx"), Path.Combine(Content.RootDirectory, "Maps"), physicsWorld, mapEntity));
+            mapEntity.SetRange(new Map(), new MapInfo(Path.Combine(Content.RootDirectory, "Maps", mapContainer.Folder, mapContainer.MapFilename), Path.Combine(Content.RootDirectory, "Maps", mapContainer.Folder), physicsWorld, mapEntity));
         }
 
         private void placePlayer()
         {
             var body = new BodyDef();
-            body.position = new System.Numerics.Vector2(384, 384) / PhysicsConstants.PhysicsToPixelsRatio;
+            body.position = new System.Numerics.Vector2(mapContainer.Start.X, mapContainer.Start.Y) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
 
             player = world.Create<Player, EntityStatus, Position, Velocity, Speed, AttackSpeed, SpellDamage, SpellEffectChance, Animation, SpriteSheet, Target, Spell1, Spell2, Health, KillCount, Body>();
@@ -214,7 +224,7 @@ namespace RogueliteSurvivor.Scenes
             player.SetRange(
                 new Player(),
                 new EntityStatus(),
-                new Position() { XY = new Vector2(384, 384) },
+                new Position() { XY = new Vector2(mapContainer.Start.X, mapContainer.Start.Y) },
                 new Velocity() { Vector = Vector2.Zero },
                 new Speed() { speed = playerContainers[gameSettings.PlayerName].Speed },
                 new AttackSpeed(1f),

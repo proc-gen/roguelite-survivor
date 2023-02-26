@@ -24,12 +24,14 @@ namespace RogueliteSurvivor.Scenes
         private int selectedButton = 1;
 
         private Dictionary<string, PlayerContainer> playerContainers;
+        private Dictionary<string, MapContainer> mapContainers;
 
 
-        public MainMenuScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers)
+        public MainMenuScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers, Dictionary<string, MapContainer> mapContainers)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
         {
             this.playerContainers = playerContainers;
+            this.mapContainers = mapContainers;
         }
 
         public override void LoadContent()
@@ -257,7 +259,8 @@ namespace RogueliteSurvivor.Scenes
         {
             var gameSettings = new GameSettings()
             {
-                PlayerName = selectedPlayer
+                PlayerName = selectedPlayer,
+                MapName = "Plateau"
             };
 
             return gameSettings;

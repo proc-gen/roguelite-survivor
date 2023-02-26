@@ -6,6 +6,7 @@ using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TiledCS;
 
@@ -55,6 +56,7 @@ namespace RogueliteSurvivor.Systems
                             var mapTileset = map.Map.GetTiledMapTileset(gid);
 
                             var tileset = map.Tilesets[mapTileset.firstgid];
+                            string path = tileset.Image.source.Replace(".png", "").ToLower();
 
                             var rect = map.Map.GetSourceRect(mapTileset, tileset, gid);
 
@@ -64,7 +66,7 @@ namespace RogueliteSurvivor.Systems
                             SpriteEffects effects = SpriteEffects.None;
                             double rotation = 0f;
 
-                            spriteBatch.Draw(textures["tiles"], new Vector2(tileX + offset.X, tileY + offset.Y), source, Color.White, (float)rotation, playerPosition, 1f, effects, .05f * layer);
+                            spriteBatch.Draw(textures[path], new Vector2(tileX + offset.X, tileY + offset.Y), source, Color.White, (float)rotation, playerPosition, 1f, effects, .05f * layer);
                         }
                     }
                 }
