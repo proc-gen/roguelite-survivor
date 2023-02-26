@@ -15,18 +15,10 @@ namespace RogueliteSurvivor.Systems
     public class RenderSpriteSystem : ArchSystem, IRenderSystem
     {
         GraphicsDeviceManager graphics;
-        QueryDescription playerQuery = new QueryDescription()
-                                            .WithAll<Player, Position, SpriteSheet, Animation>();
-        QueryDescription enemyQuery = new QueryDescription()
-                                            .WithAll<Enemy, Position, SpriteSheet, Animation>();
-        QueryDescription projectileQuery = new QueryDescription()
-                                            .WithAll<Projectile, Position, SpriteSheet, Animation>();
-        QueryDescription singleTargetQuery = new QueryDescription()
-                                            .WithAll<SingleTarget, Position, SpriteSheet, Animation>();
 
         public RenderSpriteSystem(World world, GraphicsDeviceManager graphics)
             : base(world, new QueryDescription()
-                                .WithAll<Position, SpriteSheet, Animation>())
+                                .WithAll<EntityStatus, Position, SpriteSheet, Animation>())
         {
             this.graphics = graphics;
         }
@@ -38,37 +30,10 @@ namespace RogueliteSurvivor.Systems
                 Vector2 playerPosition = player.Get<Position>().XY;
                 Vector2 offset = new Vector2(graphics.PreferredBackBufferWidth / 6, graphics.PreferredBackBufferHeight / 6);
 
-                world.Query(in playerQuery, (ref Position pos, ref Animation anim, ref SpriteSheet sprite) =>
+                world.Query(in query, (ref EntityStatus entityStatus, ref Position pos, ref Animation anim, ref SpriteSheet sprite) =>
                 {
                     Vector2 position = pos.XY - playerPosition;
                     renderEntity(spriteBatch, textures, sprite, anim, position, offset);
-                });
-
-                world.Query(in enemyQuery, (ref Enemy enemy, ref Position pos, ref Animation anim, ref SpriteSheet sprite) =>
-                {
-                    if (enemy.State != EntityState.Dead)
-                    {
-                        Vector2 position = pos.XY - playerPosition;
-                        renderEntity(spriteBatch, textures, sprite, anim, position, offset);
-                    }
-                });
-
-                world.Query(in projectileQuery, (ref Projectile projectile, ref Position pos, ref Animation anim, ref SpriteSheet sprite) =>
-                {
-                    if (projectile.State != EntityState.Dead)
-                    {
-                        Vector2 position = pos.XY - playerPosition;
-                        renderEntity(spriteBatch, textures, sprite, anim, position, offset);
-                    }
-                });
-
-                world.Query(in singleTargetQuery, (ref SingleTarget single, ref Position pos, ref Animation anim, ref SpriteSheet sprite) =>
-                {
-                    if (single.State != EntityState.Dead)
-                    {
-                        Vector2 position = pos.XY - playerPosition;
-                        renderEntity(spriteBatch, textures, sprite, anim, position, offset);
-                    }
                 });
             }
         }

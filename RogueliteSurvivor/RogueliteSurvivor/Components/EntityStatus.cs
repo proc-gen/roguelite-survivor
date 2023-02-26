@@ -7,7 +7,13 @@ using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Components
 {
-    public struct Player
+    public struct EntityStatus
     {
+        public EntityStatus() 
+        {
+            State = State.Alive;
+        }
+        public State State { get; set; }
+
     }
 }

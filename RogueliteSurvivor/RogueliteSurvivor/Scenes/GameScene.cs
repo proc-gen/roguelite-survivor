@@ -213,10 +213,11 @@ namespace RogueliteSurvivor.Scenes
             body.position = new System.Numerics.Vector2(384, 384) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
 
-            player = world.Create<Player, Position, Velocity, Speed, Animation, SpriteSheet, Target, Spell1, Spell2, Health, KillCount, Body>();
+            player = world.Create<Player, EntityStatus, Position, Velocity, Speed, Animation, SpriteSheet, Target, Spell1, Spell2, Health, KillCount, Body>();
 
             player.SetRange(
-                new Player() { State = EntityState.Alive },
+                new Player(),
+                new EntityStatus(),
                 new Position() { XY = new Vector2(384, 384) },
                 new Velocity() { Vector = Vector2.Zero },
                 new Speed() { speed = playerContainers[gameSettings.PlayerName].Speed },
@@ -245,7 +246,7 @@ namespace RogueliteSurvivor.Scenes
                 Loaded = false;
                 retVal = "main-menu";
             }
-            else if(player.Get<Player>().State == EntityState.Dead)
+            else if(player.Get<EntityStatus>().State == State.Dead)
             {
                 Loaded = false;
                 retVal = "game-over";

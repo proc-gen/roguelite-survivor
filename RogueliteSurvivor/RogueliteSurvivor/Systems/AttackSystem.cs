@@ -87,7 +87,7 @@ namespace RogueliteSurvivor.Systems
 
         private void createProjectile(Entity entity, ISpell spell, Target target, Position pos, SpellEffects effect)
         {
-            var projectile = world.Create<Projectile, Position, Velocity, Speed, Animation, SpriteSheet, Damage, Owner, Body>();
+            var projectile = world.Create<Projectile, EntityStatus, Position, Velocity, Speed, Animation, SpriteSheet, Damage, Owner, Body>();
 
             var body = new BodyDef();
             var velocityVector = Vector2.Normalize(target.TargetPosition - pos.XY);
@@ -96,7 +96,8 @@ namespace RogueliteSurvivor.Systems
             body.fixedRotation = true;
 
             projectile.SetRange(
-                new Projectile() { State = EntityState.Alive },
+                new Projectile(),
+                new EntityStatus(),
                 new Position() { XY = new Vector2(body.position.X, body.position.Y) },
                 new Velocity() { Vector = velocityVector * spell.CurrentProjectileSpeed },
                 new Speed() { speed = spell.CurrentProjectileSpeed },
@@ -110,7 +111,7 @@ namespace RogueliteSurvivor.Systems
 
         private void createSingleTarget(Entity entity, ISpell spell, Target target, Position pos, SpellEffects effect)
         {
-            var singleTarget = world.Create<SingleTarget, Position, Speed, Animation, SpriteSheet, Damage, Owner, Body>();
+            var singleTarget = world.Create<SingleTarget, EntityStatus, Position, Speed, Animation, SpriteSheet, Damage, Owner, Body>();
 
             var body = new BodyDef();
             body.position = new System.Numerics.Vector2(target.TargetPosition.X, target.TargetPosition.Y) / PhysicsConstants.PhysicsToPixelsRatio;
@@ -118,6 +119,7 @@ namespace RogueliteSurvivor.Systems
 
             singleTarget.SetRange(
                 SpellFactory.CreateSingleTarget(spellContainers[spell.Spell]),
+                new EntityStatus(),
                 new Position() { XY = target.TargetPosition },
                 new Speed() { speed = spell.CurrentProjectileSpeed },
                 SpellFactory.GetSpellAliveAnimation(spellContainers[spell.Spell]),

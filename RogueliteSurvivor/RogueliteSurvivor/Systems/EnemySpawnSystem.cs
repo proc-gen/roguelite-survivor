@@ -69,9 +69,9 @@ namespace RogueliteSurvivor.Systems
                 }
             });
 
-            world.Query(in query, (in Entity entity, ref Enemy enemy, ref Pickup pickup, ref Position position) =>
+            world.Query(in query, (in Entity entity, ref Enemy enemy, ref Pickup pickup, ref Position position, ref EntityStatus entityStatus) =>
             {
-                if(enemy.State == EntityState.Dead)
+                if(entityStatus.State == State.Dead)
                 {
                     if (entity.IsAlive())
                     {
@@ -143,14 +143,15 @@ namespace RogueliteSurvivor.Systems
             {
                 EnemyContainer container = enemyContainers[enemyType];
 
-                var entity = world.Create<Enemy, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell1, Body, Pickup>();
+                var entity = world.Create<Enemy, EntityStatus, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell1, Body, Pickup>();
 
                 var body = new BodyDef();
                 body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
                 body.fixedRotation = true;
 
                 entity.SetRange(
-                            new Enemy() { State = EntityState.Alive },
+                            new Enemy(),
+                            new EntityStatus(),
                             new Position() { XY = new Vector2(body.position.X, body.position.Y) },
                             new Velocity() { Vector = Vector2.Zero },
                             new Speed() { speed = container.Speed },

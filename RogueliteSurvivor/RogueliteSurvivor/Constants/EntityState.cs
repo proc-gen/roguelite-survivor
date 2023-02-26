@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RogueliteSurvivor.Constants
 {
-    public enum EntityState
+    public enum State
     {
         Alive,
         ReadyToDie,

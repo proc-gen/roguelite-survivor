@@ -82,7 +82,6 @@ namespace RogueliteSurvivor.ComponentFactories
         {
             return new SingleTarget()
             {
-                State = EntityState.Alive,
                 DamageStartDelay = spellContainer.DamageStartDelay,
                 DamageEndDelay = spellContainer.DamageEndDelay,
             };

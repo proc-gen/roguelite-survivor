@@ -9,6 +9,5 @@ namespace RogueliteSurvivor.Components
 {
     public struct Enemy
     {
-        public EntityState State { get; set; }
     }
 }
