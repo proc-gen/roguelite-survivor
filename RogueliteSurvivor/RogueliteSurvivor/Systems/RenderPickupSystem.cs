@@ -21,27 +21,30 @@ namespace RogueliteSurvivor.Systems
 
         public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player, float totalElapsedTime, GameState gameState, int layer)
         {
-            Vector2 playerPosition = player.Get<Position>().XY;
-            Vector2 offset = new Vector2(graphics.PreferredBackBufferWidth / 6, graphics.PreferredBackBufferHeight / 6);
-
-            world.Query(in query, (ref Position pos, ref PickupSprite sprite) =>
+            if (layer == 1)
             {
-                Vector2 position = pos.XY - playerPosition;
-                if (MathF.Abs(position.X) < offset.X && MathF.Abs(position.Y) < offset.Y)
+                Vector2 playerPosition = player.Get<Position>().XY;
+                Vector2 offset = new Vector2(graphics.PreferredBackBufferWidth / 6, graphics.PreferredBackBufferHeight / 6);
+
+                world.Query(in query, (ref Position pos, ref PickupSprite sprite) =>
                 {
-                    spriteBatch.Draw(
-                        textures["pickups"],
-                        position + offset + (Vector2.UnitY * sprite.Current),
-                        getSourceRectangle(sprite.Type),
-                        Color.White,
-                        0f,
-                        new Vector2(8, 8),
-                        1f,
-                        SpriteEffects.None,
-                        .1f
-                    );
-                }
-            });
+                    Vector2 position = pos.XY - playerPosition;
+                    if (MathF.Abs(position.X) < offset.X && MathF.Abs(position.Y) < offset.Y)
+                    {
+                        spriteBatch.Draw(
+                            textures["pickups"],
+                            position + offset + (Vector2.UnitY * sprite.Current),
+                            getSourceRectangle(sprite.Type),
+                            Color.White,
+                            0f,
+                            new Vector2(8, 8),
+                            1f,
+                            SpriteEffects.None,
+                            .1f
+                        );
+                    }
+                });
+            }
         }
 
         private Rectangle getSourceRectangle(PickupType pickupType)
