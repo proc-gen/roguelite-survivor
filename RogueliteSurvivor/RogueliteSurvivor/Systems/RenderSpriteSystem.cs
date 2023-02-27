@@ -29,8 +29,11 @@ namespace RogueliteSurvivor.Systems
 
                 world.Query(in query, (ref EntityStatus entityStatus, ref Position pos, ref Animation anim, ref SpriteSheet sprite) =>
                 {
-                    Vector2 position = pos.XY - playerPosition;
-                    renderEntity(spriteBatch, textures, sprite, anim, position, offset);
+                    if (entityStatus.State != EntityState.Dead)
+                    {
+                        Vector2 position = pos.XY - playerPosition;
+                        renderEntity(spriteBatch, textures, sprite, anim, position, offset);
+                    }
                 });
             }
         }
