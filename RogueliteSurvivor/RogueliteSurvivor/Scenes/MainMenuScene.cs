@@ -8,6 +8,7 @@ using RogueliteSurvivor.Containers;
 using RogueliteSurvivor.Utils;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace RogueliteSurvivor.Scenes
 {
@@ -22,16 +23,17 @@ namespace RogueliteSurvivor.Scenes
         private MainMenuState state;
         private string selectedPlayer;
         private int selectedButton = 1;
+        private string selectedMap = "Demo";
 
         private Dictionary<string, PlayerContainer> playerContainers;
-        private Dictionary<string, MapContainer> mapContainers;
+        private List<MapContainer> mapContainers;
 
 
         public MainMenuScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers, Dictionary<string, MapContainer> mapContainers)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
         {
             this.playerContainers = playerContainers;
-            this.mapContainers = mapContainers;
+            this.mapContainers = mapContainers.Values.ToList();
         }
 
         public override void LoadContent()
@@ -83,7 +85,7 @@ namespace RogueliteSurvivor.Scenes
                         switch (selectedButton)
                         {
                             case 1:
-                                state = MainMenuState.SpellSelection;
+                                state = MainMenuState.CharacterSelection;
                                 break;
                             case 2:
                                 break;
@@ -105,7 +107,7 @@ namespace RogueliteSurvivor.Scenes
                         readyForInput = false;
                     }
                 }
-                else
+                else if (state == MainMenuState.CharacterSelection)
                 {
                     if (kState.IsKeyDown(Keys.Enter) || gState.Buttons.A == ButtonState.Pressed)
                     {
@@ -122,10 +124,8 @@ namespace RogueliteSurvivor.Scenes
                                 break;
                         }
 
-                        state = MainMenuState.MainMenu;
-                        retVal = "loading";
+                        state = MainMenuState.MapSelection;
                         readyForInput = false;
-                        selectedButton = 1;
                     }
                     else if (kState.IsKeyDown(Keys.Left) || gState.DPad.Left == ButtonState.Pressed || gState.ThumbSticks.Left.X < -0.5f)
                     {
@@ -141,6 +141,39 @@ namespace RogueliteSurvivor.Scenes
                     {
                         state = MainMenuState.MainMenu;
                         selectedButton = 1;
+                        readyForInput = false;
+                    }
+                }
+                else if(state == MainMenuState.MapSelection)
+                {
+                    if (kState.IsKeyDown(Keys.Enter) || gState.Buttons.A == ButtonState.Pressed)
+                    {
+                        state = MainMenuState.MainMenu;
+                        retVal = "loading";
+                        readyForInput = false;
+                        selectedButton = 1;
+                    }
+                    else if (gState.Buttons.B == ButtonState.Pressed || kState.IsKeyDown(Keys.Escape))
+                    {
+                        state = MainMenuState.CharacterSelection;
+                        readyForInput = false;
+                    }
+                    else if (kState.IsKeyDown(Keys.Up) || gState.DPad.Up == ButtonState.Pressed || gState.ThumbSticks.Left.Y > 0.5f)
+                    {
+                        if(selectedMap != mapContainers[0].Name)
+                        {
+                            int index = mapContainers.IndexOf(mapContainers.Where(a => a.Name == selectedMap).First()) - 1;
+                            selectedMap = mapContainers[index].Name;
+                        }
+                        readyForInput = false;
+                    }
+                    else if (kState.IsKeyDown(Keys.Down) || gState.DPad.Down == ButtonState.Pressed || gState.ThumbSticks.Left.Y < -0.5f)
+                    {
+                        if (selectedMap != mapContainers.Last().Name)
+                        {
+                            int index = mapContainers.IndexOf(mapContainers.Where(a => a.Name == selectedMap).First()) + 1;
+                            selectedMap = mapContainers[index].Name;
+                        }
                         readyForInput = false;
                     }
                 }
@@ -199,7 +232,7 @@ namespace RogueliteSurvivor.Scenes
                     0f
                 );
             }
-            else
+            else if (state == MainMenuState.CharacterSelection)
             {
                 _spriteBatch.DrawString(
                     fonts["Font"],
@@ -251,7 +284,35 @@ namespace RogueliteSurvivor.Scenes
                     Color.White
                 );
             }
+            else if (state == MainMenuState.MapSelection)
+            {
+                _spriteBatch.DrawString(
+                    fonts["Font"],
+                    "Select a map:",
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 50, _graphics.PreferredBackBufferHeight / 6 - 32),
+                    Color.White
+                );
 
+                int counter = 0;
+                foreach(var map in mapContainers)
+                {
+                    _spriteBatch.DrawString(
+                        fonts["Font"],
+                        map.Name,
+                        new Vector2(_graphics.PreferredBackBufferWidth / 6 - 45, _graphics.PreferredBackBufferHeight / 6 + counter),
+                        selectedMap == map.Name ? Color.Green : Color.White
+                    );
+
+                    counter += 32;
+                }
+
+                _spriteBatch.DrawString(
+                    fonts["Font"],
+                    "Press Esc on the keyboard or B on the controller to go back",
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 200, _graphics.PreferredBackBufferHeight / 6 + 32 + counter),
+                    Color.White
+                );
+            }
             _spriteBatch.End();
         }
 
@@ -260,7 +321,7 @@ namespace RogueliteSurvivor.Scenes
             var gameSettings = new GameSettings()
             {
                 PlayerName = selectedPlayer,
-                MapName = "Plateau"
+                MapName = selectedMap,
             };
 
             return gameSettings;

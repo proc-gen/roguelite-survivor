@@ -3,6 +3,7 @@
     public enum MainMenuState
     {
         MainMenu,
-        SpellSelection,
+        CharacterSelection,
+        MapSelection,
     }
 }
