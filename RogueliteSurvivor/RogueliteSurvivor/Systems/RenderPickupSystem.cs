@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
+using RogueliteSurvivor.Helpers;
 using System;
 using System.Collections.Generic;
 
@@ -34,7 +35,7 @@ namespace RogueliteSurvivor.Systems
                         spriteBatch.Draw(
                             textures["pickups"],
                             position + offset + (Vector2.UnitY * sprite.Current),
-                            getSourceRectangle(sprite.Type),
+                            PickupHelper.GetPickupSourceRectangle(sprite.Type),
                             Color.White,
                             0f,
                             new Vector2(8, 8),
@@ -47,35 +48,5 @@ namespace RogueliteSurvivor.Systems
             }
         }
 
-        private Rectangle getSourceRectangle(PickupType pickupType)
-        {
-            int x = 0, y = 0;
-
-            switch (pickupType)
-            {
-                case PickupType.AttackSpeed:
-                    x = 80;
-                    y = 64;
-                    break;
-                case PickupType.Damage:
-                    x = 80;
-                    y = 336;
-                    break;
-                case PickupType.MoveSpeed:
-                    x = 0;
-                    y = 64;
-                    break;
-                case PickupType.Health:
-                    x = 208;
-                    y = 224;
-                    break;
-                case PickupType.SpellEffectChance:
-                    x = 80;
-                    y = 320;
-                    break;
-            }
-
-            return new Rectangle(x, y, 16, 16);
-        }
     }
 }

@@ -123,6 +123,7 @@ namespace RogueliteSurvivor.Scenes
             fonts = new Dictionary<string, SpriteFont>()
             {
                 { "Font", Content.Load<SpriteFont>(Path.Combine("Fonts", "Font")) },
+                { "FontSmall", Content.Load<SpriteFont>(Path.Combine("Fonts", "FontSmall")) },
             };
         }
 

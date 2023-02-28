@@ -29,7 +29,7 @@ namespace RogueliteSurvivor.Systems
 
                 world.Query(in query, (ref EntityStatus entityStatus, ref Position pos, ref Animation anim, ref SpriteSheet sprite) =>
                 {
-                    if (entityStatus.State != EntityState.Dead)
+                    if (entityStatus.State != State.Dead)
                     {
                         Vector2 position = pos.XY - playerPosition;
                         renderEntity(spriteBatch, textures, sprite, anim, position, offset);

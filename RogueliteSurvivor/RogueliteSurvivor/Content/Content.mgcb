@@ -284,6 +284,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Font.spritefont
 
+#begin Fonts/FontSmall.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/FontSmall.spritefont
+
 #begin Hud/HealthBar.png
 /importer:TextureImporter
 /processor:TextureProcessor
