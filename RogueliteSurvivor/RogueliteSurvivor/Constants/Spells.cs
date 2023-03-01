@@ -26,30 +26,43 @@ namespace RogueliteSurvivor.Constants
             {
                 case "None":
                     return Spells.None;
-                    break;
                 case "Fireball":
                     return Spells.Fireball;
-                    break;
                 case "FireExplosion":
                     return Spells.FireExplosion;
-                    break;
                 case "IceShard":
                     return Spells.IceShard;
-                    break;
                 case "IceSpikes":
                     return Spells.IceSpikes;
-                    break;
                 case "LightningBlast":
                     return Spells.LightningBlast;
-                    break;
                 case "LightningStrike":
                     return Spells.LightningStrike;
-                    break;
                 case "EnemyMelee":
                     return Spells.EnemyMelee;
-                    break;
                 default:
                     return Spells.None;
+            }
+        }
+
+        public static string GetReadableSpellName(this Spells spell)
+        {
+            switch (spell)
+            {
+                case Spells.Fireball:
+                    return "Fireball";
+                case Spells.FireExplosion:
+                    return "Fire Explosion";
+                case Spells.IceShard:
+                    return "Ice Shard";
+                case Spells.IceSpikes:
+                    return "Ice Spikes";
+                case Spells.LightningBlast:
+                    return "Lightning Blast";
+                case Spells.LightningStrike:
+                    return "Lightning Strike";
+                default:
+                    return "None";
             }
         }
     }
