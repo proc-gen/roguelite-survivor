@@ -123,12 +123,13 @@ namespace RogueliteSurvivor.Systems
                 .Add("BloodLich", difficulty - 3);
 
             pickupTable = new RandomTable<PickupType>()
-                .Add(PickupType.None, 20 + difficulty)
+                .Add(PickupType.None, 50 + difficulty)
                 .Add(PickupType.AttackSpeed, difficulty)
                 .Add(PickupType.Damage, difficulty)
                 .Add(PickupType.MoveSpeed, difficulty)
                 .Add(PickupType.Health, difficulty)
-                .Add(PickupType.SpellEffectChance, difficulty);
+                .Add(PickupType.SpellEffectChance, difficulty)
+                .Add(PickupType.Pierce, difficulty);
         }
 
         private void createEnemy(Position? player, Vector2 offset)
@@ -186,6 +187,9 @@ namespace RogueliteSurvivor.Systems
                     break;
                 case PickupType.SpellEffectChance:
                     pickup.PickupAmount = .25f;
+                    break;
+                case PickupType.Pierce:
+                    pickup.PickupAmount = 1f;
                     break;
             }
 

@@ -44,14 +44,14 @@ namespace RogueliteSurvivor.Physics
                             state = b.Get<EntityStatus>();
                             damage = a.Get<Damage>();
                             owner = a.Get<Owner>();
-                            setEntityDead(a, state);
+                            updateProjectile(a, state);
                         }
                         else
                         {
                             state = b.Get<EntityStatus>();
                             damage = b.Get<Damage>();
                             owner = b.Get<Owner>();
-                            setEntityDead(b, state);
+                            updateProjectile(b, state);
                         }
 
                         if (state.State == State.Alive)
@@ -162,6 +162,20 @@ namespace RogueliteSurvivor.Physics
                         }
                     }
                 }
+            }
+        }
+
+        private void updateProjectile(Entity entity, EntityStatus entityStatus)
+        {
+            var pierce = entity.Get<Pierce>();
+            if(pierce.Num > 0)
+            {
+                pierce.Num--;
+                entity.Set(pierce);
+            }
+            else
+            {
+                setEntityDead(entity, entityStatus);
             }
         }
 

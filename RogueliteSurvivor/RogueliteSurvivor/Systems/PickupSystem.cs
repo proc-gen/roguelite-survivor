@@ -51,6 +51,12 @@ namespace RogueliteSurvivor.Systems
                             player.Value.Set(moveSpeed);
                             world.TryDestroy(entity);
                             break;
+                        case PickupType.Pierce:
+                            var pierce = player.Value.Get<Pierce>();
+                            pierce.Num += (int)sprite.PickupAmount;
+                            player.Value.Set(pierce);
+                            world.TryDestroy(entity);
+                            break;
                         case PickupType.Health:
                             var health = player.Value.Get<Health>();
                             if (health.Current < health.Max)

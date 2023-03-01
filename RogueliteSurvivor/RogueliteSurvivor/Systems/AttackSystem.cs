@@ -83,7 +83,7 @@ namespace RogueliteSurvivor.Systems
 
         private void createProjectile(Entity entity, ISpell spell, Target target, Position pos, SpellEffects effect)
         {
-            var projectile = world.Create<Projectile, EntityStatus, Position, Velocity, Speed, Animation, SpriteSheet, Damage, Owner, Body>();
+            var projectile = world.Create<Projectile, EntityStatus, Position, Velocity, Speed, Animation, SpriteSheet, Damage, Owner, Pierce, Body>();
 
             var body = new BodyDef();
             var velocityVector = Vector2.Normalize(target.TargetPosition - pos.XY);
@@ -101,6 +101,7 @@ namespace RogueliteSurvivor.Systems
                 SpellFactory.GetSpellAliveSpriteSheet(textures, spellContainers[spell.Spell], pos.XY, target.TargetPosition),
                 new Damage() { Amount = spell.CurrentDamage, BaseAmount = spell.CurrentDamage, SpellEffect = effect },
                 new Owner() { Entity = entity },
+                new Pierce(entity.Has<Pierce>() ? entity.Get<Pierce>().Num : 0),
                 BodyFactory.CreateCircularBody(projectile, 16, physicsWorld, body, .1f)
             );
         }

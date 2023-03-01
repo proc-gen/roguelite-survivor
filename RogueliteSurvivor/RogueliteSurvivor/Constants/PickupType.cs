@@ -8,5 +8,6 @@
         MoveSpeed,
         Health,
         SpellEffectChance,
+        Pierce,
     }
 }
