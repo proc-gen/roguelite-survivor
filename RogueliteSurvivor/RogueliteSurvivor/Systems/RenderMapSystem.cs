@@ -63,10 +63,7 @@ namespace RogueliteSurvivor.Systems
                             var source = new Rectangle(rect.x, rect.y, rect.width, rect.height);
                             var destination = new Rectangle(tileX, tileY, map.Map.TileWidth, map.Map.TileHeight);
 
-                            SpriteEffects effects = SpriteEffects.None;
-                            double rotation = 0f;
-
-                            spriteBatch.Draw(textures[path], new Vector2(tileX + offset.X, tileY + offset.Y), source, Color.White, (float)rotation, playerPosition, 1f, effects, .05f * layer);
+                            spriteBatch.Draw(textures[path], new Vector2(tileX + offset.X, tileY + offset.Y), source, Color.White, 0f, playerPosition, 1f, SpriteEffects.None, .05f * layer);
                         }
                     }
                 }
