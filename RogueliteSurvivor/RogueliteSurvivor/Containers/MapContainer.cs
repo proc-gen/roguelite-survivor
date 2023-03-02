@@ -17,6 +17,7 @@ namespace RogueliteSurvivor.Containers
         public int SpawnMaxX { get; set; }
         public int SpawnMinY { get; set; }
         public int SpawnMaxY { get; set; }
+        public List<EnemyWavesContainer> EnemyWaves { get; set; }
 
 
         public static string MapContainerName(JToken map)
@@ -37,6 +38,7 @@ namespace RogueliteSurvivor.Containers
                 SpawnMaxX = (int)map["spawnMaxX"],
                 SpawnMinY = (int)map["spawnMinY"],
                 SpawnMaxY = (int)map["spawnMaxY"],
+                EnemyWaves = EnemyWavesContainer.ToEnemyWavesContainers(map["enemyWaves"])
             };
         }
 

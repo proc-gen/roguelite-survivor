@@ -10,7 +10,69 @@
       "spawnMinX": 64,
       "spawnMaxX": 736,
       "spawnMinY": 64,
-      "spawnMaxY": 736
+      "spawnMaxY": 736,
+      "enemyWaves": [
+        {
+          "repeat": true,
+          "start": 0,
+          "maxEnemies": 20,
+          "enemies": [
+            {
+              "type": "VampireBat",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 20,
+          "maxEnemies": 40,
+          "enemies": [
+            {
+              "type": "VampireBat",
+              "weight": 10
+            },
+            {
+              "type": "GhastlyBeholder",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 40,
+          "maxEnemies": 40,
+          "enemies": [
+            {
+              "type": "VampireBat",
+              "weight": 2
+            },
+            {
+              "type": "GhastlyBeholder",
+              "weight": 10
+            },
+            {
+              "type": "GraveRevenant",
+              "weight": 10
+            }
+          ]
+        },
+        {
+          "repeat": false,
+          "start": 60,
+          "maxEnemies": 100,
+          "enemies": [
+            {
+              "type": "VampireBat",
+              "weight": 10
+            },
+            {
+              "type": "BloodLich",
+              "weight": 2
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Plateau",
@@ -22,7 +84,69 @@
       "spawnMinX": 336,
       "spawnMaxX": 2864,
       "spawnMinY": 336,
-      "spawnMaxY": 2864
+      "spawnMaxY": 2864,
+      "enemyWaves": [
+        {
+          "repeat": true,
+          "start": 0,
+          "maxEnemies": 20,
+          "enemies": [
+            {
+              "type": "VampireBat",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 20,
+          "maxEnemies": 40,
+          "enemies": [
+            {
+              "type": "VampireBat",
+              "weight": 10
+            },
+            {
+              "type": "GhastlyBeholder",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 40,
+          "maxEnemies": 40,
+          "enemies": [
+            {
+              "type": "VampireBat",
+              "weight": 2
+            },
+            {
+              "type": "GhastlyBeholder",
+              "weight": 10
+            },
+            {
+              "type": "GraveRevenant",
+              "weight": 10
+            }
+          ]
+        },
+        {
+          "repeat": false,
+          "start": 60,
+          "maxEnemies": 100,
+          "enemies": [
+            {
+              "type": "VampireBat",
+              "weight": 10
+            },
+            {
+              "type": "BloodLich",
+              "weight": 2
+            }
+          ]
+        }
+      ]
     }
   ]
 }
