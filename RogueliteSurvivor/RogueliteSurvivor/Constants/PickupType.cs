@@ -9,5 +9,6 @@
         Health,
         SpellEffectChance,
         Pierce,
+        AreaOfEffect,
     }
 }

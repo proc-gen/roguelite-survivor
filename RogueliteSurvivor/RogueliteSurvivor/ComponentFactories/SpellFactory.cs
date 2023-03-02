@@ -41,7 +41,7 @@ namespace RogueliteSurvivor.ComponentFactories
                 spellContainer.AliveAnimation.Repeatable);
         }
 
-        public static SpriteSheet GetSpellAliveSpriteSheet(Dictionary<string, Texture2D> textures, SpellContainer spellContainer, Vector2 currentPosition, Vector2 targetPosition)
+        public static SpriteSheet GetSpellAliveSpriteSheet(Dictionary<string, Texture2D> textures, SpellContainer spellContainer, Vector2 currentPosition, Vector2 targetPosition, float scaleMultiplier = 1f)
         {
             return new SpriteSheet(
                 textures[spellContainer.Spell.ToString()],
@@ -49,7 +49,7 @@ namespace RogueliteSurvivor.ComponentFactories
                 spellContainer.AliveSpriteSheet.FramesPerRow,
                 spellContainer.AliveSpriteSheet.FramesPerColumn,
                 spellContainer.AliveSpriteSheet.Rotation == "none" ? 0 : MathF.Atan2(targetPosition.Y - currentPosition.Y, targetPosition.X - currentPosition.X),
-                spellContainer.AliveSpriteSheet.Scale
+                spellContainer.AliveSpriteSheet.Scale * scaleMultiplier
             );
         }
 
@@ -63,7 +63,7 @@ namespace RogueliteSurvivor.ComponentFactories
                 spellContainer.HitAnimation.Repeatable);
         }
 
-        public static SpriteSheet GetSpellHitSpriteSheet(Dictionary<string, Texture2D> textures, SpellContainer spellContainer, float rotation)
+        public static SpriteSheet GetSpellHitSpriteSheet(Dictionary<string, Texture2D> textures, SpellContainer spellContainer, float rotation, float scaleMultiplier = 1f)
         {
             return new SpriteSheet(
                 textures[spellContainer.Spell.ToString() + "Hit"],
@@ -71,7 +71,7 @@ namespace RogueliteSurvivor.ComponentFactories
                 spellContainer.HitSpriteSheet.FramesPerRow,
                 spellContainer.HitSpriteSheet.FramesPerColumn,
                 spellContainer.HitSpriteSheet.Rotation == "none" ? 0 : rotation,
-                spellContainer.HitSpriteSheet.Scale
+                spellContainer.HitSpriteSheet.Scale * scaleMultiplier
             );
         }
 

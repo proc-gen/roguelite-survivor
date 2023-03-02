@@ -40,6 +40,10 @@ namespace RogueliteSurvivor.Helpers
                     x = 96;
                     y = 0;
                     break;
+                case PickupType.AreaOfEffect:
+                    x = 144;
+                    y = 48;
+                    break;
             }
 
             return new Rectangle(x, y, 16, 16);

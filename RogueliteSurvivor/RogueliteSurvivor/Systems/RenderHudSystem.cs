@@ -55,7 +55,8 @@ namespace RogueliteSurvivor.Systems
             if (layer == 2)
             {
                 int counter = 0;
-                world.Query(in query, (in Entity entity, ref Health health, ref KillCount killCount, ref AttackSpeed attackSpeed, ref Speed speed, ref SpellDamage spellDamage, ref SpellEffectChance spellEffectChance, ref Pierce pierce) =>
+                world.Query(in query, (in Entity entity, ref Health health, ref KillCount killCount, ref AttackSpeed attackSpeed, ref Speed speed
+                    , ref SpellDamage spellDamage, ref SpellEffectChance spellEffectChance, ref Pierce pierce, ref AreaOfEffect areaOfEffect) =>
                 {
                     spriteBatch.Draw(
                         textures["HealthBar"],
@@ -98,18 +99,18 @@ namespace RogueliteSurvivor.Systems
                     switch (statPage)
                     {
                         case StatPage.Main:
-                            renderMainStats(spriteBatch, counter, attackSpeed, speed, spellDamage, spellEffectChance, pierce);
+                            renderMainStats(spriteBatch, counter, attackSpeed, speed, spellDamage, spellEffectChance, pierce, areaOfEffect);
                             break;
                         case StatPage.Spell1:
                             if(entity.TryGet(out Spell1 spell1))
                             {
-                                renderSpellStats(spriteBatch, counter, spell1, pierce);
+                                renderSpellStats(spriteBatch, counter, spell1, pierce, areaOfEffect);
                             }
                             break;
                         case StatPage.Spell2:
                             if (entity.TryGet(out Spell2 spell2))
                             {
-                                renderSpellStats(spriteBatch, counter, spell2, pierce);
+                                renderSpellStats(spriteBatch, counter, spell2, pierce, areaOfEffect);
                             }
                             break;
                     }
@@ -137,7 +138,7 @@ namespace RogueliteSurvivor.Systems
             }
         }
 
-        private void renderMainStats(SpriteBatch spriteBatch, int counter, AttackSpeed attackSpeed, Speed speed, SpellDamage spellDamage, SpellEffectChance spellEffectChance, Pierce pierce)
+        private void renderMainStats(SpriteBatch spriteBatch, int counter, AttackSpeed attackSpeed, Speed speed, SpellDamage spellDamage, SpellEffectChance spellEffectChance, Pierce pierce, AreaOfEffect areaOfEffect)
         {
             spriteBatch.DrawString(
                 fonts["FontSmall"],
@@ -180,9 +181,16 @@ namespace RogueliteSurvivor.Systems
                 HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 100 + Vector2.UnitX * 5,
                 Color.White
             );
+
+            spriteBatch.DrawString(
+                    fonts["FontSmall"],
+                    string.Concat("Area of Effect: ", areaOfEffect.Radius, "x"),
+                    HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 112 + Vector2.UnitX * 5,
+                    Color.White
+                );
         }
     
-        private void renderSpellStats(SpriteBatch spriteBatch, int counter, ISpell spell, Pierce pierce)
+        private void renderSpellStats(SpriteBatch spriteBatch, int counter, ISpell spell, Pierce pierce, AreaOfEffect areaOfEffect)
         {
             spriteBatch.DrawString(
                 fonts["FontSmall"],
@@ -217,6 +225,15 @@ namespace RogueliteSurvivor.Systems
                 spriteBatch.DrawString(
                     fonts["FontSmall"],
                     string.Concat("Pierce: ", pierce.Num),
+                    HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 88 + Vector2.UnitX * 5,
+                    Color.White
+                );
+            }
+            else if(spell.Type == SpellType.SingleTarget)
+            {
+                spriteBatch.DrawString(
+                    fonts["FontSmall"],
+                    string.Concat("Area of Effect: ", areaOfEffect.Radius, "x"),
                     HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 88 + Vector2.UnitX * 5,
                     Color.White
                 );

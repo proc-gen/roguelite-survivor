@@ -114,16 +114,18 @@ namespace RogueliteSurvivor.Systems
             body.position = new System.Numerics.Vector2(target.TargetPosition.X, target.TargetPosition.Y) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
 
+            float radiusMultiplier = entity.Has<AreaOfEffect>() ? entity.Get<AreaOfEffect>().Radius : 1f;
+
             singleTarget.SetRange(
                 SpellFactory.CreateSingleTarget(spellContainers[spell.Spell]),
                 new EntityStatus(),
                 new Position() { XY = target.TargetPosition },
                 new Speed() { speed = spell.CurrentProjectileSpeed },
                 SpellFactory.GetSpellAliveAnimation(spellContainers[spell.Spell]),
-                SpellFactory.GetSpellAliveSpriteSheet(textures, spellContainers[spell.Spell], pos.XY, target.TargetPosition),
+                SpellFactory.GetSpellAliveSpriteSheet(textures, spellContainers[spell.Spell], pos.XY, target.TargetPosition, radiusMultiplier),
                 new Damage() { Amount = spell.CurrentDamage, BaseAmount = spell.CurrentDamage, SpellEffect = effect },
                 new Owner() { Entity = entity },
-                BodyFactory.CreateCircularBody(singleTarget, 32, physicsWorld, body, .1f, false)
+                BodyFactory.CreateCircularBody(singleTarget, (int)(32 * radiusMultiplier), physicsWorld, body, .1f, false)
             );
         }
     }

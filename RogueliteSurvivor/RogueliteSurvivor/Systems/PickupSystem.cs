@@ -21,18 +21,20 @@ namespace RogueliteSurvivor.Systems
         {
             Entity? player = null;
             Position? playerPos = null;
-            world.Query(in playerQuery, (in Entity entity, ref Position pos) =>
+            float radiusMultiplier = 0;
+            world.Query(in playerQuery, (in Entity entity, ref Position pos, ref AreaOfEffect areaOfEffect) =>
             {
                 if (!playerPos.HasValue)
                 {
                     player = entity;
                     playerPos = pos;
+                    radiusMultiplier = areaOfEffect.Radius;
                 }
             });
 
             world.Query(in query, (in Entity entity, ref PickupSprite sprite, ref Position pos) =>
             {
-                if (Vector2.Distance(playerPos.Value.XY, pos.XY) < 16)
+                if (Vector2.Distance(playerPos.Value.XY, pos.XY) < (16 * radiusMultiplier))
                 {
                     switch (sprite.Type)
                     {
@@ -55,6 +57,12 @@ namespace RogueliteSurvivor.Systems
                             var pierce = player.Value.Get<Pierce>();
                             pierce.Num += (int)sprite.PickupAmount;
                             player.Value.Set(pierce);
+                            world.TryDestroy(entity);
+                            break;
+                        case PickupType.AreaOfEffect:
+                            var areaOfAffect = player.Value.Get<AreaOfEffect>();
+                            areaOfAffect.Radius += sprite.PickupAmount;
+                            player.Value.Set(areaOfAffect);
                             world.TryDestroy(entity);
                             break;
                         case PickupType.Health:
