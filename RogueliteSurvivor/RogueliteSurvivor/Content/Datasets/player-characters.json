@@ -2,7 +2,7 @@
   "data": [
     {
       "name": "Fire",
-      "texture": "player",
+      "texture": "PlayerRed",
       "startingSpell": "Fireball",
       "secondarySpell": "FireExplosion",
       "health": 100,
@@ -23,7 +23,7 @@
     },
     {
       "name": "Ice",
-      "texture": "player_blue",
+      "texture": "PlayerBlue",
       "startingSpell": "IceShard",
       "secondarySpell": "IceSpikes",
       "health": 100,
@@ -44,7 +44,7 @@
     },
     {
       "name": "Lightning",
-      "texture": "player_yellow",
+      "texture": "PlayerYellow",
       "startingSpell": "LightningBlast",
       "secondarySpell": "LightningStrike",
       "health": 100,

@@ -14,6 +14,7 @@ using RogueliteSurvivor.Extensions;
 using RogueliteSurvivor.Physics;
 using RogueliteSurvivor.Systems;
 using RogueliteSurvivor.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -75,10 +76,6 @@ namespace RogueliteSurvivor.Scenes
         {
             textures = new Dictionary<string, Texture2D>
             {
-                { "player", Content.Load<Texture2D>(Path.Combine("Player", "Animated_Mage_Character")) },
-                { "player_blue", Content.Load<Texture2D>(Path.Combine("Player", "Animated_Mage_Character_blue")) },
-                { "player_yellow", Content.Load<Texture2D>(Path.Combine("Player", "Animated_Mage_Character_yellow")) },
-
                 { "Fireball", Content.Load<Texture2D>(Path.Combine("Spells", "fireball")) },
                 { "IceShard", Content.Load<Texture2D>(Path.Combine("Spells", "ice-shard")) },
                 { "LightningBlast", Content.Load<Texture2D>(Path.Combine("Spells", "lightning-blast")) },
@@ -105,12 +102,11 @@ namespace RogueliteSurvivor.Scenes
                 { "Blood3", Content.Load<Texture2D>(Path.Combine("Effects", "blood-3")) },
                 { "Blood4", Content.Load<Texture2D>(Path.Combine("Effects", "blood-4")) },
                 { "Blood5", Content.Load<Texture2D>(Path.Combine("Effects", "blood-5")) },
+
                 { "IceShardHit", Content.Load<Texture2D>(Path.Combine("Effects", "ice-shard-hit")) },
                 { "LightningBlastHit", Content.Load<Texture2D>(Path.Combine("Effects", "lightning-blast-hit")) },
                 { "FireballHit", Content.Load<Texture2D>(Path.Combine("Effects", "fireball-hit")) },
             };
-
-            
 
             fonts = new Dictionary<string, SpriteFont>()
             {
@@ -227,6 +223,8 @@ namespace RogueliteSurvivor.Scenes
 
         private void placePlayer()
         {
+            textures.Add(playerContainers[gameSettings.PlayerName].Texture, Content.Load<Texture2D>(Path.Combine("Player", playerContainers[gameSettings.PlayerName].Texture)));
+
             var body = new BodyDef();
             body.position = new System.Numerics.Vector2(mapContainer.Start.X, mapContainer.Start.Y) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;

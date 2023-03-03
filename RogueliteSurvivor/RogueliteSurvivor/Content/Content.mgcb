@@ -438,7 +438,7 @@
 /processorParam:TextureFormat=Color
 /build:Pickups/player-pickups.png
 
-#begin Player/Animated_Mage_Character_blue.png
+#begin Player/PlayerBlue.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -448,9 +448,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Animated_Mage_Character_blue.png
+/build:Player/PlayerBlue.png
 
-#begin Player/Animated_Mage_Character_yellow.png
+#begin Player/PlayerRed.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -460,9 +460,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Animated_Mage_Character_yellow.png
+/build:Player/PlayerRed.png
 
-#begin Player/Animated_Mage_Character.png
+#begin Player/PlayerYellow.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -472,7 +472,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Animated_Mage_Character.png
+/build:Player/PlayerYellow.png
 
 #begin Spells/fire-explosion.png
 /importer:TextureImporter
