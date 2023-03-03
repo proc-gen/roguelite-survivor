@@ -19,7 +19,7 @@
           "enemies": [
             {
               "type": "VampireBat",
-              "weight": 1
+              "weight": 2
             }
           ]
         },
@@ -34,7 +34,7 @@
             },
             {
               "type": "GhastlyBeholder",
-              "weight": 1
+              "weight": 2
             }
           ]
         },
@@ -93,7 +93,7 @@
           "enemies": [
             {
               "type": "VampireBat",
-              "weight": 1
+              "weight": 2
             }
           ]
         },
@@ -108,7 +108,7 @@
             },
             {
               "type": "GhastlyBeholder",
-              "weight": 1
+              "weight": 2
             }
           ]
         },

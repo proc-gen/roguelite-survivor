@@ -12,6 +12,7 @@ using RogueliteSurvivor.Physics;
 using RogueliteSurvivor.Utils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RogueliteSurvivor.Systems
 {
@@ -32,7 +33,7 @@ namespace RogueliteSurvivor.Systems
         int enemyCount = 20;
         int difficulty = 1;
         int increaseAfterSeconds = 15;
-        int lastSet = 0;
+        int lastSet = -1;
 
         public EnemySpawnSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, GraphicsDeviceManager graphics, Dictionary<string, EnemyContainer> enemyContainers, Dictionary<Spells, SpellContainer> spellContainers, MapContainer mapContainer)
             : base(world, new QueryDescription()
@@ -46,17 +47,11 @@ namespace RogueliteSurvivor.Systems
             this.mapContainer = mapContainer;
 
             random = new Random();
-            setDifficulty(0);
         }
 
         public void Update(GameTime gameTime, float totalElapsedTime)
         {
             int numEnemies = 0;
-
-            if (((int)totalElapsedTime) % increaseAfterSeconds == 0 && lastSet != (int)totalElapsedTime)
-            {
-                setDifficulty((int)totalElapsedTime);
-            }
 
             Vector2 offset = new Vector2(graphics.PreferredBackBufferWidth / 6, graphics.PreferredBackBufferHeight / 6);
             Position? player = null;
@@ -67,6 +62,11 @@ namespace RogueliteSurvivor.Systems
                     player = playerPos;
                 }
             });
+
+            if (lastSet != (int)totalElapsedTime)
+            {
+                setDifficulty((int)totalElapsedTime, player, offset);
+            }
 
             world.Query(in query, (in Entity entity, ref Enemy enemy, ref Pickup pickup, ref Position position, ref EntityStatus entityStatus) =>
             {
@@ -109,18 +109,37 @@ namespace RogueliteSurvivor.Systems
             return new System.Numerics.Vector2(x, y);
         }
 
-        private void setDifficulty(int time)
+        private void setDifficulty(int time, Position? player, Vector2 offset)
         {
             lastSet = time;
             difficulty = (time / increaseAfterSeconds) + 1;
 
-            enemyCount = 20 * difficulty;
+            var enemyWave = mapContainer.EnemyWaves.Where(a => a.Start == time).FirstOrDefault();
 
-            enemyTable = new RandomTable<string>()
-                .Add("VampireBat", 10 + difficulty)
-                .Add("GhastlyBeholder", difficulty - 1)
-                .Add("GraveRevenant", difficulty - 2)
-                .Add("BloodLich", difficulty - 3);
+            if(enemyWave != null)
+            {
+                if (enemyWave.Repeat)
+                {
+                    enemyTable = new RandomTable<string>();
+                    foreach(var enemyWeight in enemyWave.Enemies)
+                    {
+                        enemyTable.Add(enemyWeight.Type, enemyWeight.Weight);
+                    }
+                    enemyCount = enemyWave.MaxEnemies;
+                }
+                else
+                {
+                    var tempTable = new RandomTable<string>();
+                    foreach (var enemyWeight in enemyWave.Enemies)
+                    {
+                        enemyTable.Add(enemyWeight.Type, enemyWeight.Weight);
+                    }
+                    for(int i = 0; i < enemyWave.MaxEnemies; i++)
+                    {
+                        createEnemyFromContainer(tempTable.Roll(random), player, offset);
+                    }
+                }
+            }
 
             pickupTable = new RandomTable<PickupType>()
                 .Add(PickupType.None, 40 - difficulty)
