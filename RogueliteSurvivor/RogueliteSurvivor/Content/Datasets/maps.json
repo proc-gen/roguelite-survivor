@@ -138,11 +138,34 @@
           "enemies": [
             {
               "type": "OrcShaman",
+              "weight": 5
+            },
+            {
+              "type": "OrcJuggernaut",
+              "weight": 5
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 80,
+          "maxEnemies": 200,
+          "enemies": [
+            {
+              "type": "GnollGrunt",
+              "weight": 2
+            },
+            {
+              "type": "OrcSavage",
+              "weight": 10
+            },
+            {
+              "type": "OrcShaman",
               "weight": 10
             },
             {
               "type": "OrcJuggernaut",
-              "weight": 2
+              "weight": 5
             }
           ]
         }

@@ -102,8 +102,8 @@ namespace RogueliteSurvivor.Systems
             int x, y;
             do
             {
-                x = random.Next(int.Max(mapContainer.SpawnMinX, (int)playerPosition.X - 200), int.Min(mapContainer.SpawnMaxX, (int)playerPosition.X + 200));
-                y = random.Next(int.Max(mapContainer.SpawnMinY, (int)playerPosition.Y - 200), int.Min(mapContainer.SpawnMaxY, (int)playerPosition.Y + 200));
+                x = random.Next(int.Max(mapContainer.SpawnMinX, (int)playerPosition.X - 300), int.Min(mapContainer.SpawnMaxX, (int)playerPosition.X + 300));
+                y = random.Next(int.Max(mapContainer.SpawnMinY, (int)playerPosition.Y - 300), int.Min(mapContainer.SpawnMaxY, (int)playerPosition.Y + 300));
             } while ((x > (playerPosition.X - offset.X) && x < (playerPosition.X + offset.X)) && (y > (playerPosition.Y - offset.Y) && y < (playerPosition.Y + offset.Y)));
 
             return new System.Numerics.Vector2(x, y);

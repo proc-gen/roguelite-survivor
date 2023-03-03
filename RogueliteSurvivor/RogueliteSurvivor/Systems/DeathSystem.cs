@@ -62,10 +62,19 @@ namespace RogueliteSurvivor.Systems
                 {
                     entityStatus.State = State.Dying;
                     physicsWorld.DestroyBody(body);
-                    
-                    int bloodToUse = random.Next(1, 9);
-                    spriteSheet = new SpriteSheet(textures["MiniBlood" + bloodToUse], "MiniBlood" + bloodToUse, getMiniBloodNumFrames(bloodToUse), 1, 0, spriteSheet.Width == 16 ? .5f : 1f);
-                    animation = new Animation(0, getMiniBloodNumFrames(bloodToUse) - 1, 1 / 60f, 1, false);
+
+                    if (spriteSheet.Width == 16)
+                    {
+                        int bloodToUse = random.Next(1, 9);
+                        spriteSheet = new SpriteSheet(textures["MiniBlood" + bloodToUse], "MiniBlood" + bloodToUse, getMiniBloodNumFrames(bloodToUse), 1, 0, .5f);
+                        animation = new Animation(0, getMiniBloodNumFrames(bloodToUse) - 1, 1 / 60f, 1, false);
+                    }
+                    else
+                    {
+                        int bloodToUse = random.Next(1, 5);
+                        spriteSheet = new SpriteSheet(textures["Blood" + bloodToUse], "Blood" + bloodToUse, 30, 1, 0, .5f);
+                        animation = new Animation(0, 29, 1 / 60f, 1, false);
+                    }
                     
                 }
                 else if (entityStatus.State == State.Dying && animation.CurrentFrame == animation.LastFrame)

@@ -9,7 +9,7 @@ namespace RogueliteSurvivor.Systems
     public class SpellEffectSystem : ArchSystem, IUpdateSystem
     {
         private QueryDescription burnQuery = new QueryDescription()
-                                                    .WithAll<Burn, Health>();
+                                                    .WithAll<Enemy, Burn, Health>();
         private QueryDescription slowQuery = new QueryDescription()
                                                     .WithAll<Slow>();
         private QueryDescription shockQuery = new QueryDescription()
@@ -34,20 +34,13 @@ namespace RogueliteSurvivor.Systems
 
                     if (health.Current < 1)
                     {
-                        if (entity.Has<Player>())
-                        {
-                            entityStatus.State = Constants.State.Dead;
-                        }
-                        else if (entity.Has<Enemy>())
-                        {
-                            entityStatus.State = Constants.State.ReadyToDie;
-                        }
+                        entityStatus.State = Constants.State.ReadyToDie;
                     }
-                }
 
-                if (burn.TimeLeft < 0)
-                {
-                    entity.Remove<Burn>();
+                    if (burn.TimeLeft < 0)
+                    {
+                        entity.Remove<Burn>();
+                    }
                 }
             });
 
