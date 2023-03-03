@@ -12,7 +12,7 @@
         "lastFrame": 3,
         "playbackSpeed": 0.1,
         "numDirections": 2,
-        "repeatable": true,
+        "repeatable": true
       },
       "spriteSheet": {
         "framesPerRow": 4,
@@ -79,6 +79,111 @@
       },
       "spriteSheet": {
         "framesPerRow": 10,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "GnollGrunt",
+      "health": 20,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 16,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "GnollPikeman",
+      "health": 15,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 16,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "OrcSavage",
+      "health": 30,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 16,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "OrcShaman",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 16,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "OrcJuggernaut",
+      "health": 150,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 32,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 8,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 8,
         "framesPerColumn": 2,
         "rotation": "none",
         "scale": 1

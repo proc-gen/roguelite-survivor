@@ -92,7 +92,7 @@
           "maxEnemies": 20,
           "enemies": [
             {
-              "type": "VampireBat",
+              "type": "GnollGrunt",
               "weight": 2
             }
           ]
@@ -103,11 +103,11 @@
           "maxEnemies": 40,
           "enemies": [
             {
-              "type": "VampireBat",
+              "type": "GnollGrunt",
               "weight": 10
             },
             {
-              "type": "GhastlyBeholder",
+              "type": "GnollPikeman",
               "weight": 2
             }
           ]
@@ -118,15 +118,15 @@
           "maxEnemies": 40,
           "enemies": [
             {
-              "type": "VampireBat",
+              "type": "GnollGrunt",
               "weight": 2
             },
             {
-              "type": "GhastlyBeholder",
+              "type": "OrcSavage",
               "weight": 10
             },
             {
-              "type": "GraveRevenant",
+              "type": "OrcShaman",
               "weight": 10
             }
           ]
@@ -137,11 +137,11 @@
           "maxEnemies": 100,
           "enemies": [
             {
-              "type": "VampireBat",
+              "type": "OrcShaman",
               "weight": 10
             },
             {
-              "type": "BloodLich",
+              "type": "OrcJuggernaut",
               "weight": 2
             }
           ]

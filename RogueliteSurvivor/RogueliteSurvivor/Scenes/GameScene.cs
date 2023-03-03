@@ -82,7 +82,12 @@ namespace RogueliteSurvivor.Scenes
                 { "VampireBat", Content.Load<Texture2D>(Path.Combine("Enemies", "VampireBat")) },
                 { "GhastlyBeholder", Content.Load<Texture2D>(Path.Combine("Enemies", "GhastlyBeholderIdleSide")) },
                 { "GraveRevenant", Content.Load<Texture2D>(Path.Combine("Enemies", "GraveRevenantIdleSide")) },
-                { "BloodLich", Content.Load<Texture2D>(Path.Combine("Enemies", "BloodLichIdleSIde")) },
+                { "BloodLich", Content.Load<Texture2D>(Path.Combine("Enemies", "BloodLichIdleSide")) },
+                { "GnollGrunt", Content.Load<Texture2D>(Path.Combine("Enemies", "GnollGruntIdleSide")) },
+                { "GnollPikeman", Content.Load<Texture2D>(Path.Combine("Enemies", "GnollPikemanIdleSide")) },
+                { "OrcSavage", Content.Load<Texture2D>(Path.Combine("Enemies", "OrcSavageIdleSide")) },
+                { "OrcShaman", Content.Load<Texture2D>(Path.Combine("Enemies", "OrcShamanIdleSide")) },
+                { "OrcJuggernaut", Content.Load<Texture2D>(Path.Combine("Enemies", "OrcJuggernautIdleSide")) },
 
                 { "Fireball", Content.Load<Texture2D>(Path.Combine("Spells", "fireball")) },
                 { "IceShard", Content.Load<Texture2D>(Path.Combine("Spells", "ice-shard")) },
