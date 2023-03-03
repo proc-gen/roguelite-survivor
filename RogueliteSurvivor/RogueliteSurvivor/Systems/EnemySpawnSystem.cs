@@ -132,7 +132,7 @@ namespace RogueliteSurvivor.Systems
                     var tempTable = new RandomTable<string>();
                     foreach (var enemyWeight in enemyWave.Enemies)
                     {
-                        enemyTable.Add(enemyWeight.Type, enemyWeight.Weight);
+                        tempTable.Add(enemyWeight.Type, enemyWeight.Weight);
                     }
                     for(int i = 0; i < enemyWave.MaxEnemies; i++)
                     {

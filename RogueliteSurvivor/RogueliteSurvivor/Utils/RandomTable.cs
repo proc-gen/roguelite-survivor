@@ -34,7 +34,7 @@ namespace RogueliteSurvivor.Utils
                 int roll = random.Next(0, _totalWeight);
 
                 int index = 0;
-                while (roll > 0)
+                do
                 {
                     if (roll < _entries.ElementAt(index).Value)
                     {
@@ -53,7 +53,7 @@ namespace RogueliteSurvivor.Utils
                             index++;
                         }
                     }
-                }
+                } while (roll > 0);
             }
 
             return retVal;
