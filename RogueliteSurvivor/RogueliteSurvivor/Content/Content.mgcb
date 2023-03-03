@@ -229,7 +229,7 @@
 /processorParam:TextureFormat=Color
 /build:Effects/mini-blood-9.png
 
-#begin Enemies/BloodLichIdleSide.png
+#begin Enemies/BloodLich.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -239,9 +239,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enemies/BloodLichIdleSide.png
+/build:Enemies/BloodLich.png
 
-#begin Enemies/GhastlyBeholderIdleSide.png
+#begin Enemies/GhastlyBeholder.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -251,9 +251,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enemies/GhastlyBeholderIdleSide.png
+/build:Enemies/GhastlyBeholder.png
 
-#begin Enemies/GnollGruntIdleSide.png
+#begin Enemies/GnollGrunt.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -263,9 +263,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enemies/GnollGruntIdleSide.png
+/build:Enemies/GnollGrunt.png
 
-#begin Enemies/GnollPikemanIdleSide.png
+#begin Enemies/GnollPikeman.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -275,9 +275,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enemies/GnollPikemanIdleSide.png
+/build:Enemies/GnollPikeman.png
 
-#begin Enemies/GraveRevenantIdleSide.png
+#begin Enemies/GraveRevenant.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -287,9 +287,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enemies/GraveRevenantIdleSide.png
+/build:Enemies/GraveRevenant.png
 
-#begin Enemies/OrcJuggernautIdleSide.png
+#begin Enemies/OrcJuggernaut.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -299,9 +299,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enemies/OrcJuggernautIdleSide.png
+/build:Enemies/OrcJuggernaut.png
 
-#begin Enemies/OrcSavageIdleSide.png
+#begin Enemies/OrcSavage.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -311,9 +311,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enemies/OrcSavageIdleSide.png
+/build:Enemies/OrcSavage.png
 
-#begin Enemies/OrcShamanIdleSide.png
+#begin Enemies/OrcShaman.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -323,7 +323,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enemies/OrcShamanIdleSide.png
+/build:Enemies/OrcShaman.png
 
 #begin Enemies/VampireBat.png
 /importer:TextureImporter
