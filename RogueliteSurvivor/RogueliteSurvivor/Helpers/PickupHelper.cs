@@ -101,10 +101,10 @@ namespace RogueliteSurvivor.Helpers
                     retVal = string.Concat("Spell Effect Chance: +", GetPickupAmount(pickupType).ToString("F"), "x");
                     break;
                 case PickupType.MoveSpeed:
-                    retVal = string.Concat("Move Speed: +", GetPickupAmount(pickupType).ToString("F"));
+                    retVal = string.Concat("Move Speed: +", ((int)GetPickupAmount(pickupType)).ToString());
                     break;
                 case PickupType.Pierce:
-                    retVal = string.Concat("Pierce: +", GetPickupAmount(pickupType).ToString("F"));
+                    retVal = string.Concat("Pierce: +", ((int)GetPickupAmount(pickupType)).ToString());
                     break;
                 case PickupType.AreaOfEffect:
                     retVal = string.Concat("Area of Effect: +", GetPickupAmount(pickupType).ToString("F"), "x");
