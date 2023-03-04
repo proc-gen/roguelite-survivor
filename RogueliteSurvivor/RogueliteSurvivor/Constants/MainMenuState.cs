@@ -5,5 +5,6 @@
         MainMenu,
         CharacterSelection,
         MapSelection,
+        Credits
     }
 }

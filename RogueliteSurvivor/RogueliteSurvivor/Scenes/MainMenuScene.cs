@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json.Linq;
 using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Containers;
 using RogueliteSurvivor.Utils;
@@ -27,6 +28,7 @@ namespace RogueliteSurvivor.Scenes
 
         private Dictionary<string, PlayerContainer> playerContainers;
         private List<MapContainer> mapContainers;
+        private CreditsContainer creditsContainer = null;
 
 
         public MainMenuScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers, Dictionary<string, MapContainer> mapContainers)
@@ -52,7 +54,14 @@ namespace RogueliteSurvivor.Scenes
                 fonts = new Dictionary<string, SpriteFont>()
                 {
                     { "Font", Content.Load<SpriteFont>(Path.Combine("Fonts", "Font")) },
+                    { "FontSmall", Content.Load<SpriteFont>(Path.Combine("Fonts", "FontSmall")) },
                 };
+            }
+
+            if(creditsContainer == null)
+            {
+                JObject credits = JObject.Parse(File.ReadAllText(Path.Combine(Content.RootDirectory, "Datasets", "credits.json")));
+                creditsContainer = CreditsContainer.ToCreditsContainer(credits["data"]);
             }
 
             state = MainMenuState.MainMenu;
@@ -90,6 +99,9 @@ namespace RogueliteSurvivor.Scenes
                             case 2:
                                 break;
                             case 3:
+                                state = MainMenuState.Credits;
+                                break;
+                            case 4:
                                 retVal = "exit";
                                 break;
                         }
@@ -103,7 +115,7 @@ namespace RogueliteSurvivor.Scenes
                     }
                     else if (kState.IsKeyDown(Keys.Down) || gState.DPad.Down == ButtonState.Pressed || gState.ThumbSticks.Left.Y < -0.5f)
                     {
-                        selectedButton = int.Min(selectedButton + 1, 3);
+                        selectedButton = int.Min(selectedButton + 1, 4);
                         readyForInput = false;
                     }
                 }
@@ -177,7 +189,15 @@ namespace RogueliteSurvivor.Scenes
                         readyForInput = false;
                     }
                 }
-
+                else if (state == MainMenuState.Credits)
+                {
+                    if (gState.Buttons.A == ButtonState.Pressed || gState.Buttons.B == ButtonState.Pressed 
+                        || kState.IsKeyDown(Keys.Escape) || kState.IsKeyDown(Keys.Enter))
+                    {
+                        state = MainMenuState.MainMenu;
+                        readyForInput = false;
+                    }
+                }
             }
 
             return retVal;
@@ -223,7 +243,19 @@ namespace RogueliteSurvivor.Scenes
                 _spriteBatch.Draw(
                     textures["MainMenuButtons"],
                     new Vector2(_graphics.PreferredBackBufferWidth / 6, _graphics.PreferredBackBufferHeight / 6 + 96),
-                    new Rectangle(0 + selectedButton == 3 ? 128 : 0, 96, 128, 32),
+                    new Rectangle(0 + selectedButton == 3 ? 128 : 0, 128, 128, 32),
+                    Color.White,
+                    0f,
+                    new Vector2(64, 16),
+                    1f,
+                    SpriteEffects.None,
+                    0f
+                );
+
+                _spriteBatch.Draw(
+                    textures["MainMenuButtons"],
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6, _graphics.PreferredBackBufferHeight / 6 + 144),
+                    new Rectangle(0 + selectedButton == 4 ? 128 : 0, 96, 128, 32),
                     Color.White,
                     0f,
                     new Vector2(64, 16),
@@ -312,6 +344,62 @@ namespace RogueliteSurvivor.Scenes
                     new Vector2(_graphics.PreferredBackBufferWidth / 6 - 200, _graphics.PreferredBackBufferHeight / 6 + 32 + counter),
                     Color.White
                 );
+            }
+            else if (state == MainMenuState.Credits)
+            {
+                int counterX = 0, counterY = 0;
+                foreach(var outsideResource in creditsContainer.OutsideResources)
+                {
+                    _spriteBatch.DrawString(
+                        fonts["Font"],
+                        outsideResource.Author,
+                        new Vector2(_graphics.PreferredBackBufferWidth / 6 - 300 + counterX, _graphics.PreferredBackBufferHeight / 6 + counterY),
+                        Color.White
+                    );
+                    counterY += 18;
+
+                    foreach(var package in outsideResource.Packages)
+                    {
+                        if(package.Length > 40)
+                        {
+                            string part1, part2;
+                            part1 = package.Substring(0, package.IndexOf(' ', 30));
+                            part2 = package.Substring(package.IndexOf(' ', 30));
+                            _spriteBatch.DrawString(
+                                fonts["FontSmall"],
+                                part1,
+                                new Vector2(_graphics.PreferredBackBufferWidth / 6 - 288 + counterX, _graphics.PreferredBackBufferHeight / 6 + counterY),
+                                Color.White
+                            );
+                            counterY += 12;
+                            _spriteBatch.DrawString(
+                                fonts["FontSmall"],
+                                part2,
+                                new Vector2(_graphics.PreferredBackBufferWidth / 6 - 276 + counterX, _graphics.PreferredBackBufferHeight / 6 + counterY),
+                                Color.White
+                            );
+                        }
+                        else
+                        {
+                            _spriteBatch.DrawString(
+                                fonts["FontSmall"],
+                                package,
+                                new Vector2(_graphics.PreferredBackBufferWidth / 6 - 288 + counterX, _graphics.PreferredBackBufferHeight / 6 + counterY),
+                                Color.White
+                            );
+                        }
+                        
+                        counterY += 12;
+                    }
+
+                    counterY += 18;
+
+                    if(counterY > 100)
+                    {
+                        counterY = 0;
+                        counterX += 200;
+                    }
+                }
             }
             _spriteBatch.End();
         }
