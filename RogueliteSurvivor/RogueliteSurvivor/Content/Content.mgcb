@@ -13,6 +13,9 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Datasets/credits.json
+/copy:Datasets/credits.json
+
 #begin Datasets/enemies.json
 /copy:Datasets/enemies.json
 

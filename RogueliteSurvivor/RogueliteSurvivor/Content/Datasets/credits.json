@@ -1,0 +1,49 @@
+{
+  "data": 
+    {
+      "outsideResources": [
+        {
+          "author": "DeepDiveGameStudio",
+          "packages": [
+            "Humanoid Asset Pack",
+            "Undead Asset Pack"
+          ]
+        },
+        {
+          "author": "pimen",
+          "packages": [
+            "Ice Spell Effect 01",
+            "Thunder Spell Effect 01",
+            "Thunder Spell Effect 02",
+            "Fire Spell Effect 01",
+            "Fire Spell Effect 02"
+          ]
+        },
+        {
+          "author": "Anokolisa",
+          "packages": [
+            "Free - Pixel Art Asset Pack"
+          ]
+        },
+        {
+          "author": "cyberrumor",
+          "packages": [
+            "Animated Pixel Mage"
+          ]
+        },
+        {
+          "author": "Kyrise",
+          "packages": [
+            "Kyrise's Free 16x16 RPG Icon Pack"
+          ]
+        },
+        {
+          "author": "XYEzawr",
+          "packages": [
+            "Free Pixel Effects Pack #11 - Mini Blood Splash",
+            "GIF Free Pixel Effects Pack #5 - Blood Effects"
+          ]
+        }
+      ]
+    }
+}
