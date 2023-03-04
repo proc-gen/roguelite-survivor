@@ -56,7 +56,7 @@ namespace RogueliteSurvivor.Systems
             {
                 int counter = 0;
                 world.Query(in query, (in Entity entity, ref Health health, ref KillCount killCount, ref AttackSpeed attackSpeed, ref Speed speed
-                    , ref SpellDamage spellDamage, ref SpellEffectChance spellEffectChance, ref Pierce pierce, ref AreaOfEffect areaOfEffect) =>
+                    , ref SpellDamage spellDamage, ref SpellEffectChance spellEffectChance, ref Pierce pierce, ref AreaOfEffect areaOfEffect, ref Experience experience) =>
                 {
                     spriteBatch.Draw(
                         textures["HealthBar"],
@@ -93,6 +93,13 @@ namespace RogueliteSurvivor.Systems
                         fonts["FontSmall"],
                         string.Concat("Enemies Killed: ", killCount.Count),
                         HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 16 + Vector2.UnitX * 5,
+                        Color.White
+                    );
+
+                    spriteBatch.DrawString(
+                        fonts["FontSmall"],
+                        string.Concat("Experience: ", experience.Amount),
+                        HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 28 + Vector2.UnitX * 5,
                         Color.White
                     );
 
@@ -143,51 +150,51 @@ namespace RogueliteSurvivor.Systems
             spriteBatch.DrawString(
                 fonts["FontSmall"],
                 "Base Stats",
-                HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 40 + Vector2.UnitX * 5,
-                Color.White
-            );
-
-            spriteBatch.DrawString(
-                fonts["FontSmall"],
-                string.Concat("Attack Speed: ", attackSpeed.CurrentAttackSpeed.ToString("F"), "x"),
                 HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 52 + Vector2.UnitX * 5,
                 Color.White
             );
 
             spriteBatch.DrawString(
                 fonts["FontSmall"],
-                string.Concat("Spell Damage: ", spellDamage.CurrentSpellDamage.ToString("F"), "x"),
+                string.Concat("Attack Speed: ", attackSpeed.CurrentAttackSpeed.ToString("F"), "x"),
                 HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 64 + Vector2.UnitX * 5,
                 Color.White
             );
 
             spriteBatch.DrawString(
                 fonts["FontSmall"],
-                string.Concat("Spell Effect Chance: ", spellEffectChance.CurrentSpellEffectChance.ToString("F"), "x"),
+                string.Concat("Spell Damage: ", spellDamage.CurrentSpellDamage.ToString("F"), "x"),
                 HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 76 + Vector2.UnitX * 5,
                 Color.White
             );
 
             spriteBatch.DrawString(
-            fonts["FontSmall"],
-                string.Concat("Move Speed: ", speed.speed),
+                fonts["FontSmall"],
+                string.Concat("Spell Effect Chance: ", spellEffectChance.CurrentSpellEffectChance.ToString("F"), "x"),
                 HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 88 + Vector2.UnitX * 5,
                 Color.White
             );
 
             spriteBatch.DrawString(
-            fonts["FontSmall"],
-                string.Concat("Pierce: ", pierce.Num),
+                fonts["FontSmall"],
+                string.Concat("Move Speed: ", speed.speed),
                 HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 100 + Vector2.UnitX * 5,
                 Color.White
             );
 
             spriteBatch.DrawString(
-                    fonts["FontSmall"],
-                    string.Concat("Area of Effect: ", areaOfEffect.Radius, "x"),
-                    HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 112 + Vector2.UnitX * 5,
-                    Color.White
-                );
+                fonts["FontSmall"],
+                string.Concat("Pierce: ", pierce.Num),
+                HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 112 + Vector2.UnitX * 5,
+                Color.White
+            );
+
+            spriteBatch.DrawString(
+                fonts["FontSmall"],
+                string.Concat("Area of Effect: ", areaOfEffect.Radius, "x"),
+                HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 124 + Vector2.UnitX * 5,
+                Color.White
+            );
         }
     
         private void renderSpellStats(SpriteBatch spriteBatch, int counter, ISpell spell, Pierce pierce, AreaOfEffect areaOfEffect)
@@ -195,28 +202,28 @@ namespace RogueliteSurvivor.Systems
             spriteBatch.DrawString(
                 fonts["FontSmall"],
                 string.Concat(spell.Spell.GetReadableSpellName(), " Stats"),
-                HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 40 + Vector2.UnitX * 5,
-                Color.White
-            );
-
-            spriteBatch.DrawString(
-                fonts["FontSmall"],
-                string.Concat("Attack Speed: ", spell.CurrentAttacksPerSecond.ToString("F"), "/s"),
                 HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 52 + Vector2.UnitX * 5,
                 Color.White
             );
 
             spriteBatch.DrawString(
                 fonts["FontSmall"],
-                string.Concat("Spell Damage: ", spell.CurrentDamage.ToString("F")),
+                string.Concat("Attack Speed: ", spell.CurrentAttacksPerSecond.ToString("F"), "/s"),
                 HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 64 + Vector2.UnitX * 5,
                 Color.White
             );
 
             spriteBatch.DrawString(
                 fonts["FontSmall"],
-                string.Concat("Spell Effect Chance: ", string.Format("{0:P2}", spell.CurrentEffectChance)),
+                string.Concat("Spell Damage: ", spell.CurrentDamage.ToString("F")),
                 HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 76 + Vector2.UnitX * 5,
+                Color.White
+            );
+
+            spriteBatch.DrawString(
+                fonts["FontSmall"],
+                string.Concat("Spell Effect Chance: ", string.Format("{0:P2}", spell.CurrentEffectChance)),
+                HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 88 + Vector2.UnitX * 5,
                 Color.White
             );
 
@@ -225,7 +232,7 @@ namespace RogueliteSurvivor.Systems
                 spriteBatch.DrawString(
                     fonts["FontSmall"],
                     string.Concat("Pierce: ", pierce.Num),
-                    HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 88 + Vector2.UnitX * 5,
+                    HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 100 + Vector2.UnitX * 5,
                     Color.White
                 );
             }
@@ -234,7 +241,7 @@ namespace RogueliteSurvivor.Systems
                 spriteBatch.DrawString(
                     fonts["FontSmall"],
                     string.Concat("Area of Effect: ", areaOfEffect.Radius, "x"),
-                    HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 88 + Vector2.UnitX * 5,
+                    HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 100 + Vector2.UnitX * 5,
                     Color.White
                 );
             }

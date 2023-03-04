@@ -113,9 +113,12 @@ namespace RogueliteSurvivor.Physics
                 {
                     entityStatus.State = State.ReadyToDie;
                     entity.Set(entityStatus);
+                    Experience enemyExperience = entity.Get<Experience>();
                     KillCount killCount = owner.Entity.Get<KillCount>();
+                    Experience playerExperience = owner.Entity.Get<Experience>();
                     killCount.Count++;
-                    owner.Entity.Set(killCount);
+                    playerExperience.Amount += enemyExperience.Amount;
+                    owner.Entity.SetRange(killCount, playerExperience);
                 }
                 else
                 {

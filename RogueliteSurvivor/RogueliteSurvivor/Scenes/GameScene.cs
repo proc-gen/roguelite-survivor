@@ -229,7 +229,7 @@ namespace RogueliteSurvivor.Scenes
             body.position = new System.Numerics.Vector2(mapContainer.Start.X, mapContainer.Start.Y) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
 
-            player = world.Create<Player, EntityStatus, Position, Velocity, Speed, AttackSpeed, SpellDamage, SpellEffectChance, Pierce, AreaOfEffect, Animation, SpriteSheet, Target, Spell1, Spell2, Health, KillCount, Body>();
+            player = world.Create<Player, EntityStatus, Position, Velocity, Speed, AttackSpeed, SpellDamage, SpellEffectChance, Pierce, AreaOfEffect, Animation, SpriteSheet, Target, Spell1, Spell2, Health, KillCount, Experience, Body>();
 
             player.SetRange(
                 new Player(),
@@ -249,6 +249,7 @@ namespace RogueliteSurvivor.Scenes
                 SpellFactory.CreateSpell<Spell2>(spellContainers[playerContainers[gameSettings.PlayerName].SecondarySpell]),
                 new Health() { Current = playerContainers[gameSettings.PlayerName].Health, Max = playerContainers[gameSettings.PlayerName].Health },
                 new KillCount() { Count = 0 },
+                new Experience(0),
                 BodyFactory.CreateCircularBody(player, 16, physicsWorld, body, 99)
             );
         }

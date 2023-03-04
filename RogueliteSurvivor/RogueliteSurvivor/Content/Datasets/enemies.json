@@ -7,6 +7,7 @@
       "speed": 50,
       "spell": "EnemyMelee",
       "width": 16,
+      "experience": 1,
       "animation": {
         "firstFrame": 0,
         "lastFrame": 3,
@@ -28,6 +29,7 @@
       "speed": 50,
       "spell": "EnemyMelee",
       "width": 16,
+      "experience": 1,
       "animation": {
         "firstFrame": 0,
         "lastFrame": 3,
@@ -49,6 +51,7 @@
       "speed": 50,
       "spell": "EnemyMelee",
       "width": 16,
+      "experience": 1,
       "animation": {
         "firstFrame": 0,
         "lastFrame": 3,
@@ -70,6 +73,7 @@
       "speed": 25,
       "spell": "EnemyMelee",
       "width": 32,
+      "experience": 10,
       "animation": {
         "firstFrame": 0,
         "lastFrame": 9,
@@ -91,6 +95,7 @@
       "speed": 50,
       "spell": "EnemyMelee",
       "width": 16,
+      "experience": 1,
       "animation": {
         "firstFrame": 0,
         "lastFrame": 3,
@@ -112,6 +117,7 @@
       "speed": 50,
       "spell": "EnemyMelee",
       "width": 16,
+      "experience": 1,
       "animation": {
         "firstFrame": 0,
         "lastFrame": 3,
@@ -133,6 +139,7 @@
       "speed": 50,
       "spell": "EnemyMelee",
       "width": 16,
+      "experience": 1,
       "animation": {
         "firstFrame": 0,
         "lastFrame": 3,
@@ -154,6 +161,7 @@
       "speed": 50,
       "spell": "EnemyMelee",
       "width": 16,
+      "experience": 1,
       "animation": {
         "firstFrame": 0,
         "lastFrame": 3,
@@ -175,6 +183,7 @@
       "speed": 50,
       "spell": "EnemyMelee",
       "width": 32,
+      "experience": 15,
       "animation": {
         "firstFrame": 0,
         "lastFrame": 8,

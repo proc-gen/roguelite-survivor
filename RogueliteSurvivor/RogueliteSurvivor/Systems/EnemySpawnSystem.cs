@@ -163,7 +163,7 @@ namespace RogueliteSurvivor.Systems
             {
                 EnemyContainer container = enemyContainers[enemyType];
 
-                var entity = world.Create<Enemy, EntityStatus, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell1, Body, Pickup>();
+                var entity = world.Create<Enemy, EntityStatus, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell1, Body, Pickup, Experience>();
 
                 var body = new BodyDef();
                 body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
@@ -182,7 +182,8 @@ namespace RogueliteSurvivor.Systems
                             new Damage() { Amount = container.Damage, BaseAmount = container.Damage },
                             SpellFactory.CreateSpell<Spell1>(spellContainers[container.Spell]),
                             BodyFactory.CreateCircularBody(entity, container.Width, physicsWorld, body),
-                            createPickupForEnemy()
+                            createPickupForEnemy(),
+                            new Experience(container.Experience)
                         );
             }
         }

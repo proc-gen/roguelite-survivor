@@ -12,6 +12,7 @@ namespace RogueliteSurvivor.Containers
         public float Speed { get; set; }
         public Spells Spell { get; set; }
         public int Width { get; set; }
+        public int Experience { get; set; }
         public SpriteSheetContainer SpriteSheet { get; set; }
         public AnimationContainer Animation { get; set; }
 
@@ -31,6 +32,7 @@ namespace RogueliteSurvivor.Containers
                 Speed = (float)enemy["speed"],
                 Spell = ((string)enemy["spell"]).GetSpellFromString(),
                 Width = (int)enemy["width"],
+                Experience = (int)enemy["experience"],
                 Animation = AnimationContainer.ToAnimationContainer(enemy["animation"]),
                 SpriteSheet = SpriteSheetContainer.ToSpriteSheetContainer(enemy["spriteSheet"])
             };
