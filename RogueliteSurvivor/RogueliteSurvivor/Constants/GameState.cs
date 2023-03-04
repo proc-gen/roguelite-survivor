@@ -3,6 +3,7 @@
     public enum GameState
     {
         Running,
-        Paused
+        Paused,
+        LevelUp,
     }
 }

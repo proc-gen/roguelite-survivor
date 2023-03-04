@@ -11,6 +11,7 @@ using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Containers;
 using RogueliteSurvivor.Extensions;
+using RogueliteSurvivor.Helpers;
 using RogueliteSurvivor.Physics;
 using RogueliteSurvivor.Systems;
 using RogueliteSurvivor.Utils;
@@ -229,10 +230,10 @@ namespace RogueliteSurvivor.Scenes
             body.position = new System.Numerics.Vector2(mapContainer.Start.X, mapContainer.Start.Y) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
 
-            player = world.Create<Player, EntityStatus, Position, Velocity, Speed, AttackSpeed, SpellDamage, SpellEffectChance, Pierce, AreaOfEffect, Animation, SpriteSheet, Target, Spell1, Spell2, Health, KillCount, Experience, Body>();
+            player = world.Create<Player, EntityStatus, Position, Velocity, Speed, AttackSpeed, SpellDamage, SpellEffectChance, Pierce, AreaOfEffect, Animation, SpriteSheet, Target, Spell1, Spell2, Health, KillCount, Body>();
 
             player.SetRange(
-                new Player(),
+                new Player() { Level = 1, ExperienceToNextLevel = ExperienceHelper.ExperienceRequiredForLevel(2), TotalExperience = 0 },
                 new EntityStatus(),
                 new Position() { XY = new Vector2(mapContainer.Start.X, mapContainer.Start.Y) },
                 new Velocity() { Vector = Vector2.Zero },
@@ -249,7 +250,6 @@ namespace RogueliteSurvivor.Scenes
                 SpellFactory.CreateSpell<Spell2>(spellContainers[playerContainers[gameSettings.PlayerName].SecondarySpell]),
                 new Health() { Current = playerContainers[gameSettings.PlayerName].Health, Max = playerContainers[gameSettings.PlayerName].Health },
                 new KillCount() { Count = 0 },
-                new Experience(0),
                 BodyFactory.CreateCircularBody(player, 16, physicsWorld, body, 99)
             );
         }
@@ -285,6 +285,15 @@ namespace RogueliteSurvivor.Scenes
                     }
                 }
                 stateChangeTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                Player playerInfo = player.Get<Player>();
+                if(playerInfo.ExperienceToNextLevel <= 0)
+                {
+                    stateChangeTime = 0f;
+                    playerInfo.Level++;
+                    playerInfo.ExperienceToNextLevel += ExperienceHelper.ExperienceRequiredForLevel(playerInfo.Level + 1);
+                    player.Set(playerInfo);
+                }
             }
 
             return retVal;
@@ -299,7 +308,6 @@ namespace RogueliteSurvivor.Scenes
                     _spriteBatch.Begin(samplerState: SamplerState.PointClamp, blendState: BlendState.AlphaBlend, transformMatrix: transformMatrix);
                     system.Render(gameTime, _spriteBatch, textures, player, totalGameTime, gameState, layer);
                     _spriteBatch.End();
-
                 }
             }
         }

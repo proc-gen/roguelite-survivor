@@ -56,7 +56,7 @@ namespace RogueliteSurvivor.Systems
             {
                 int counter = 0;
                 world.Query(in query, (in Entity entity, ref Health health, ref KillCount killCount, ref AttackSpeed attackSpeed, ref Speed speed
-                    , ref SpellDamage spellDamage, ref SpellEffectChance spellEffectChance, ref Pierce pierce, ref AreaOfEffect areaOfEffect, ref Experience experience) =>
+                    , ref SpellDamage spellDamage, ref SpellEffectChance spellEffectChance, ref Pierce pierce, ref AreaOfEffect areaOfEffect, ref Player playerInfo) =>
                 {
                     spriteBatch.Draw(
                         textures["HealthBar"],
@@ -98,7 +98,7 @@ namespace RogueliteSurvivor.Systems
 
                     spriteBatch.DrawString(
                         fonts["FontSmall"],
-                        string.Concat("Experience: ", experience.Amount),
+                        string.Concat("Level: ", playerInfo.Level),
                         HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 28 + Vector2.UnitX * 5,
                         Color.White
                     );
