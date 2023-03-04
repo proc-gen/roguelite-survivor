@@ -7,6 +7,7 @@ using RogueliteSurvivor.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -83,6 +84,37 @@ namespace RogueliteSurvivor.Helpers
             }
 
             return pickup;
+        }
+
+        public static string GetPickupDisplayTextForLevelUpChoice(PickupType pickupType)
+        {
+            string retVal = string.Empty;
+            switch (pickupType)
+            {
+                case PickupType.AttackSpeed:
+                    retVal = string.Concat("Attack Speed: +", GetPickupAmount(pickupType).ToString("F"), "x");
+                    break;
+                case PickupType.Damage:
+                    retVal = string.Concat("Spell Damage: +", GetPickupAmount(pickupType).ToString("F"), "x");
+                    break;
+                case PickupType.SpellEffectChance:
+                    retVal = string.Concat("Spell Effect Chance: +", GetPickupAmount(pickupType).ToString("F"), "x");
+                    break;
+                case PickupType.MoveSpeed:
+                    retVal = string.Concat("Move Speed: +", GetPickupAmount(pickupType).ToString("F"));
+                    break;
+                case PickupType.Pierce:
+                    retVal = string.Concat("Pierce: +", GetPickupAmount(pickupType).ToString("F"));
+                    break;
+                case PickupType.AreaOfEffect:
+                    retVal = string.Concat("Area of Effect: +", GetPickupAmount(pickupType).ToString("F"), "x");
+                    break;
+                case PickupType.Health:
+                    //Not Used
+                    break;
+            }
+
+            return retVal;
         }
 
         public static void ProcessPickup(ref Entity player, PickupType pickupType)

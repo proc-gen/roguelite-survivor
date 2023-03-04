@@ -341,9 +341,9 @@ namespace RogueliteSurvivor.Scenes
                         gameState = GameState.LevelUp;
 
                         RandomTable<PickupType> pickupTable = new RandomTable<PickupType>()
-                            .Add(PickupType.AttackSpeed, 3)
-                            .Add(PickupType.Damage, 3)
-                            .Add(PickupType.MoveSpeed, 2)
+                            .Add(PickupType.AttackSpeed, 10)
+                            .Add(PickupType.Damage, 10)
+                            .Add(PickupType.MoveSpeed, 3)
                             .Add(PickupType.SpellEffectChance, 1)
                             .Add(PickupType.Pierce, 1)
                             .Add(PickupType.AreaOfEffect, 1);
@@ -397,7 +397,7 @@ namespace RogueliteSurvivor.Scenes
                 {
                     _spriteBatch.DrawString(
                         fonts["Font"],
-                        levelUpChoice.ToString(),
+                        PickupHelper.GetPickupDisplayTextForLevelUpChoice(levelUpChoice),
                         new Vector2(_graphics.PreferredBackBufferWidth / 6 - 45, _graphics.PreferredBackBufferHeight / 6 + counter),
                         selectedLevelUpChoice == levelUpChoice ? Color.Green : Color.White
                     );
