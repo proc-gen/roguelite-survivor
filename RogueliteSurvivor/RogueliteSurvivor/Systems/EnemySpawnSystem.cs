@@ -8,6 +8,7 @@ using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Containers;
 using RogueliteSurvivor.Extensions;
+using RogueliteSurvivor.Helpers;
 using RogueliteSurvivor.Physics;
 using RogueliteSurvivor.Utils;
 using System;
@@ -143,13 +144,7 @@ namespace RogueliteSurvivor.Systems
 
             pickupTable = new RandomTable<PickupType>()
                 .Add(PickupType.None, 40 - difficulty)
-                .Add(PickupType.AttackSpeed, 2)
-                .Add(PickupType.Damage, 2)
-                .Add(PickupType.MoveSpeed, 2)
-                .Add(PickupType.Health, 2)
-                .Add(PickupType.SpellEffectChance, 2)
-                .Add(PickupType.Pierce, 2)
-                .Add(PickupType.AreaOfEffect, 2);
+                .Add(PickupType.Health, 2);
         }
 
         private void createEnemy(Position? player, Vector2 offset)
@@ -192,30 +187,7 @@ namespace RogueliteSurvivor.Systems
         {
             var pickup = new Pickup() { Type = pickupTable.Roll(random) };
 
-            switch (pickup.Type)
-            {
-                case PickupType.AttackSpeed:
-                    pickup.PickupAmount = .1f;
-                    break;
-                case PickupType.Damage:
-                    pickup.PickupAmount = .25f;
-                    break;
-                case PickupType.MoveSpeed:
-                    pickup.PickupAmount = 5f;
-                    break;
-                case PickupType.Health:
-                    pickup.PickupAmount = 5f;
-                    break;
-                case PickupType.SpellEffectChance:
-                    pickup.PickupAmount = .25f;
-                    break;
-                case PickupType.Pierce:
-                    pickup.PickupAmount = 1f;
-                    break;
-                case PickupType.AreaOfEffect:
-                    pickup.PickupAmount = .25f;
-                    break;
-            }
+            pickup.PickupAmount = PickupHelper.GetPickupAmount(pickup.Type);
 
             return pickup;
         }

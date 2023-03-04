@@ -17,7 +17,9 @@ using RogueliteSurvivor.Systems;
 using RogueliteSurvivor.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.IO;
+using System.Linq;
 
 namespace RogueliteSurvivor.Scenes
 {
@@ -43,12 +45,18 @@ namespace RogueliteSurvivor.Scenes
         private Dictionary<string, MapContainer> mapContainers;
 
         private MapContainer mapContainer;
+        
+        private Random random;
+        private List<PickupType> levelUpChoices = new List<PickupType>();
+        private PickupType selectedLevelUpChoice;
 
         public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers, Dictionary<string, MapContainer> mapContainers)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld)
         {
             this.playerContainers = playerContainers;
             this.mapContainers = mapContainers;
+
+            random = new Random();
         }
 
         public void SetGameSettings(GameSettings gameSettings)
@@ -257,42 +265,102 @@ namespace RogueliteSurvivor.Scenes
         public override string Update(GameTime gameTime, params object[] values)
         {
             string retVal = string.Empty;
+            var kState = Keyboard.GetState();
+            var gState = GamePad.GetState(PlayerIndex.One);
 
-            if (stateChangeTime > .1f && (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P)))
+            if (gameState == GameState.LevelUp)
             {
-                gameState = gameState == GameState.Running ? GameState.Paused : GameState.Running;
-                stateChangeTime = 0f;
-            }
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-                Loaded = false;
-                retVal = "main-menu";
-            }
-            else if (player.Get<EntityStatus>().State == State.Dead)
-            {
-                Loaded = false;
-                retVal = "game-over";
+                stateChangeTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (stateChangeTime > .1f)
+                {
+                    if (kState.IsKeyDown(Keys.Enter) || gState.Buttons.A == ButtonState.Pressed)
+                    {
+                        gameState = GameState.Running;
+                        PickupHelper.ProcessPickup(ref player, selectedLevelUpChoice);
+                        stateChangeTime = 0f;
+                    }
+                    else if (kState.IsKeyDown(Keys.Up) || gState.DPad.Up == ButtonState.Pressed || gState.ThumbSticks.Left.Y > 0.5f)
+                    {
+                        if (selectedLevelUpChoice != levelUpChoices[0])
+                        {
+                            int index = levelUpChoices.IndexOf(levelUpChoices.Where(a => a == selectedLevelUpChoice).First()) - 1;
+                            selectedLevelUpChoice = levelUpChoices[index];
+                        }
+                        stateChangeTime = 0f;
+                    }
+                    else if (kState.IsKeyDown(Keys.Down) || gState.DPad.Down == ButtonState.Pressed || gState.ThumbSticks.Left.Y < -0.5f)
+                    {
+                        if (selectedLevelUpChoice != levelUpChoices.Last())
+                        {
+                            int index = levelUpChoices.IndexOf(levelUpChoices.Where(a => a == selectedLevelUpChoice).First()) + 1;
+                            selectedLevelUpChoice = levelUpChoices[index];
+                        }
+                        stateChangeTime = 0f;
+                    }
+                }
             }
             else
             {
-                if (gameState == GameState.Running)
+                if (stateChangeTime > .1f && (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P)))
                 {
-                    totalGameTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                    foreach (var system in updateSystems)
-                    {
-                        system.Update(gameTime, totalGameTime);
-                    }
-                }
-                stateChangeTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                Player playerInfo = player.Get<Player>();
-                if(playerInfo.ExperienceToNextLevel <= 0)
-                {
+                    gameState = gameState == GameState.Running ? GameState.Paused : GameState.Running;
                     stateChangeTime = 0f;
-                    playerInfo.Level++;
-                    playerInfo.ExperienceToNextLevel += ExperienceHelper.ExperienceRequiredForLevel(playerInfo.Level + 1);
-                    player.Set(playerInfo);
+                }
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                {
+                    Loaded = false;
+                    retVal = "main-menu";
+                }
+                else if (player.Get<EntityStatus>().State == State.Dead)
+                {
+                    Loaded = false;
+                    retVal = "game-over";
+                }
+                else
+                {
+                    if (gameState == GameState.Running)
+                    {
+                        totalGameTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                        foreach (var system in updateSystems)
+                        {
+                            system.Update(gameTime, totalGameTime);
+                        }
+                    }
+                    stateChangeTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    Player playerInfo = player.Get<Player>();
+                    if (playerInfo.ExperienceToNextLevel <= 0)
+                    {
+                        stateChangeTime = 0f;
+                        playerInfo.Level++;
+                        playerInfo.ExperienceToNextLevel += ExperienceHelper.ExperienceRequiredForLevel(playerInfo.Level + 1);
+                        player.Set(playerInfo);
+
+                        gameState = GameState.LevelUp;
+
+                        RandomTable<PickupType> pickupTable = new RandomTable<PickupType>()
+                            .Add(PickupType.AttackSpeed, 3)
+                            .Add(PickupType.Damage, 3)
+                            .Add(PickupType.MoveSpeed, 2)
+                            .Add(PickupType.SpellEffectChance, 1)
+                            .Add(PickupType.Pierce, 1)
+                            .Add(PickupType.AreaOfEffect, 1);
+
+                        levelUpChoices.Clear();
+                        for(int i = 0; i < 4; i++)
+                        {
+                            PickupType choice;
+                            do
+                            {
+                                choice = pickupTable.Roll(random);
+                            }while(levelUpChoices.Contains(choice));
+
+                            levelUpChoices.Add(choice);
+                        }
+                        selectedLevelUpChoice = levelUpChoices[0];
+                    }
                 }
             }
 
@@ -301,14 +369,43 @@ namespace RogueliteSurvivor.Scenes
 
         public override void Draw(GameTime gameTime, Matrix transformMatrix, params object[] values)
         {
-            for (int layer = 1; layer < 3; layer++)
+            if (gameState != GameState.LevelUp)
             {
-                foreach (var system in renderSystems)
+                for (int layer = 1; layer < 3; layer++)
                 {
-                    _spriteBatch.Begin(samplerState: SamplerState.PointClamp, blendState: BlendState.AlphaBlend, transformMatrix: transformMatrix);
-                    system.Render(gameTime, _spriteBatch, textures, player, totalGameTime, gameState, layer);
-                    _spriteBatch.End();
+                    foreach (var system in renderSystems)
+                    {
+                        _spriteBatch.Begin(samplerState: SamplerState.PointClamp, blendState: BlendState.AlphaBlend, transformMatrix: transformMatrix);
+                        system.Render(gameTime, _spriteBatch, textures, player, totalGameTime, gameState, layer);
+                        _spriteBatch.End();
+                    }
                 }
+            }
+            else
+            {
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, blendState: BlendState.AlphaBlend, transformMatrix: transformMatrix);
+
+                _spriteBatch.DrawString(
+                    fonts["Font"],
+                    "Level Up! Select an upgrade:",
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 62, _graphics.PreferredBackBufferHeight / 6 - 64),
+                    Color.White
+                );
+
+                int counter = 0;
+                foreach (var levelUpChoice in levelUpChoices)
+                {
+                    _spriteBatch.DrawString(
+                        fonts["Font"],
+                        levelUpChoice.ToString(),
+                        new Vector2(_graphics.PreferredBackBufferWidth / 6 - 45, _graphics.PreferredBackBufferHeight / 6 + counter),
+                        selectedLevelUpChoice == levelUpChoice ? Color.Green : Color.White
+                    );
+
+                    counter += 32;
+                }
+
+                _spriteBatch.End();
             }
         }
     }
