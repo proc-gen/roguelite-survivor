@@ -91,14 +91,14 @@ namespace RogueliteSurvivor.Systems
 
                     spriteBatch.DrawString(
                         fonts["FontSmall"],
-                        string.Concat("Enemies Killed: ", killCount.Count),
+                        string.Concat("Level: ", playerInfo.Level),
                         HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 16 + Vector2.UnitX * 5,
                         Color.White
                     );
 
                     spriteBatch.DrawString(
                         fonts["FontSmall"],
-                        string.Concat("Level: ", playerInfo.Level),
+                        string.Concat("Enemies Killed: ", killCount.Count),
                         HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 28 + Vector2.UnitX * 5,
                         Color.White
                     );
