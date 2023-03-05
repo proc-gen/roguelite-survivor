@@ -398,19 +398,26 @@ namespace RogueliteSurvivor.Scenes
                 foreach (var levelUpChoice in levelUpChoices)
                 {
                     _spriteBatch.Draw(
-                    textures["LevelUpChoices"],
-                    new Vector2(_graphics.PreferredBackBufferWidth / 6 + counter, _graphics.PreferredBackBufferHeight / 6 + 32),
-                    LevelUpChoiceHelper.GetLevelUpChoiceButton(levelUpChoice, levelUpChoice == selectedLevelUpChoice),
-                    Color.White,
-                    0f,
-                    new Vector2(32, 32),
-                    1f,
-                    SpriteEffects.None,
-                    0f
-                );
+                        textures["LevelUpChoices"],
+                        new Vector2(_graphics.PreferredBackBufferWidth / 6 + counter, _graphics.PreferredBackBufferHeight / 6 + 32),
+                        LevelUpChoiceHelper.GetLevelUpChoiceButton(levelUpChoice, levelUpChoice == selectedLevelUpChoice),
+                        Color.White,
+                        0f,
+                        new Vector2(32, 32),
+                        1f,
+                        SpriteEffects.None,
+                        0f
+                    );
 
                     counter += 80;
                 }
+
+                _spriteBatch.DrawString(
+                    fonts["Font"],
+                    PickupHelper.GetPickupDisplayTextForLevelUpChoice(selectedLevelUpChoice),
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - PickupHelper.GetPickupDisplayTextForLevelUpChoice(selectedLevelUpChoice).Length * 4.5f, _graphics.PreferredBackBufferHeight / 6 + 96),
+                    Color.White
+                );
 
                 _spriteBatch.End();
             }
