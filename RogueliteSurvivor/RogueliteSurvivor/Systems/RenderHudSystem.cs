@@ -14,7 +14,9 @@ namespace RogueliteSurvivor.Systems
     public class RenderHudSystem : ArchSystem, IRenderSystem, IUpdateSystem
     {
         static Vector2 HealthLocation = new Vector2(10, 10);
+        static Vector2 HudLocation = new Vector2(5, 5);
         static Vector2 TimeLocation = new Vector2(-100, 10);
+        static Color OffsetColor = new Color(1, 1, 1, .5f);
         const int Increment = 100;
 
         GraphicsDeviceManager graphics;
@@ -58,6 +60,13 @@ namespace RogueliteSurvivor.Systems
                 world.Query(in query, (in Entity entity, ref Health health, ref KillCount killCount, ref AttackSpeed attackSpeed, ref Speed speed
                     , ref SpellDamage spellDamage, ref SpellEffectChance spellEffectChance, ref Pierce pierce, ref AreaOfEffect areaOfEffect, ref Player playerInfo) =>
                 {
+                    spriteBatch.Draw(
+                        textures["StatsBackground"],
+                        new Rectangle((int)HudLocation.X, (int)HudLocation.Y, 146, 150),
+                        new Rectangle(0, 0, 64, 64),
+                        OffsetColor
+                    );
+
                     spriteBatch.Draw(
                         textures["HealthBar"],
                         HealthLocation + (Vector2.UnitY * Increment * counter),
@@ -126,6 +135,13 @@ namespace RogueliteSurvivor.Systems
                     counter++;
                 });
 
+                spriteBatch.Draw(
+                        textures["StatsBackground"],
+                        new Rectangle((int)TimeLocation.X + graphics.PreferredBackBufferWidth / 3 - 4, (int)TimeLocation.Y - 5, 100, 24),
+                        new Rectangle(0, 0, 64, 64),
+                        OffsetColor
+                    );
+
                 spriteBatch.DrawString(
                         fonts["Font"],
                         string.Concat("Time: ", float.Round(totalElapsedTime, 2)),
@@ -135,6 +151,13 @@ namespace RogueliteSurvivor.Systems
 
                 if (gameState == GameState.Paused)
                 {
+                    spriteBatch.Draw(
+                        textures["StatsBackground"],
+                        new Rectangle(graphics.PreferredBackBufferWidth / 6 - 55, graphics.PreferredBackBufferHeight / 6 - 4, 110, 24),
+                        new Rectangle(0, 0, 64, 64),
+                        Color.White
+                    );
+
                     spriteBatch.DrawString(
                         fonts["Font"],
                         "Game Paused",
@@ -222,7 +245,7 @@ namespace RogueliteSurvivor.Systems
 
             spriteBatch.DrawString(
                 fonts["FontSmall"],
-                string.Concat("Spell Effect Chance: ", string.Format("{0:P2}", spell.CurrentEffectChance)),
+                string.Concat("Spell Effect Chance: ", string.Format("{0:P0}", spell.CurrentEffectChance)),
                 HealthLocation + (Vector2.UnitY * Increment * counter) + Vector2.UnitY * 88 + Vector2.UnitX * 5,
                 Color.White
             );

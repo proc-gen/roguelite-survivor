@@ -94,6 +94,7 @@ namespace RogueliteSurvivor.Scenes
 
                 { "StatBar", Content.Load<Texture2D>(Path.Combine("Hud", "StatBar")) },
                 { "HealthBar", Content.Load<Texture2D>(Path.Combine("Hud", "HealthBar")) },
+                { "StatsBackground", Content.Load<Texture2D>(Path.Combine("Hud", "StatsBackground")) },
 
                 { "LevelUpChoices", Content.Load<Texture2D>(Path.Combine("UI", "level-up-buttons")) },
 
