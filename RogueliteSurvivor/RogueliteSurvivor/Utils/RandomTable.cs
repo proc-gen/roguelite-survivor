@@ -31,7 +31,7 @@ namespace RogueliteSurvivor.Utils
 
             if (_totalWeight > 0)
             {
-                int roll = random.Next(0, _totalWeight);
+                int roll = random.Next(0, _totalWeight + 1);
 
                 int index = 0;
                 do
