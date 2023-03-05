@@ -35,6 +35,7 @@ namespace RogueliteSurvivor.Systems
         int difficulty = 1;
         int increaseAfterSeconds = 15;
         int lastSet = -1;
+        int maxEnemiesPerUpdate = 200;
 
         public EnemySpawnSystem(World world, Dictionary<string, Texture2D> textures, Box2D.NetStandard.Dynamics.World.World physicsWorld, GraphicsDeviceManager graphics, Dictionary<string, EnemyContainer> enemyContainers, Dictionary<Spells, SpellContainer> spellContainers, MapContainer mapContainer)
             : base(world, new QueryDescription()
@@ -91,7 +92,8 @@ namespace RogueliteSurvivor.Systems
 
             if (numEnemies < enemyCount)
             {
-                for (int i = numEnemies; i < enemyCount; i++)
+                int max = int.Min(enemyCount - numEnemies, maxEnemiesPerUpdate);
+                for (int i = 0; i < max; i++)
                 {
                     createEnemy(player, offset);
                 }

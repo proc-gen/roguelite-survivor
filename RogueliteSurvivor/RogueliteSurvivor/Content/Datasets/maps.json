@@ -176,8 +176,8 @@
       "folder": "Stress Test",
       "mapFilename": "Stress Test.tmx",
       "tilesetImages": [ "Tileset" ],
-      "startingX": 2000,
-      "startingY": 2000,
+      "startingX": 1936,
+      "startingY": 2160,
       "spawnMinX": 192,
       "spawnMaxX": 3808,
       "spawnMinY": 192,
@@ -354,7 +354,7 @@
         {
           "repeat": true,
           "start": 240,
-          "maxEnemies": 2560,
+          "maxEnemies": 1920,
           "enemies": [
             {
               "type": "GnollGrunt",
@@ -381,7 +381,7 @@
         {
           "repeat": true,
           "start": 270,
-          "maxEnemies": 5120,
+          "maxEnemies": 2560,
           "enemies": [
             {
               "type": "GnollGrunt",

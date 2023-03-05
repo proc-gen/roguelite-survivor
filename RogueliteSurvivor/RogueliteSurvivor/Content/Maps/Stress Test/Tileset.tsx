@@ -1293,7 +1293,7 @@
  </tile>
  <tile id="258">
   <properties>
-   <property name="Passable" type="bool" value="true"/>
+   <property name="Passable" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="259">
@@ -1658,7 +1658,7 @@
  </tile>
  <tile id="331">
   <properties>
-   <property name="Passable" type="bool" value="false"/>
+   <property name="Passable" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="332">
@@ -1668,7 +1668,7 @@
  </tile>
  <tile id="333">
   <properties>
-   <property name="Passable" type="bool" value="false"/>
+   <property name="Passable" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="334">
@@ -9748,17 +9748,17 @@
  </tile>
  <tile id="1949">
   <properties>
-   <property name="Passable" type="bool" value="false"/>
+   <property name="Passable" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="1950">
   <properties>
-   <property name="Passable" type="bool" value="false"/>
+   <property name="Passable" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="1951">
   <properties>
-   <property name="Passable" type="bool" value="false"/>
+   <property name="Passable" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="1952">
