@@ -29,11 +29,14 @@ namespace RogueliteSurvivor.Components
                     bool passable = true;
                     foreach (var layer in tileLayers)
                     {
-                        var tile = getTile(layer, x, y);
-
-                        if (tile != null && tile.properties[0].value == "false")
+                        if (layer.properties[0].value == "true")
                         {
-                            passable = false;
+                            var tile = getTile(layer, x, y);
+
+                            if (tile != null && tile.properties[0].value == "false")
+                            {
+                                passable = false;
+                            }
                         }
                     }
 
@@ -49,7 +52,7 @@ namespace RogueliteSurvivor.Components
 
 
                         var bodyShape = new Box2D.NetStandard.Dynamics.Fixtures.FixtureDef();
-                        bodyShape.shape = new PolygonShape(Map.TileWidth / 2f / PhysicsConstants.PhysicsToPixelsRatio, Map.TileHeight / 2f / PhysicsConstants.PhysicsToPixelsRatio);
+                        bodyShape.shape = new PolygonShape((Map.TileWidth - 1f) / 2f / PhysicsConstants.PhysicsToPixelsRatio, (Map.TileHeight - 1f) / 2f / PhysicsConstants.PhysicsToPixelsRatio);
                         bodyShape.density = 1;
                         bodyShape.friction = 0.0f;
 

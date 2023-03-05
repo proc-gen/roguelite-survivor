@@ -22,7 +22,7 @@ namespace RogueliteSurvivor.Systems
 
         public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player, float totalElapsedTime, GameState gameState, int layer)
         {
-            if (layer == 1)
+            if (layer == 2)
             {
                 Vector2 playerPosition = player.Get<Position>().XY;
                 Vector2 offset = new Vector2(graphics.PreferredBackBufferWidth / 6, graphics.PreferredBackBufferHeight / 6);

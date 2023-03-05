@@ -29,7 +29,7 @@ namespace RogueliteSurvivor.Systems
 
             world.Query(in query, (ref MapInfo map) =>
             {
-                var tileLayer = map.Map.Layers.Where(x => x.type == TiledLayerType.TileLayer && x.id == layer).FirstOrDefault();
+                var tileLayer = map.Map.Layers.Where(x => x.type == TiledLayerType.TileLayer && x.id == layer - 1).FirstOrDefault();
 
                 if (tileLayer != null)
                 {

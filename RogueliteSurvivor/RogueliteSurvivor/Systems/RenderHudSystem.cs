@@ -54,7 +54,7 @@ namespace RogueliteSurvivor.Systems
 
         public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player, float totalElapsedTime, GameState gameState, int layer)
         {
-            if (layer == 2)
+            if (layer == 4)
             {
                 int counter = 0;
                 world.Query(in query, (in Entity entity, ref Health health, ref KillCount killCount, ref AttackSpeed attackSpeed, ref Speed speed

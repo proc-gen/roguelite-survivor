@@ -24,7 +24,7 @@ namespace RogueliteSurvivor.Scenes
         private MainMenuState state;
         private string selectedPlayer;
         private int selectedButton = 1;
-        private string selectedMap = "Demo";
+        private string selectedMap;
 
         private Dictionary<string, PlayerContainer> playerContainers;
         private List<MapContainer> mapContainers;
@@ -66,6 +66,7 @@ namespace RogueliteSurvivor.Scenes
 
             state = MainMenuState.MainMenu;
             selectedPlayer = "Fire";
+            selectedMap = mapContainers.First().Name;
             Loaded = true;
         }
 
@@ -170,23 +171,26 @@ namespace RogueliteSurvivor.Scenes
                         state = MainMenuState.CharacterSelection;
                         readyForInput = false;
                     }
-                    else if (kState.IsKeyDown(Keys.Up) || gState.DPad.Up == ButtonState.Pressed || gState.ThumbSticks.Left.Y > 0.5f)
+                    else if (mapContainers.Count > 1) 
                     {
-                        if(selectedMap != mapContainers[0].Name)
+                        if (kState.IsKeyDown(Keys.Up) || gState.DPad.Up == ButtonState.Pressed || gState.ThumbSticks.Left.Y > 0.5f)
                         {
-                            int index = mapContainers.IndexOf(mapContainers.Where(a => a.Name == selectedMap).First()) - 1;
-                            selectedMap = mapContainers[index].Name;
+                            if (selectedMap != mapContainers[0].Name)
+                            {
+                                int index = mapContainers.IndexOf(mapContainers.Where(a => a.Name == selectedMap).First()) - 1;
+                                selectedMap = mapContainers[index].Name;
+                            }
+                            readyForInput = false;
                         }
-                        readyForInput = false;
-                    }
-                    else if (kState.IsKeyDown(Keys.Down) || gState.DPad.Down == ButtonState.Pressed || gState.ThumbSticks.Left.Y < -0.5f)
-                    {
-                        if (selectedMap != mapContainers.Last().Name)
+                        else if (kState.IsKeyDown(Keys.Down) || gState.DPad.Down == ButtonState.Pressed || gState.ThumbSticks.Left.Y < -0.5f)
                         {
-                            int index = mapContainers.IndexOf(mapContainers.Where(a => a.Name == selectedMap).First()) + 1;
-                            selectedMap = mapContainers[index].Name;
+                            if (selectedMap != mapContainers.Last().Name)
+                            {
+                                int index = mapContainers.IndexOf(mapContainers.Where(a => a.Name == selectedMap).First()) + 1;
+                                selectedMap = mapContainers[index].Name;
+                            }
+                            readyForInput = false;
                         }
-                        readyForInput = false;
                     }
                 }
                 else if (state == MainMenuState.Credits)

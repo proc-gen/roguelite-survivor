@@ -9563,12 +9563,12 @@
  </tile>
  <tile id="1912">
   <properties>
-   <property name="Passable" type="bool" value="false"/>
+   <property name="Passable" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="1913">
   <properties>
-   <property name="Passable" type="bool" value="false"/>
+   <property name="Passable" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="1914">

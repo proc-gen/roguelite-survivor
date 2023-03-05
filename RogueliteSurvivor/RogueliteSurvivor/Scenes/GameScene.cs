@@ -374,7 +374,7 @@ namespace RogueliteSurvivor.Scenes
         {
             if (gameState != GameState.LevelUp)
             {
-                for (int layer = 1; layer < 3; layer++)
+                for (int layer = 1; layer < 5; layer++)
                 {
                     foreach (var system in renderSystems)
                     {
