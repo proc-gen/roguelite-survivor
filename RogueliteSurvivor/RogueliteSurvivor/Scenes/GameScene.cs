@@ -95,6 +95,8 @@ namespace RogueliteSurvivor.Scenes
                 { "StatBar", Content.Load<Texture2D>(Path.Combine("Hud", "StatBar")) },
                 { "HealthBar", Content.Load<Texture2D>(Path.Combine("Hud", "HealthBar")) },
 
+                { "LevelUpChoices", Content.Load<Texture2D>(Path.Combine("UI", "level-up-buttons")) },
+
                 { "pickups", Content.Load<Texture2D>(Path.Combine("Pickups", "player-pickups")) },
 
                 { "MiniBlood1", Content.Load<Texture2D>(Path.Combine("Effects", "mini-blood-1")) },
@@ -280,7 +282,7 @@ namespace RogueliteSurvivor.Scenes
                         PickupHelper.ProcessPickup(ref player, selectedLevelUpChoice);
                         stateChangeTime = 0f;
                     }
-                    else if (kState.IsKeyDown(Keys.Up) || gState.DPad.Up == ButtonState.Pressed || gState.ThumbSticks.Left.Y > 0.5f)
+                    else if (kState.IsKeyDown(Keys.Left) || gState.DPad.Left == ButtonState.Pressed || gState.ThumbSticks.Left.X < -0.5f)
                     {
                         if (selectedLevelUpChoice != levelUpChoices[0])
                         {
@@ -289,7 +291,7 @@ namespace RogueliteSurvivor.Scenes
                         }
                         stateChangeTime = 0f;
                     }
-                    else if (kState.IsKeyDown(Keys.Down) || gState.DPad.Down == ButtonState.Pressed || gState.ThumbSticks.Left.Y < -0.5f)
+                    else if (kState.IsKeyDown(Keys.Right) || gState.DPad.Right == ButtonState.Pressed || gState.ThumbSticks.Left.X > 0.5f)
                     {
                         if (selectedLevelUpChoice != levelUpChoices.Last())
                         {
@@ -388,21 +390,26 @@ namespace RogueliteSurvivor.Scenes
                 _spriteBatch.DrawString(
                     fonts["Font"],
                     "Level Up! Select an upgrade:",
-                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 62, _graphics.PreferredBackBufferHeight / 6 - 64),
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 116, _graphics.PreferredBackBufferHeight / 6 - 64),
                     Color.White
                 );
 
-                int counter = 0;
+                int counter = -136;
                 foreach (var levelUpChoice in levelUpChoices)
                 {
-                    _spriteBatch.DrawString(
-                        fonts["Font"],
-                        PickupHelper.GetPickupDisplayTextForLevelUpChoice(levelUpChoice),
-                        new Vector2(_graphics.PreferredBackBufferWidth / 6 - 45, _graphics.PreferredBackBufferHeight / 6 + counter),
-                        selectedLevelUpChoice == levelUpChoice ? Color.Green : Color.White
-                    );
+                    _spriteBatch.Draw(
+                    textures["LevelUpChoices"],
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 + counter, _graphics.PreferredBackBufferHeight / 6 + 32),
+                    LevelUpChoiceHelper.GetLevelUpChoiceButton(levelUpChoice, levelUpChoice == selectedLevelUpChoice),
+                    Color.White,
+                    0f,
+                    new Vector2(32, 32),
+                    1f,
+                    SpriteEffects.None,
+                    0f
+                );
 
-                    counter += 32;
+                    counter += 80;
                 }
 
                 _spriteBatch.End();
