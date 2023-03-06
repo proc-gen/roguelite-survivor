@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="1">
  <tileset firstgid="1" source="Tileset.tsx"/>
- <layer id="1" name="Ground" width="50" height="50">
+ <layer id="1" name="Ground" class="1" width="50" height="50">
   <properties>
    <property name="RunCollision" type="bool" value="true"/>
   </properties>
@@ -58,7 +58,7 @@
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,290,290,290,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
 </data>
  </layer>
- <layer id="4" name="Ground Decoration" width="50" height="50">
+ <layer id="4" name="Ground Decoration" class="2" width="50" height="50">
   <properties>
    <property name="RunCollision" type="bool" value="false"/>
   </properties>
@@ -115,7 +115,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="2" name="Walls" width="50" height="50">
+ <layer id="2" name="Walls" class="3" width="50" height="50">
   <properties>
    <property name="RunCollision" type="bool" value="true"/>
   </properties>
@@ -172,7 +172,7 @@
 219,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,553,554,555,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,214,220
 </data>
  </layer>
- <layer id="3" name="Decoration" width="50" height="50">
+ <layer id="3" name="Decoration" class="4" width="50" height="50">
   <properties>
    <property name="RunCollision" type="bool" value="false"/>
   </properties>

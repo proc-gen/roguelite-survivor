@@ -202,9 +202,9 @@ namespace RogueliteSurvivor.Scenes
 
             renderSystems = new List<IRenderSystem>
             {
-                new RenderMapSystem(world, _graphics),
-                new RenderPickupSystem(world, _graphics),
                 new RenderSpriteSystem(world, _graphics),
+                new RenderPickupSystem(world, _graphics),
+                new RenderMapSystem(world, _graphics),
                 renderHud,
             };
         }
@@ -214,7 +214,7 @@ namespace RogueliteSurvivor.Scenes
             mapContainer = mapContainers[gameSettings.MapName];
 
             var mapEntity = world.Create<Map, MapInfo>();
-            mapEntity.SetRange(new Map(), new MapInfo(Path.Combine(Content.RootDirectory, "Maps", mapContainer.Folder, mapContainer.MapFilename), Path.Combine(Content.RootDirectory, "Maps", mapContainer.Folder), physicsWorld, mapEntity));
+            mapEntity.SetRange(new Map(), new MapInfo(Path.Combine(Content.RootDirectory, "Maps", mapContainer.Folder, mapContainer.MapFilename), Path.Combine(Content.RootDirectory, "Maps", mapContainer.Folder), physicsWorld, mapEntity, mapContainer.Spawnables));
 
             foreach (var tilesetImage in mapContainer.TilesetImages)
             {

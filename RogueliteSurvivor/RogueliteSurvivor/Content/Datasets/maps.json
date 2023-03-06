@@ -7,10 +7,14 @@
       "tilesetImages": [ "Tileset" ],
       "startingX": 384,
       "startingY": 752,
-      "spawnMinX": 32,
-      "spawnMaxX": 768,
-      "spawnMinY": 32,
-      "spawnMaxY": 768,
+      "spawnableAreas": [
+        {
+          "spawnMinX": 32,
+          "spawnMaxX": 768,
+          "spawnMinY": 32,
+          "spawnMaxY": 768
+        }
+      ],
       "enemyWaves": [
         {
           "repeat": true,
@@ -36,10 +40,26 @@
       "tilesetImages": [ "Tileset", "WallTops" ],
       "startingX": 384,
       "startingY": 592,
-      "spawnMinX": 32,
-      "spawnMaxX": 768,
-      "spawnMinY": 32,
-      "spawnMaxY": 768,
+      "spawnableAreas": [
+        {
+          "spawnMinX": 32,
+          "spawnMaxX": 768,
+          "spawnMinY": 32,
+          "spawnMaxY": 608
+        },
+        {
+          "spawnMinX": 32,
+          "spawnMaxX": 208,
+          "spawnMinY": 608,
+          "spawnMaxY": 768
+        },
+        {
+          "spawnMinX": 576,
+          "spawnMaxX": 768,
+          "spawnMinY": 608,
+          "spawnMaxY": 768
+        }
+      ],
       "enemyWaves": [
         {
           "repeat": true,
