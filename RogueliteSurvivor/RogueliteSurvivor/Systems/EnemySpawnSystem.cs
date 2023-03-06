@@ -21,6 +21,8 @@ namespace RogueliteSurvivor.Systems
     {
         QueryDescription playerQuery = new QueryDescription()
                                             .WithAll<Player, Position>();
+        QueryDescription mapQuery = new QueryDescription()
+                                            .WithAll<MapInfo>();
         Dictionary<string, Texture2D> textures;
         Random random;
         Box2D.NetStandard.Dynamics.World.World physicsWorld;
@@ -57,6 +59,7 @@ namespace RogueliteSurvivor.Systems
 
             Vector2 offset = new Vector2(graphics.PreferredBackBufferWidth / 6, graphics.PreferredBackBufferHeight / 6);
             Position? player = null;
+            MapInfo map = null;
             world.Query(in playerQuery, (ref Position playerPos) =>
             {
                 if (!player.HasValue)
@@ -65,9 +68,17 @@ namespace RogueliteSurvivor.Systems
                 }
             });
 
+            world.Query(in mapQuery, (ref MapInfo mapInfo) =>
+            {
+                if(map == null)
+                {
+                    map = mapInfo;
+                }
+            });
+
             if (lastSet != (int)totalElapsedTime)
             {
-                setDifficulty((int)totalElapsedTime, player, offset);
+                setDifficulty((int)totalElapsedTime, player, offset, map);
             }
 
             world.Query(in query, (in Entity entity, ref Enemy enemy, ref Pickup pickup, ref Position position, ref EntityStatus entityStatus) =>
@@ -95,24 +106,26 @@ namespace RogueliteSurvivor.Systems
                 int max = int.Min(enemyCount - numEnemies, maxEnemiesPerUpdate);
                 for (int i = 0; i < max; i++)
                 {
-                    createEnemy(player, offset);
+                    createEnemy(player, offset, map);
                 }
             }
         }
 
-        private System.Numerics.Vector2 getSpawnPosition(Vector2 playerPosition, Vector2 offset)
+        private System.Numerics.Vector2 getSpawnPosition(Vector2 playerPosition, Vector2 offset, MapInfo map)
         {
             int x, y;
             do
             {
                 x = random.Next(int.Max(mapContainer.SpawnMinX, (int)playerPosition.X - 300), int.Min(mapContainer.SpawnMaxX, (int)playerPosition.X + 300));
                 y = random.Next(int.Max(mapContainer.SpawnMinY, (int)playerPosition.Y - 300), int.Min(mapContainer.SpawnMaxY, (int)playerPosition.Y + 300));
-            } while ((x > (playerPosition.X - offset.X) && x < (playerPosition.X + offset.X)) && (y > (playerPosition.Y - offset.Y) && y < (playerPosition.Y + offset.Y)));
+            } while (((x > (playerPosition.X - offset.X) && x < (playerPosition.X + offset.X)) 
+                        && (y > (playerPosition.Y - offset.Y) && y < (playerPosition.Y + offset.Y)))
+                        || !map.IsTileSpawnable(x, y));
 
             return new System.Numerics.Vector2(x, y);
         }
 
-        private void setDifficulty(int time, Position? player, Vector2 offset)
+        private void setDifficulty(int time, Position? player, Vector2 offset, MapInfo map)
         {
             lastSet = time;
             difficulty = (time / increaseAfterSeconds) + 1;
@@ -139,7 +152,7 @@ namespace RogueliteSurvivor.Systems
                     }
                     for(int i = 0; i < enemyWave.MaxEnemies; i++)
                     {
-                        createEnemyFromContainer(tempTable.Roll(random), player, offset);
+                        createEnemyFromContainer(tempTable.Roll(random), player, offset, map);
                     }
                 }
             }
@@ -149,12 +162,12 @@ namespace RogueliteSurvivor.Systems
                 .Add(PickupType.Health, 2);
         }
 
-        private void createEnemy(Position? player, Vector2 offset)
+        private void createEnemy(Position? player, Vector2 offset, MapInfo map)
         {
-            createEnemyFromContainer(enemyTable.Roll(random), player, offset);
+            createEnemyFromContainer(enemyTable.Roll(random), player, offset, map);
         }
 
-        private void createEnemyFromContainer(string enemyType, Position? player, Vector2 offset)
+        private void createEnemyFromContainer(string enemyType, Position? player, Vector2 offset, MapInfo map)
         {
             if (!string.IsNullOrEmpty(enemyType))
             {
@@ -162,14 +175,16 @@ namespace RogueliteSurvivor.Systems
 
                 var entity = world.Create<Enemy, EntityStatus, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell1, Body, Pickup, Experience>();
 
+                Vector2 position = getSpawnPosition(player.Value.XY, offset, map);
+
                 var body = new BodyDef();
-                body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
+                body.position = new System.Numerics.Vector2(position.X, position.Y) / PhysicsConstants.PhysicsToPixelsRatio;
                 body.fixedRotation = true;
 
                 entity.SetRange(
                             new Enemy(),
                             new EntityStatus(),
-                            new Position() { XY = new Vector2(body.position.X, body.position.Y) },
+                            new Position() { XY = new Vector2(position.X, position.Y) },
                             new Velocity() { Vector = Vector2.Zero },
                             new Speed() { speed = container.Speed },
                             new Animation(container.Animation.FirstFrame, container.Animation.LastFrame, container.Animation.PlaybackSpeed, container.Animation.NumDirections),

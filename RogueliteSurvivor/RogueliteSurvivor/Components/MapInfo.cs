@@ -64,6 +64,27 @@ namespace RogueliteSurvivor.Components
             }
         }
 
+        public bool IsTileSpawnable(int x, int y)
+        {
+            var tileLayers = Map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
+            bool passable = true;
+
+            foreach (var layer in tileLayers)
+            {
+                if (layer.properties[0].value == "true")
+                {
+                    var tile = getTile(layer, x / Map.Width, y / Map.Height);
+
+                    if (tile != null && tile.properties[0].value == "false")
+                    {
+                        passable = false;
+                    }
+                }
+            }
+
+            return passable;
+        }
+
         private TiledTile getTile(TiledLayer layer, int x, int y)
         {
             int index = (y * layer.width) + x;

@@ -94,7 +94,7 @@ namespace RogueliteSurvivor.Systems
             projectile.SetRange(
                 new Projectile(),
                 new EntityStatus(),
-                new Position() { XY = new Vector2(body.position.X, body.position.Y) },
+                new Position() { XY = new Vector2(position.X, position.Y) },
                 new Velocity() { Vector = velocityVector * spell.CurrentProjectileSpeed },
                 new Speed() { speed = spell.CurrentProjectileSpeed },
                 SpellFactory.GetSpellAliveAnimation(spellContainers[spell.Spell]),
