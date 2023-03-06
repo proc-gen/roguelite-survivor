@@ -85,15 +85,12 @@ namespace RogueliteSurvivor.Systems
             {
                 if (entityStatus.State == State.Dead)
                 {
-                    if (entity.IsAlive())
+                    if (pickup.Type != PickupType.None)
                     {
-                        if (pickup.Type != PickupType.None)
-                        {
-                            createPickup(pickup, position);
-                        }
-
-                        world.TryDestroy(entity);
+                        createPickup(pickup, position);
                     }
+
+                    world.TryDestroy(entity);
                 }
                 else
                 {
