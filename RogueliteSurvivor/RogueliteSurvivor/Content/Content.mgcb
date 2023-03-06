@@ -393,6 +393,9 @@
 #begin Maps/The Beginning/The Beginning.tmx
 /copy:Maps/The Beginning/The Beginning.tmx
 
+#begin Maps/The Beginning/The Church.tmx
+/copy:Maps/The Beginning/The Church.tmx
+
 #begin Maps/The Beginning/Tileset.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -407,6 +410,21 @@
 
 #begin Maps/The Beginning/Tileset.tsx
 /copy:Maps/The Beginning/Tileset.tsx
+
+#begin Maps/The Beginning/WallTops.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Maps/The Beginning/WallTops.png
+
+#begin Maps/The Beginning/WallTops.tsx
+/copy:Maps/The Beginning/WallTops.tsx
 
 #begin Pickups/player-pickups.png
 /importer:TextureImporter

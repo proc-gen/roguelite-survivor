@@ -28,6 +28,35 @@
           ]
         }
       ]
+    },
+    {
+      "name": "The Church",
+      "folder": "The Beginning",
+      "mapFilename": "The Church.tmx",
+      "tilesetImages": [ "Tileset", "WallTops" ],
+      "startingX": 384,
+      "startingY": 592,
+      "spawnMinX": 32,
+      "spawnMaxX": 768,
+      "spawnMinY": 32,
+      "spawnMaxY": 768,
+      "enemyWaves": [
+        {
+          "repeat": true,
+          "start": 0,
+          "maxEnemies": 10,
+          "enemies": [
+            {
+              "type": "GnollGrunt",
+              "weight": 1
+            },
+            {
+              "type": "GnollPikeman",
+              "weight": 1
+            }
+          ]
+        }
+      ]
     }
   ]
 }
