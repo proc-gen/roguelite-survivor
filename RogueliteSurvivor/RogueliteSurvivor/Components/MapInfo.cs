@@ -64,7 +64,7 @@ namespace RogueliteSurvivor.Components
             }
         }
 
-        public bool IsTileSpawnable(int x, int y)
+        public bool IsTileWalkable(int x, int y)
         {
             var tileLayers = Map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
             bool passable = true;
@@ -73,7 +73,7 @@ namespace RogueliteSurvivor.Components
             {
                 if (layer.properties[0].value == "true")
                 {
-                    var tile = getTile(layer, x / Map.Width, y / Map.Height);
+                    var tile = getTile(layer, x / Map.TileWidth, y / Map.TileHeight);
 
                     if (tile != null && tile.properties[0].value == "false")
                     {

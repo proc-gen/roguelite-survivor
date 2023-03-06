@@ -120,7 +120,7 @@ namespace RogueliteSurvivor.Systems
                 y = random.Next(int.Max(mapContainer.SpawnMinY, (int)playerPosition.Y - 300), int.Min(mapContainer.SpawnMaxY, (int)playerPosition.Y + 300));
             } while (((x > (playerPosition.X - offset.X) && x < (playerPosition.X + offset.X)) 
                         && (y > (playerPosition.Y - offset.Y) && y < (playerPosition.Y + offset.Y)))
-                        || !map.IsTileSpawnable(x, y));
+                        || !map.IsTileWalkable(x, y));
 
             return new System.Numerics.Vector2(x, y);
         }
