@@ -38,7 +38,7 @@ namespace RogueliteSurvivor.Systems
 
         public void Update(GameTime gameTime, float totalElapsedTime)
         {
-            world.Query(in projectileQuery, (in Entity entity, ref EntityStatus entityStatus, ref SpriteSheet spriteSheet, ref Animation animation, ref Body body) =>
+            world.Query(in projectileQuery, (ref EntityStatus entityStatus, ref SpriteSheet spriteSheet, ref Animation animation, ref Body body) =>
             {
                 if (entityStatus.State == State.ReadyToDie)
                 {
@@ -56,7 +56,7 @@ namespace RogueliteSurvivor.Systems
                 }
             });
 
-            world.Query(in enemyQuery, (in Entity entity, ref EntityStatus entityStatus, ref SpriteSheet spriteSheet, ref Animation animation, ref Body body) =>
+            world.Query(in enemyQuery, (ref EntityStatus entityStatus, ref SpriteSheet spriteSheet, ref Animation animation, ref Body body) =>
             {
                 if (entityStatus.State == State.ReadyToDie)
                 {

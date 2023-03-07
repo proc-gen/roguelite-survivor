@@ -23,39 +23,33 @@ namespace RogueliteSurvivor.Systems
         {
             world.Query(in query, (in Entity entity, ref Position pos, ref Velocity vel, ref Body body) =>
             {
-                if (entity.IsAlive())
+                if (float.IsNaN(vel.VectorPhysics.X) || float.IsNaN(vel.VectorPhysics.Y))
                 {
-                    if (float.IsNaN(vel.VectorPhysics.X) || float.IsNaN(vel.VectorPhysics.Y))
-                    {
-                        vel.Vector = Vector2.Zero;
-                    }
-                    else if (entity.Has<Slow>())
-                    {
-                        vel.Vector *= 0.5f;
-                    }
-                    else if (entity.Has<Shock>())
-                    {
-                        vel.Vector = Vector2.Zero;
-                    }
-                    body.SetLinearVelocity(vel.VectorPhysics / PhysicsConstants.PhysicsToPixelsRatio);
+                    vel.Vector = Vector2.Zero;
                 }
+                else if (entity.Has<Slow>())
+                {
+                    vel.Vector *= 0.5f;
+                }
+                else if (entity.Has<Shock>())
+                {
+                    vel.Vector = Vector2.Zero;
+                }
+                body.SetLinearVelocity(vel.VectorPhysics / PhysicsConstants.PhysicsToPixelsRatio);
             });
 
             world.Query(in singleTargetQuery, (in Entity entity, ref SingleTarget single, ref Body body) =>
             {
-                if (entity.IsAlive())
-                {
-                    single.DamageStartDelay -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    single.DamageEndDelay -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                single.DamageStartDelay -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                single.DamageEndDelay -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    if (single.DamageStartDelay < 0 && !body.IsAwake())
-                    {
-                        body.SetAwake(true);
-                    }
-                    else if (single.DamageEndDelay < 0 && body.IsAwake())
-                    {
-                        body.SetAwake(false);
-                    }
+                if (single.DamageStartDelay < 0 && !body.IsAwake())
+                {
+                    body.SetAwake(true);
+                }
+                else if (single.DamageEndDelay < 0 && body.IsAwake())
+                {
+                    body.SetAwake(false);
                 }
             });
 
@@ -63,11 +57,8 @@ namespace RogueliteSurvivor.Systems
 
             world.Query(in query, (in Entity entity, ref Position pos, ref Velocity vel, ref Body body) =>
             {
-                if (entity.IsAlive())
-                {
-                    var position = body.GetPosition();
-                    pos.XY = new Vector2(position.X, position.Y) * PhysicsConstants.PhysicsToPixelsRatio;
-                }
+                var position = body.GetPosition();
+                pos.XY = new Vector2(position.X, position.Y) * PhysicsConstants.PhysicsToPixelsRatio;
             });
 
             physicsWorld.ClearForces();

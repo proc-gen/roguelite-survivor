@@ -83,15 +83,14 @@ namespace RogueliteSurvivor.Systems
 
         private void createProjectile(Entity entity, ISpell spell, Target target, Position pos, SpellEffects effect)
         {
-            var projectile = world.Create<Projectile, EntityStatus, Position, Velocity, Speed, Animation, SpriteSheet, Damage, Owner, Pierce, Body>();
-
             var body = new BodyDef();
             var velocityVector = Vector2.Normalize(target.TargetPosition - pos.XY);
             var position = pos.XY + velocityVector;
             body.position = new System.Numerics.Vector2(position.X, position.Y) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
-
-            projectile.SetRange(
+            
+            var projectile = world.Create<Projectile, EntityStatus, Position, Velocity, Speed, Animation, SpriteSheet, Damage, Owner, Pierce, Body>();
+            projectile.Set(                
                 new Projectile(),
                 new EntityStatus(),
                 new Position() { XY = new Vector2(body.position.X, body.position.Y) },
@@ -108,15 +107,14 @@ namespace RogueliteSurvivor.Systems
 
         private void createSingleTarget(Entity entity, ISpell spell, Target target, Position pos, SpellEffects effect)
         {
-            var singleTarget = world.Create<SingleTarget, EntityStatus, Position, Speed, Animation, SpriteSheet, Damage, Owner, Body>();
-
             var body = new BodyDef();
             body.position = new System.Numerics.Vector2(target.TargetPosition.X, target.TargetPosition.Y) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
 
             float radiusMultiplier = entity.Has<AreaOfEffect>() ? entity.Get<AreaOfEffect>().Radius : 1f;
-
-            singleTarget.SetRange(
+            
+            var singleTarget = world.Create<SingleTarget, EntityStatus, Position, Speed, Animation, SpriteSheet, Damage, Owner, Body>();
+            singleTarget.Set(
                 SpellFactory.CreateSingleTarget(spellContainers[spell.Spell]),
                 new EntityStatus(),
                 new Position() { XY = target.TargetPosition },

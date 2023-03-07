@@ -74,15 +74,12 @@ namespace RogueliteSurvivor.Systems
             {
                 if (entityStatus.State == State.Dead)
                 {
-                    if (entity.IsAlive())
+                    if (pickup.Type != PickupType.None)
                     {
-                        if (pickup.Type != PickupType.None)
-                        {
-                            createPickup(pickup, position);
-                        }
-
-                        world.TryDestroy(entity);
+                        createPickup(pickup, position);
                     }
+
+                    world.TryDestroy(entity);
                 }
                 else
                 {
@@ -159,36 +156,34 @@ namespace RogueliteSurvivor.Systems
             if (!string.IsNullOrEmpty(enemyType))
             {
                 EnemyContainer container = enemyContainers[enemyType];
-
-                var entity = world.Create<Enemy, EntityStatus, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell1, Body, Pickup, Experience>();
-
+                
                 var body = new BodyDef();
                 body.position = getSpawnPosition(player.Value.XY, offset) / PhysicsConstants.PhysicsToPixelsRatio;
                 body.fixedRotation = true;
-
-                entity.SetRange(
-                            new Enemy(),
-                            new EntityStatus(),
-                            new Position() { XY = new Vector2(body.position.X, body.position.Y) },
-                            new Velocity() { Vector = Vector2.Zero },
-                            new Speed() { speed = container.Speed },
-                            new Animation(container.Animation.FirstFrame, container.Animation.LastFrame, container.Animation.PlaybackSpeed, container.Animation.NumDirections),
-                            new SpriteSheet(textures[container.Name], container.Name, container.SpriteSheet.FramesPerRow, container.SpriteSheet.FramesPerColumn),
-                            new Target(),
-                            new Health() { Current = container.Health, Max = container.Health },
-                            new Damage() { Amount = container.Damage, BaseAmount = container.Damage },
-                            SpellFactory.CreateSpell<Spell1>(spellContainers[container.Spell]),
-                            BodyFactory.CreateCircularBody(entity, container.Width, physicsWorld, body),
-                            createPickupForEnemy(),
-                            new Experience(container.Experience)
-                        );
+                
+                var entity = world.Create<Enemy, EntityStatus, Position, Velocity, Speed, Animation, SpriteSheet, Target, Health, Damage, Spell1, Body, Pickup, Experience>();
+                entity.Set(
+                new Enemy(),
+                new EntityStatus(),
+                new Position() { XY = new Vector2(body.position.X, body.position.Y) },
+                new Velocity() { Vector = Vector2.Zero },
+                new Speed() { speed = container.Speed },
+                new Animation(container.Animation.FirstFrame, container.Animation.LastFrame, container.Animation.PlaybackSpeed, container.Animation.NumDirections),
+                new SpriteSheet(textures[container.Name], container.Name, container.SpriteSheet.FramesPerRow, container.SpriteSheet.FramesPerColumn),
+                new Target(),
+                new Health() { Current = container.Health, Max = container.Health },
+                new Damage() { Amount = container.Damage, BaseAmount = container.Damage },
+                SpellFactory.CreateSpell<Spell1>(spellContainers[container.Spell]),
+                BodyFactory.CreateCircularBody(entity, container.Width, physicsWorld, body),
+                createPickupForEnemy(),
+                new Experience(container.Experience)
+                );
             }
         }
 
         private Pickup createPickupForEnemy()
         {
             var pickup = new Pickup() { Type = pickupTable.Roll(random) };
-
             pickup.PickupAmount = PickupHelper.GetPickupAmount(pickup.Type);
 
             return pickup;
@@ -196,9 +191,8 @@ namespace RogueliteSurvivor.Systems
 
         private void createPickup(Pickup pickup, Position position)
         {
-            var entity = world.Create<PickupSprite, Position>();
-
-            entity.SetRange(new PickupSprite() { Type = pickup.Type, PickupAmount = pickup.PickupAmount },
+            world.Create(         
+                new PickupSprite() { Type = pickup.Type, PickupAmount = pickup.PickupAmount },
                 new Position() { XY = new Vector2(position.XY.X, position.XY.Y) }
             );
         }
