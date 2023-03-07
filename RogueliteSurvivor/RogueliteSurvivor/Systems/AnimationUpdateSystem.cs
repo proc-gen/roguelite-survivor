@@ -8,6 +8,10 @@ namespace RogueliteSurvivor.Systems
 {
     public class AnimationUpdateSystem : ArchSystem, IUpdateSystem
     {
+        QueryDescription burnQuery = new QueryDescription().WithAll<Burn>();
+        QueryDescription slowQuery = new QueryDescription().WithAll<Slow>();
+        QueryDescription shockQuery = new QueryDescription().WithAll<Shock>();
+
         public AnimationUpdateSystem(World world)
             : base(world, new QueryDescription()
                                 .WithAll<Animation>())
@@ -16,38 +20,38 @@ namespace RogueliteSurvivor.Systems
 
         public void Update(GameTime gameTime, float totalElapsedTime)
         {
-            world.Query(in query, (in Entity entity, ref Animation anim) =>
+            world.Query(in query, (ref Animation anim) =>
             {
-                if (entity.IsAlive())
+                anim.Count += (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
+                if (anim.Count > anim.Max)
                 {
-                    anim.Count += (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
-                    if (anim.Count > anim.Max)
+                    anim.Count = 0;
+                    if (anim.Repeatable)
                     {
-                        anim.Count = 0;
-                        if (anim.Repeatable)
-                        {
-                            anim.CurrentFrame = anim.CurrentFrame == anim.LastFrame ? anim.FirstFrame : anim.CurrentFrame + 1;
-                        }
-                        else
-                        {
-                            anim.CurrentFrame = anim.CurrentFrame == anim.LastFrame ? anim.LastFrame : anim.CurrentFrame + 1;
-                        }
-
-                        anim.Overlay = Color.White;
-                        if (entity.Has<Burn>())
-                        {
-                            anim.Overlay = Color.Orange;
-                        }
-                        else if (entity.Has<Slow>())
-                        {
-                            anim.Overlay = Color.Blue;
-                        }
-                        else if (entity.Has<Shock>())
-                        {
-                            anim.Overlay = Color.Yellow;
-                        }
+                        anim.CurrentFrame = anim.CurrentFrame == anim.LastFrame ? anim.FirstFrame : anim.CurrentFrame + 1;
                     }
+                    else
+                    {
+                        anim.CurrentFrame = anim.CurrentFrame == anim.LastFrame ? anim.LastFrame : anim.CurrentFrame + 1;
+                    }
+
+                    anim.Overlay = Color.White;
                 }
+            });
+
+            world.Query(in burnQuery, (ref Animation anim) =>
+            {
+                anim.Overlay = Color.Orange;
+            });
+
+            world.Query(in slowQuery, (ref Animation anim) =>
+            {
+                anim.Overlay = Color.Blue;
+            });
+
+            world.Query(in shockQuery, (ref Animation anim) =>
+            {
+                anim.Overlay = Color.Yellow;
             });
         }
     }
