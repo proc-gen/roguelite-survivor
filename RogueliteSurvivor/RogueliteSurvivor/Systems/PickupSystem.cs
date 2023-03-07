@@ -39,8 +39,10 @@ namespace RogueliteSurvivor.Systems
                 {
                     if (Vector2.Distance(playerPos.Value.XY, pos.XY) < (16 * radiusMultiplier))
                     {
-                        PickupHelper.ProcessPickup(ref player, sprite.Type);
-                        world.TryDestroy(entity);
+                        if (PickupHelper.ProcessPickup(ref player, sprite.Type))
+                        {
+                            world.TryDestroy(entity);
+                        }
                     }
                     else
                     {

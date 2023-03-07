@@ -10,31 +10,46 @@ namespace RogueliteSurvivor.Systems
     public class CollisionSystem : ArchSystem, IUpdateSystem
     {
         Box2D.NetStandard.Dynamics.World.World physicsWorld;
+
+        QueryDescription mainQuery = new QueryDescription().WithAll<Position, Velocity, Body>().WithNone<Slow, Shock>();
         QueryDescription singleTargetQuery = new QueryDescription()
                                                     .WithAll<SingleTarget, Body>();
+        QueryDescription slowQuery = new QueryDescription().WithAll<Slow, Position, Velocity, Body>();
+        QueryDescription shockQuery = new QueryDescription().WithAll<Shock, Position, Velocity, Body>();
+
         public CollisionSystem(World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
-            : base(world, new QueryDescription()
-                                .WithAll<Position, Velocity, Body>())
+            : base(world, new QueryDescription().WithAll<Position, Velocity, Body>())
         {
             this.physicsWorld = physicsWorld;
         }
 
         public void Update(GameTime gameTime, float totalElapsedTime)
         {
-            world.Query(in query, (in Entity entity, ref Position pos, ref Velocity vel, ref Body body) =>
+            world.Query(in mainQuery, (ref Velocity vel, ref Body body) =>
             {
                 if (float.IsNaN(vel.VectorPhysics.X) || float.IsNaN(vel.VectorPhysics.Y))
                 {
                     vel.Vector = Vector2.Zero;
                 }
-                else if (entity.Has<Slow>())
-                {
-                    vel.Vector *= 0.5f;
-                }
-                else if (entity.Has<Shock>())
+                body.SetLinearVelocity(vel.VectorPhysics / PhysicsConstants.PhysicsToPixelsRatio);
+            });
+
+            world.Query(in slowQuery, (ref Velocity vel, ref Body body) =>
+            {
+                if (float.IsNaN(vel.VectorPhysics.X) || float.IsNaN(vel.VectorPhysics.Y))
                 {
                     vel.Vector = Vector2.Zero;
                 }
+                else 
+                {
+                    vel.Vector *= 0.5f;
+                }
+                body.SetLinearVelocity(vel.VectorPhysics / PhysicsConstants.PhysicsToPixelsRatio);
+            });
+
+            world.Query(in shockQuery, (ref Velocity vel, ref Body body) =>
+            {
+                vel.Vector = Vector2.Zero;
                 body.SetLinearVelocity(vel.VectorPhysics / PhysicsConstants.PhysicsToPixelsRatio);
             });
 

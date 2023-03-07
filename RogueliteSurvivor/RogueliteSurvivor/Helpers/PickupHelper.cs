@@ -117,8 +117,9 @@ namespace RogueliteSurvivor.Helpers
             return retVal;
         }
 
-        public static void ProcessPickup(ref Entity player, PickupType pickupType)
+        public static bool ProcessPickup(ref Entity player, PickupType pickupType)
         {
+            bool destroy = true;
             float pickupAmount = GetPickupAmount(pickupType);
             switch(pickupType)
             {
@@ -153,8 +154,14 @@ namespace RogueliteSurvivor.Helpers
                         health.Current = int.Min(health.Max, (int)pickupAmount + health.Current);
                         player.Set(health);
                     }
+                    else
+                    {
+                        destroy = false;
+                    }
                     break;
             }
+
+            return destroy;
         }
 
         private static void processAttackSpeed(Entity player, float pickupAmount)
