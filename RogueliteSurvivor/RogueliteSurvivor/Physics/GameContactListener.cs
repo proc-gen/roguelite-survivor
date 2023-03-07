@@ -118,14 +118,14 @@ namespace RogueliteSurvivor.Physics
                     killCount.Count++;
                     playerExperience.TotalExperience += enemyExperience.Amount;
                     playerExperience.ExperienceToNextLevel -= enemyExperience.Amount;
-                    owner.Entity.SetRange(killCount, playerExperience);
+                    owner.Entity.Set(killCount, playerExperience);
                 }
                 else
                 {
                     Animation anim = entity.Get<Animation>();
                     anim.Overlay = Microsoft.Xna.Framework.Color.Red;
                     
-                    entity.SetRange(health, anim);
+                    entity.Set(health, anim);
                     if (damage.SpellEffect != SpellEffects.None)
                     {
                         switch (damage.SpellEffect)
@@ -218,7 +218,7 @@ namespace RogueliteSurvivor.Physics
                     entityStatus.State = State.Dead;
                 }
 
-                entity.SetRange(health, anim, entityStatus);
+                entity.Set(health, anim, entityStatus);
                 other.Set(attackSpeed);
             }
         }

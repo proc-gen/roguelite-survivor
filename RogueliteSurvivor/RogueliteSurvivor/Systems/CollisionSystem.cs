@@ -38,7 +38,7 @@ namespace RogueliteSurvivor.Systems
                 body.SetLinearVelocity(vel.VectorPhysics / PhysicsConstants.PhysicsToPixelsRatio);
             });
 
-            world.Query(in singleTargetQuery, (in Entity entity, ref SingleTarget single, ref Body body) =>
+            world.Query(in singleTargetQuery, (ref SingleTarget single, ref Body body) =>
             {
                 single.DamageStartDelay -= (float)gameTime.ElapsedGameTime.TotalSeconds;
                 single.DamageEndDelay -= (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -55,7 +55,7 @@ namespace RogueliteSurvivor.Systems
 
             physicsWorld.Step(1 / 60f, 8, 3);
 
-            world.Query(in query, (in Entity entity, ref Position pos, ref Velocity vel, ref Body body) =>
+            world.Query(in query, (ref Position pos, ref Velocity vel, ref Body body) =>
             {
                 var position = body.GetPosition();
                 pos.XY = new Vector2(position.X, position.Y) * PhysicsConstants.PhysicsToPixelsRatio;

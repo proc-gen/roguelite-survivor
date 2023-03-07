@@ -25,7 +25,7 @@ namespace RogueliteSurvivor.Systems
                 }
             });
 
-            world.Query(in query, (in Entity entity, ref Position pos, ref Velocity vel, ref Speed sp, ref Target target) =>
+            world.Query(in query, (ref Position pos, ref Velocity vel, ref Speed sp, ref Target target) =>
             {
                 vel.Vector = Vector2.Normalize(target.TargetPosition - pos.XY);
 

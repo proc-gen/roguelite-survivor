@@ -178,7 +178,7 @@ namespace RogueliteSurvivor.Systems
                 body.position = new System.Numerics.Vector2(position.X, position.Y) / PhysicsConstants.PhysicsToPixelsRatio;
                 body.fixedRotation = true;
 
-                entity.SetRange(
+                entity.Set(
                             new Enemy(),
                             new EntityStatus(),
                             new Position() { XY = new Vector2(position.X, position.Y) },
@@ -210,7 +210,7 @@ namespace RogueliteSurvivor.Systems
         {
             var entity = world.Create<PickupSprite, Position>();
 
-            entity.SetRange(new PickupSprite() { Type = pickup.Type, PickupAmount = pickup.PickupAmount },
+            entity.Set(new PickupSprite() { Type = pickup.Type, PickupAmount = pickup.PickupAmount },
                 new Position() { XY = new Vector2(position.XY.X, position.XY.Y) }
             );
         }

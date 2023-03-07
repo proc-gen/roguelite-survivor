@@ -91,7 +91,7 @@ namespace RogueliteSurvivor.Systems
             body.position = new System.Numerics.Vector2(position.X, position.Y) / PhysicsConstants.PhysicsToPixelsRatio;
             body.fixedRotation = true;
 
-            projectile.SetRange(
+            projectile.Set(
                 new Projectile(),
                 new EntityStatus(),
                 new Position() { XY = new Vector2(position.X, position.Y) },
@@ -116,7 +116,7 @@ namespace RogueliteSurvivor.Systems
 
             float radiusMultiplier = entity.Has<AreaOfEffect>() ? entity.Get<AreaOfEffect>().Radius : 1f;
 
-            singleTarget.SetRange(
+            singleTarget.Set(
                 SpellFactory.CreateSingleTarget(spellContainers[spell.Spell]),
                 new EntityStatus(),
                 new Position() { XY = target.TargetPosition },
