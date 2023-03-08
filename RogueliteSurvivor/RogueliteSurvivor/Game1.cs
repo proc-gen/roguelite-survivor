@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using RogueliteSurvivor.Containers;
 using RogueliteSurvivor.Physics;
 using RogueliteSurvivor.Scenes;
+using RogueliteSurvivor.Utils;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -61,15 +62,15 @@ namespace RogueliteSurvivor
             loadPlayableMaps();
             loadProgression();
 
-            GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers);
+            GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers, progressionContainer);
 
-            MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers);
+            MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers, progressionContainer);
             mainMenu.LoadContent();
 
-            LoadingScene loadingScene = new LoadingScene(_spriteBatch, Content, _graphics, world, physicsWorld);
+            LoadingScene loadingScene = new LoadingScene(_spriteBatch, Content, _graphics, world, physicsWorld, progressionContainer);
             loadingScene.LoadContent();
 
-            GameOverScene gameOverScene = new GameOverScene(_spriteBatch, Content, _graphics, world, physicsWorld);
+            GameOverScene gameOverScene = new GameOverScene(_spriteBatch, Content, _graphics, world, physicsWorld, progressionContainer);
             gameOverScene.LoadContent();
 
             scenes.Add("game", gameScene);
@@ -154,9 +155,11 @@ namespace RogueliteSurvivor
                     case "game-over":
                         break;
                     case "loading":
+                        GameSettings gameSettings = ((MainMenuScene)scenes["main-menu"]).GetGameSettings();
+                        ((GameOverScene)scenes["game-over"]).SetGameSettings(gameSettings);
                         Task.Run(() =>
                             {
-                                ((GameScene)scenes["game"]).SetGameSettings(((MainMenuScene)scenes["main-menu"]).GetGameSettings());
+                                ((GameScene)scenes["game"]).SetGameSettings(gameSettings);
                                 scenes["game"].LoadContent();
                             });
                         break;

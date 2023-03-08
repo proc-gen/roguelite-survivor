@@ -28,7 +28,7 @@ namespace RogueliteSurvivor.Containers
             var progressionContainer = new ProgressionContainer();
 
             progressionContainer.LevelProgressions = new List<LevelProgressionContainer>();
-            foreach (var level in progression["levelProgressions"])
+            foreach (var level in progression["LevelProgressions"])
             {
                 progressionContainer.LevelProgressions.Add(LevelProgressionContainer.ToLevelProgressionContainer(level));
             }
@@ -46,8 +46,8 @@ namespace RogueliteSurvivor.Containers
         {
             var levelProgression = new LevelProgressionContainer()
             {
-                Name = (string)level["name"],
-                BestTime = (float)level["bestTime"]
+                Name = (string)level["Name"],
+                BestTime = (float)level["BestTime"]
             };
 
             return levelProgression;

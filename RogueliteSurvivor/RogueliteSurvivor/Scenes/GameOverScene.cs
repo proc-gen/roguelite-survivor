@@ -4,8 +4,11 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using RogueliteSurvivor.Components;
+using RogueliteSurvivor.Containers;
+using RogueliteSurvivor.Utils;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace RogueliteSurvivor.Scenes
 {
@@ -16,8 +19,11 @@ namespace RogueliteSurvivor.Scenes
 
         private QueryDescription queryDescription;
 
-        public GameOverScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
-            : base(spriteBatch, contentManager, graphics, world, physicsWorld)
+        private GameSettings gameSettings;
+        private bool saved = false;
+
+        public GameOverScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, ProgressionContainer progressionContainer)
+            : base(spriteBatch, contentManager, graphics, world, physicsWorld, progressionContainer)
         {
             queryDescription = new QueryDescription()
                                     .WithAll<Player, KillCount>();
@@ -33,13 +39,28 @@ namespace RogueliteSurvivor.Scenes
             Loaded = true;
         }
 
+        public void SetGameSettings(GameSettings gameSettings)
+        {
+            this.gameSettings = gameSettings;
+        }
+
         public override string Update(GameTime gameTime, params object[] values)
         {
             string retVal = string.Empty;
 
+            if (!saved)
+            {
+                var level = progressionContainer.LevelProgressions.Where(a => a.Name == gameSettings.MapName).FirstOrDefault();
+                level.BestTime = 11;
+
+                progressionContainer.Save();
+                saved = true;
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.Space) || GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed)
             {
                 retVal = "main-menu";
+                saved = false;
             }
 
             return retVal;

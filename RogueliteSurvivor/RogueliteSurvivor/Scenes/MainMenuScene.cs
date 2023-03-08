@@ -31,8 +31,8 @@ namespace RogueliteSurvivor.Scenes
         private CreditsContainer creditsContainer = null;
 
 
-        public MainMenuScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers, Dictionary<string, MapContainer> mapContainers)
-            : base(spriteBatch, contentManager, graphics, world, physicsWorld)
+        public MainMenuScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers, Dictionary<string, MapContainer> mapContainers, ProgressionContainer progressionContainer)
+            : base(spriteBatch, contentManager, graphics, world, physicsWorld, progressionContainer)
         {
             this.playerContainers = playerContainers;
             this.mapContainers = mapContainers.Values.ToList();
