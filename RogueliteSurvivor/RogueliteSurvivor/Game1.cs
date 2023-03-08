@@ -26,6 +26,7 @@ namespace RogueliteSurvivor
         Dictionary<string, Scene> scenes = new Dictionary<string, Scene>();
         Dictionary<string, PlayerContainer> playerCharacters = new Dictionary<string, PlayerContainer>();
         Dictionary<string, MapContainer> mapContainers = new Dictionary<string, MapContainer>();
+        ProgressionContainer progressionContainer = null;
         string currentScene = "main-menu";
         string nextScene = string.Empty;
 
@@ -58,6 +59,7 @@ namespace RogueliteSurvivor
 
             loadPlayerCharacters();
             loadPlayableMaps();
+            loadProgression();
 
             GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers);
 
@@ -101,6 +103,31 @@ namespace RogueliteSurvivor
                     MapContainer.MapContainerName(map),
                     MapContainer.ToMapContainer(map)
                 );
+            }
+        }
+
+        private void loadProgression()
+        {
+            if(!File.Exists(Path.Combine("Saves", "savegame.json")))
+            {
+                progressionContainer = new ProgressionContainer();
+                progressionContainer.LevelProgressions = new List<LevelProgressionContainer>();
+                
+                foreach(var map in mapContainers)
+                {
+                    progressionContainer.LevelProgressions.Add(new LevelProgressionContainer()
+                    {
+                        Name = map.Key,
+                        BestTime = 0
+                    });
+                }
+
+                progressionContainer.Save();
+            }
+            else
+            {
+                JObject progression = JObject.Parse(File.ReadAllText(Path.Combine("Saves", "savegame.json")));
+                progressionContainer = ProgressionContainer.ToProgressionContainer(progression);
             }
         }
 
