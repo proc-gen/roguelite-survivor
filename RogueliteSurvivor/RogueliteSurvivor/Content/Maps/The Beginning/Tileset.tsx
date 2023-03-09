@@ -8943,12 +8943,12 @@
  </tile>
  <tile id="1788">
   <properties>
-   <property name="Passable" type="bool" value="false"/>
+   <property name="Passable" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="1789">
   <properties>
-   <property name="Passable" type="bool" value="false"/>
+   <property name="Passable" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="1790">
