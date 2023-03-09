@@ -7,6 +7,7 @@ namespace RogueliteSurvivor.Containers
     {
         public EnemyContainer() { }
         public string Name { get; set; }
+        public string ReadableName { get; set; }
         public int Health { get; set; }
         public int Damage { get; set; }
         public float Speed { get; set; }
@@ -27,6 +28,7 @@ namespace RogueliteSurvivor.Containers
             return new EnemyContainer()
             {
                 Name = (string)enemy["name"],
+                ReadableName = (string)enemy["readableName"],
                 Health = (int)enemy["health"],
                 Damage = (int)enemy["damage"],
                 Speed = (float)enemy["speed"],

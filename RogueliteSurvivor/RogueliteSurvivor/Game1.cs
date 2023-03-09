@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using RogueliteSurvivor.Containers;
 using RogueliteSurvivor.Physics;
 using RogueliteSurvivor.Scenes;
+using RogueliteSurvivor.Utils;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace RogueliteSurvivor
         Dictionary<string, Scene> scenes = new Dictionary<string, Scene>();
         Dictionary<string, PlayerContainer> playerCharacters = new Dictionary<string, PlayerContainer>();
         Dictionary<string, MapContainer> mapContainers = new Dictionary<string, MapContainer>();
+        ProgressionContainer progressionContainer = null;
         string currentScene = "main-menu";
         string nextScene = string.Empty;
 
@@ -58,16 +60,17 @@ namespace RogueliteSurvivor
 
             loadPlayerCharacters();
             loadPlayableMaps();
+            loadProgression();
 
-            GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers);
+            GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers, progressionContainer);
 
-            MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers);
+            MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers, progressionContainer);
             mainMenu.LoadContent();
 
-            LoadingScene loadingScene = new LoadingScene(_spriteBatch, Content, _graphics, world, physicsWorld);
+            LoadingScene loadingScene = new LoadingScene(_spriteBatch, Content, _graphics, world, physicsWorld, progressionContainer);
             loadingScene.LoadContent();
 
-            GameOverScene gameOverScene = new GameOverScene(_spriteBatch, Content, _graphics, world, physicsWorld);
+            GameOverScene gameOverScene = new GameOverScene(_spriteBatch, Content, _graphics, world, physicsWorld, progressionContainer, mapContainers);
             gameOverScene.LoadContent();
 
             scenes.Add("game", gameScene);
@@ -104,6 +107,31 @@ namespace RogueliteSurvivor
             }
         }
 
+        private void loadProgression()
+        {
+            if(!File.Exists(Path.Combine("Saves", "savegame.json")))
+            {
+                progressionContainer = new ProgressionContainer();
+                progressionContainer.LevelProgressions = new List<LevelProgressionContainer>();
+                
+                foreach(var map in mapContainers)
+                {
+                    progressionContainer.LevelProgressions.Add(new LevelProgressionContainer()
+                    {
+                        Name = map.Key,
+                        BestTime = 0
+                    });
+                }
+
+                progressionContainer.Save();
+            }
+            else
+            {
+                JObject progression = JObject.Parse(File.ReadAllText(Path.Combine("Saves", "savegame.json")));
+                progressionContainer = ProgressionContainer.ToProgressionContainer(progression);
+            }
+        }
+
         protected override void Update(GameTime gameTime)
         {
             switch (currentScene)
@@ -125,11 +153,15 @@ namespace RogueliteSurvivor
                     case "main-menu":
                         break;
                     case "game-over":
+                        GameStats gameStats = ((GameScene)scenes["game"]).GetGameStats();
+                        ((GameOverScene)scenes["game-over"]).SetGameStats(gameStats);
                         break;
                     case "loading":
+                        GameSettings gameSettings = ((MainMenuScene)scenes["main-menu"]).GetGameSettings();
+                        ((GameOverScene)scenes["game-over"]).SetGameSettings(gameSettings);
                         Task.Run(() =>
                             {
-                                ((GameScene)scenes["game"]).SetGameSettings(((MainMenuScene)scenes["main-menu"]).GetGameSettings());
+                                ((GameScene)scenes["game"]).SetGameSettings(gameSettings);
                                 scenes["game"].LoadContent();
                             });
                         break;

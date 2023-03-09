@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RogueliteSurvivor.Containers;
 using System.Collections.Generic;
 using System.IO;
 
@@ -17,8 +18,8 @@ namespace RogueliteSurvivor.Scenes
         private string[] dots = new string[4] { "", ".", "..", "..." };
         private int doot = 0;
 
-        public LoadingScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld)
-            : base(spriteBatch, contentManager, graphics, world, physicsWorld)
+        public LoadingScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, ProgressionContainer progressionContainer)
+            : base(spriteBatch, contentManager, graphics, world, physicsWorld, progressionContainer)
         {
         }
 
