@@ -28,6 +28,7 @@ namespace RogueliteSurvivor.Scenes
 
         private Dictionary<string, PlayerContainer> playerContainers;
         private List<MapContainer> mapContainers;
+        private List<MapContainer> unlockedMaps;
         private CreditsContainer creditsContainer = null;
 
 
@@ -138,6 +139,7 @@ namespace RogueliteSurvivor.Scenes
                         }
 
                         state = MainMenuState.MapSelection;
+                        setUnlockedMaps();
                         readyForInput = false;
                     }
                     else if (kState.IsKeyDown(Keys.Left) || gState.DPad.Left == ButtonState.Pressed || gState.ThumbSticks.Left.X < -0.5f)
@@ -171,23 +173,23 @@ namespace RogueliteSurvivor.Scenes
                         state = MainMenuState.CharacterSelection;
                         readyForInput = false;
                     }
-                    else if (mapContainers.Count > 1) 
+                    else if (unlockedMaps.Count > 1) 
                     {
                         if (kState.IsKeyDown(Keys.Up) || gState.DPad.Up == ButtonState.Pressed || gState.ThumbSticks.Left.Y > 0.5f)
                         {
-                            if (selectedMap != mapContainers[0].Name)
+                            if (selectedMap != unlockedMaps[0].Name)
                             {
-                                int index = mapContainers.IndexOf(mapContainers.Where(a => a.Name == selectedMap).First()) - 1;
-                                selectedMap = mapContainers[index].Name;
+                                int index = unlockedMaps.IndexOf(unlockedMaps.Where(a => a.Name == selectedMap).First()) - 1;
+                                selectedMap = unlockedMaps[index].Name;
                             }
                             readyForInput = false;
                         }
                         else if (kState.IsKeyDown(Keys.Down) || gState.DPad.Down == ButtonState.Pressed || gState.ThumbSticks.Left.Y < -0.5f)
                         {
-                            if (selectedMap != mapContainers.Last().Name)
+                            if (selectedMap != unlockedMaps.Last().Name)
                             {
-                                int index = mapContainers.IndexOf(mapContainers.Where(a => a.Name == selectedMap).First()) + 1;
-                                selectedMap = mapContainers[index].Name;
+                                int index = unlockedMaps.IndexOf(unlockedMaps.Where(a => a.Name == selectedMap).First()) + 1;
+                                selectedMap = unlockedMaps[index].Name;
                             }
                             readyForInput = false;
                         }
@@ -330,7 +332,7 @@ namespace RogueliteSurvivor.Scenes
                 );
 
                 int counter = 0;
-                foreach(var map in mapContainers)
+                foreach(var map in unlockedMaps)
                 {
                     _spriteBatch.DrawString(
                         fonts["Font"],
@@ -417,6 +419,31 @@ namespace RogueliteSurvivor.Scenes
             };
 
             return gameSettings;
+        }
+
+        private void setUnlockedMaps()
+        {
+            unlockedMaps = new List<MapContainer>();
+
+            foreach(MapContainer map in mapContainers ) 
+            {
+                bool canAdd = false;
+                switch (map.UnlockRequirement.MapUnlockType)
+                {
+                    case MapUnlockType.None:
+                        canAdd = true;
+                        break;
+                    case MapUnlockType.MapBestTime:
+                        var levelProgression = progressionContainer.LevelProgressions.Where(a => a.Name == map.UnlockRequirement.RequirementText).FirstOrDefault();
+                        canAdd = levelProgression != null && levelProgression.BestTime >= map.UnlockRequirement.RequirementAmount;
+                        break;
+                }
+
+                if (canAdd)
+                {
+                    unlockedMaps.Add(map);
+                }
+            }
         }
     }
 }

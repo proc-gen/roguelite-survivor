@@ -37,6 +37,7 @@ namespace RogueliteSurvivor.Scenes
             fonts = new Dictionary<string, SpriteFont>()
             {
                 { "Font", Content.Load<SpriteFont>(Path.Combine("Fonts", "Font")) },
+                { "FontSmall", Content.Load<SpriteFont>(Path.Combine("Fonts", "FontSmall")) },
             };
 
             Loaded = true;
@@ -82,14 +83,14 @@ namespace RogueliteSurvivor.Scenes
             _spriteBatch.DrawString(
                 fonts["Font"],
                string.Concat(getProperArticle(gameStats.Killer), gameStats.Killer, " pummeled you into oblivion..."),
-                new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6),
+                new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 - 64),
                 Color.White
             );
 
             _spriteBatch.DrawString(
                 fonts["Font"],
                string.Concat("You killed ", gameStats.EnemiesKilled, " enemies in ", float.Round(gameStats.PlayTime, 2), " seconds!"),
-                new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 32),
+                new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 - 32),
                 Color.White
             );
 
@@ -98,14 +99,14 @@ namespace RogueliteSurvivor.Scenes
                 _spriteBatch.DrawString(
                     fonts["Font"],
                    string.Concat("New best time for ", gameSettings.MapName,"!"),
-                    new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 64),
+                    new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6),
                     Color.White
                 );
             }
             
 
             _spriteBatch.DrawString(
-                fonts["Font"],
+                fonts["FontSmall"],
                 "Press Space on the keyboard or Start on the controller to return to the main menu",
                 new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 96),
                 Color.White

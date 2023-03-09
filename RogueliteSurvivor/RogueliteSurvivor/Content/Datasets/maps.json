@@ -7,6 +7,9 @@
       "tilesetImages": [ "Tileset" ],
       "startingX": 384,
       "startingY": 752,
+      "mapUnlockRequirement": {
+        "mapUnlockType": "None"
+      },
       "spawnableAreas": [
         {
           "spawnMinX": 32,
@@ -40,6 +43,11 @@
       "tilesetImages": [ "Tileset", "WallTops" ],
       "startingX": 384,
       "startingY": 592,
+      "mapUnlockRequirement": {
+        "mapUnlockType": "MapBestTime",
+        "requirementText": "The Beginning",
+        "requirementAmount": 60
+      },
       "spawnableAreas": [
         {
           "spawnMinX": 32,

@@ -13,6 +13,7 @@ namespace RogueliteSurvivor.Containers
         public string MapFilename { get; set; }
         public string[] TilesetImages { get; set; }
         public Vector2 Start { get; set; }
+        public MapUnlockRequirementContainer UnlockRequirement { get; set; }
         public List<SpawnableAreaContainer> Spawnables { get; set; }
         public List<EnemyWavesContainer> EnemyWaves { get; set; }
 
@@ -31,6 +32,7 @@ namespace RogueliteSurvivor.Containers
                 MapFilename = (string)map["mapFilename"],
                 TilesetImages = getTilesetImages(map),
                 Start = new Vector2((int)map["startingX"], (int)map["startingY"]),
+                UnlockRequirement = MapUnlockRequirementContainer.ToMapUnlockRequirementContainer(map["mapUnlockRequirement"]),
                 Spawnables = SpawnableAreaContainer.ToSpawnableAreaContainer(map["spawnableAreas"]),
                 EnemyWaves = EnemyWavesContainer.ToEnemyWavesContainers(map["enemyWaves"])
             };
@@ -73,6 +75,27 @@ namespace RogueliteSurvivor.Containers
             }
 
             return spawnableAreaContainers;
+        }
+    }
+
+    public class MapUnlockRequirementContainer
+    {
+        public MapUnlockType MapUnlockType { get; set; }
+        public string RequirementText { get; set; }
+        public float RequirementAmount { get; set; }
+
+        public static MapUnlockRequirementContainer ToMapUnlockRequirementContainer(JToken mapUnlock)
+        {
+            var mapUnlockContainer = new MapUnlockRequirementContainer();
+
+            mapUnlockContainer.MapUnlockType = mapUnlock["mapUnlockType"].ToObject<MapUnlockType>();
+            if(mapUnlockContainer.MapUnlockType != MapUnlockType.None)
+            {
+                mapUnlockContainer.RequirementText = (string)mapUnlock["requirementText"];
+                mapUnlockContainer.RequirementAmount = (float)mapUnlock["requirementAmount"];
+            }
+
+            return mapUnlockContainer;
         }
     }
 }
