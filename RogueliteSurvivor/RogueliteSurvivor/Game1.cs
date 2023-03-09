@@ -70,7 +70,7 @@ namespace RogueliteSurvivor
             LoadingScene loadingScene = new LoadingScene(_spriteBatch, Content, _graphics, world, physicsWorld, progressionContainer);
             loadingScene.LoadContent();
 
-            GameOverScene gameOverScene = new GameOverScene(_spriteBatch, Content, _graphics, world, physicsWorld, progressionContainer);
+            GameOverScene gameOverScene = new GameOverScene(_spriteBatch, Content, _graphics, world, physicsWorld, progressionContainer, mapContainers);
             gameOverScene.LoadContent();
 
             scenes.Add("game", gameScene);

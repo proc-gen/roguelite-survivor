@@ -18,18 +18,18 @@ namespace RogueliteSurvivor.Scenes
         private Dictionary<string, Texture2D> textures;
         private Dictionary<string, SpriteFont> fonts;
 
-        private QueryDescription queryDescription;
+        private Dictionary<string, MapContainer> mapContainers;
 
         private GameSettings gameSettings;
         private GameStats gameStats;
         private bool saved = false;
         private bool newBest = false;
+        private MapContainer unlockedMap;
 
-        public GameOverScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, ProgressionContainer progressionContainer)
+        public GameOverScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, ProgressionContainer progressionContainer, Dictionary<string, MapContainer> mapContainers)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld, progressionContainer)
         {
-            queryDescription = new QueryDescription()
-                                    .WithAll<Player, KillCount>();
+            this.mapContainers = mapContainers;
         }
 
         public override void LoadContent()
@@ -59,11 +59,25 @@ namespace RogueliteSurvivor.Scenes
 
             if (!saved)
             {
+                unlockedMap = null;
                 var level = progressionContainer.LevelProgressions.Where(a => a.Name == gameSettings.MapName).FirstOrDefault();
                 newBest = gameStats.PlayTime > level.BestTime;
-                level.BestTime = MathF.Max(gameStats.PlayTime, level.BestTime);
 
-                progressionContainer.Save();
+                if (newBest)
+                {                    
+                    unlockedMap = mapContainers.Values.Where(a => a.UnlockRequirement.MapUnlockType == Constants.MapUnlockType.MapBestTime 
+                                                                    && a.UnlockRequirement.RequirementText == gameSettings.MapName
+                                                                    && a.UnlockRequirement.RequirementAmount <= gameStats.PlayTime).FirstOrDefault();
+
+                    if(unlockedMap != null && level.BestTime >= unlockedMap.UnlockRequirement.RequirementAmount)
+                    {
+                        unlockedMap = null;
+                    }
+
+                    level.BestTime = MathF.Max(gameStats.PlayTime, level.BestTime);
+                    progressionContainer.Save();
+                }
+                
                 saved = true;
             }
 
@@ -100,6 +114,16 @@ namespace RogueliteSurvivor.Scenes
                     fonts["Font"],
                    string.Concat("New best time for ", gameSettings.MapName,"!"),
                     new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6),
+                    Color.White
+                );
+            }
+
+            if(unlockedMap != null)
+            {
+                _spriteBatch.DrawString(
+                    fonts["Font"],
+                   string.Concat("You've unlocked ", unlockedMap.Name, "!"),
+                    new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 32),
                     Color.White
                 );
             }
