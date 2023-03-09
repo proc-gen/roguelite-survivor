@@ -64,6 +64,17 @@ namespace RogueliteSurvivor.Scenes
             this.gameSettings = gameSettings;
         }
 
+        public GameStats GetGameStats()
+        {
+            var stats = new GameStats();
+
+            stats.EnemiesKilled = player.Get<KillCount>().Count;
+            stats.Killer = enemyContainers[player.Get<KillCount>().KillerName].ReadableName;
+            stats.PlayTime = totalGameTime;
+
+            return stats;
+        }
+
         public override void LoadContent()
         {
             resetWorld();

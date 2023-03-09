@@ -215,6 +215,10 @@ namespace RogueliteSurvivor.Physics
 
                 if (health.Current < 1)
                 {
+                    var killCount = entity.Get<KillCount>();
+                    killCount.KillerName = other.Get<SpriteSheet>().TextureName;
+                    entity.Set(killCount);
+
                     entityStatus.State = State.Dead;
                 }
 

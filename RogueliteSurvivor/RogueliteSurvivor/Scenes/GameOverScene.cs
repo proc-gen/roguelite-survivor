@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Containers;
 using RogueliteSurvivor.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,7 +21,9 @@ namespace RogueliteSurvivor.Scenes
         private QueryDescription queryDescription;
 
         private GameSettings gameSettings;
+        private GameStats gameStats;
         private bool saved = false;
+        private bool newBest = false;
 
         public GameOverScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, ProgressionContainer progressionContainer)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld, progressionContainer)
@@ -44,6 +47,11 @@ namespace RogueliteSurvivor.Scenes
             this.gameSettings = gameSettings;
         }
 
+        public void SetGameStats(GameStats gameStats)
+        {
+            this.gameStats = gameStats;
+        }
+
         public override string Update(GameTime gameTime, params object[] values)
         {
             string retVal = string.Empty;
@@ -51,7 +59,8 @@ namespace RogueliteSurvivor.Scenes
             if (!saved)
             {
                 var level = progressionContainer.LevelProgressions.Where(a => a.Name == gameSettings.MapName).FirstOrDefault();
-                level.BestTime = 11;
+                newBest = gameStats.PlayTime > level.BestTime;
+                level.BestTime = MathF.Max(gameStats.PlayTime, level.BestTime);
 
                 progressionContainer.Save();
                 saved = true;
@@ -72,18 +81,28 @@ namespace RogueliteSurvivor.Scenes
 
             _spriteBatch.DrawString(
                 fonts["Font"],
-               "Oh snap, the bats killed you!",
+               string.Concat(getProperArticle(gameStats.Killer), gameStats.Killer, " pummeled you into oblivion..."),
                 new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6),
                 Color.White
             );
 
             _spriteBatch.DrawString(
                 fonts["Font"],
-               string.Concat("Enemies Killed: ", getPlayerKillCount().Count),
+               string.Concat("You killed ", gameStats.EnemiesKilled, " enemies in ", float.Round(gameStats.PlayTime, 2), " seconds!"),
                 new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 32),
                 Color.White
             );
 
+            if (newBest)
+            {
+                _spriteBatch.DrawString(
+                    fonts["Font"],
+                   string.Concat("New best time for ", gameSettings.MapName,"!"),
+                    new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 64),
+                    Color.White
+                );
+            }
+            
 
             _spriteBatch.DrawString(
                 fonts["Font"],
@@ -95,14 +114,14 @@ namespace RogueliteSurvivor.Scenes
             _spriteBatch.End();
         }
 
-        private KillCount getPlayerKillCount()
+        private string getProperArticle(string enemyName)
         {
-            KillCount playerKillCount = new KillCount();
-            world.Query(in queryDescription, (ref KillCount killCount) =>
+            if (enemyName.StartsWith('A') || enemyName.StartsWith('E') || enemyName.StartsWith('I') || enemyName.StartsWith('O') || enemyName.StartsWith('U'))
             {
-                playerKillCount.Count = killCount.Count;
-            });
-            return playerKillCount;
+                return "An ";
+            }
+
+            return "A ";
         }
     }
 }

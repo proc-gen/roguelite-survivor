@@ -153,6 +153,8 @@ namespace RogueliteSurvivor
                     case "main-menu":
                         break;
                     case "game-over":
+                        GameStats gameStats = ((GameScene)scenes["game"]).GetGameStats();
+                        ((GameOverScene)scenes["game-over"]).SetGameStats(gameStats);
                         break;
                     case "loading":
                         GameSettings gameSettings = ((MainMenuScene)scenes["main-menu"]).GetGameSettings();
