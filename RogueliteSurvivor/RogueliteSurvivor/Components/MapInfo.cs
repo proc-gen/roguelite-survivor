@@ -4,6 +4,7 @@ using Box2D.NetStandard.Dynamics.Bodies;
 using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Containers;
 using RogueliteSurvivor.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TiledCS;
@@ -30,15 +31,22 @@ namespace RogueliteSurvivor.Components
                 for (int x = 0; x < Map.Width; x++)
                 {
                     bool passable = true;
+                    bool fullHeight = true;
                     foreach (var layer in tileLayers)
                     {
                         if (layer.properties[0].value == "true")
                         {
                             var tile = getTile(layer, x, y);
 
-                            if (tile != null && tile.properties[0].value == "false")
+                            if (tile != null)
                             {
-                                passable = false;
+                                passable = !(tile.properties.Where(a => a.name == "Passable").First().value == "false");
+                                fullHeight = (tile.properties.Where(a => a.name == "Full Height").First().value == "true");
+
+                                if(!fullHeight)
+                                {
+                                    Console.WriteLine();
+                                }
                             }
                         }
                     }
@@ -80,7 +88,7 @@ namespace RogueliteSurvivor.Components
                     {
                         var tile = getTile(layer, x / Map.TileWidth, y / Map.TileHeight);
 
-                        if (tile != null && tile.properties[0].value == "false")
+                        if (tile != null && tile.properties.Where(a => a.name == "Passable").First().value == "false")
                         {
                             passable = false;
                         }
@@ -89,6 +97,26 @@ namespace RogueliteSurvivor.Components
             }
 
             return passable;
+        }
+
+        public bool IsTileFullHeight(int x, int y)
+        {
+            bool fullHeight = true;
+            var tileLayers = Map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
+            
+                foreach (var layer in tileLayers)
+                {
+                    if (layer.properties[0].value == "true")
+                    {
+                        var tile = getTile(layer, x / Map.TileWidth, y / Map.TileHeight);
+
+                        if (tile != null && tile.properties.Where(a => a.name == "Full Height").First().value == "false")
+                        {
+                            fullHeight = false;
+                        }
+                    }
+                }
+            return fullHeight;
         }
 
         private TiledTile getTile(TiledLayer layer, int x, int y)
