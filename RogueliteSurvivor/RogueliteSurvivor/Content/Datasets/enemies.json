@@ -1,6 +1,144 @@
 {
   "data": [
     {
+      "name": "RoyalScarab",
+      "readableName": "Royal Scarab",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 14,
+      "experience": 1,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "SandGhoul",
+      "readableName": "Sand Ghoul",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 14,
+      "experience": 1,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "BoundCadaver",
+      "readableName": "Bound Cadaver",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 14,
+      "experience": 1,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "DustyShambler",
+      "readableName": "Dusty Shambler",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 14,
+      "experience": 1,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "UnwrappedLurcher",
+      "readableName": "Unwrapped Lurcher",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 14,
+      "experience": 1,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "RottingArcher",
+      "readableName": "Rotting Archer",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 14,
+      "experience": 1,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
       "name": "VampireBat",
       "readableName": "Vampire Bat",
       "health": 10,
@@ -70,6 +208,213 @@
       }
     },
     {
+      "name": "DecrepitBones",
+      "readableName": "Decrepit Bones",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 14,
+      "experience": 1,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "BonySoldier",
+      "readableName": "Bony Soldier",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 14,
+      "experience": 1,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "AncientFighter",
+      "readableName": "Ancient Fighter",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 14,
+      "experience": 1,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "DismemberedCrawler",
+      "readableName": "Dismembered Crawler",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 14,
+      "experience": 1,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "CarcassFeeder",
+      "readableName": "Carcass Feeder",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 14,
+      "experience": 1,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "ToxicHound",
+      "readableName": "Toxic Hound",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 14,
+      "experience": 1,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "SkitteringHand",
+      "readableName": "Skittering Hand",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 14,
+      "experience": 1,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "MutilatedStumbler",
+      "readableName": "Mutilated Stumbler",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 14,
+      "experience": 1,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "CorpseWalker",
+      "readableName": "Corpse Walker",
+      "health": 10,
+      "damage": 2,
+      "speed": 50,
+      "spell": "EnemyMelee",
+      "width": 14,
+      "experience": 1,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 3,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 4,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
       "name": "BloodLich",
       "readableName": "Blood Lich",
       "health": 100,
@@ -87,6 +432,29 @@
       },
       "spriteSheet": {
         "framesPerRow": 10,
+        "framesPerColumn": 2,
+        "rotation": "none",
+        "scale": 1
+      }
+    },
+    {
+      "name": "TimewordPharoah",
+      "readableName": "Timeword Pharoah",
+      "health": 100,
+      "damage": 10,
+      "speed": 25,
+      "spell": "EnemyMelee",
+      "width": 28,
+      "experience": 10,
+      "animation": {
+        "firstFrame": 0,
+        "lastFrame": 7,
+        "playbackSpeed": 0.1,
+        "numDirections": 2,
+        "repeatable": true
+      },
+      "spriteSheet": {
+        "framesPerRow": 8,
         "framesPerColumn": 2,
         "rotation": "none",
         "scale": 1
