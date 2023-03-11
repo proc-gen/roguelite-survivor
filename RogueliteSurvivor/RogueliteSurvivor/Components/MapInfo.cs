@@ -7,6 +7,7 @@ using RogueliteSurvivor.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using TiledCS;
 
 namespace RogueliteSurvivor.Components
@@ -31,6 +32,7 @@ namespace RogueliteSurvivor.Components
                 for (int x = 0; x < Map.Width; x++)
                 {
                     bool passable = true;
+                    string collisionShape = "SQ";
                     foreach (var layer in tileLayers)
                     {
                         if (layer.properties[0].value == "true")
@@ -40,6 +42,7 @@ namespace RogueliteSurvivor.Components
                             if (tile != null)
                             {
                                 passable = !(tile.properties.Where(a => a.name == "Passable").First().value == "false");
+                                collisionShape = tile.properties.Where(a => a.name == "Collision Shape").First().value;
                             }
                         }
                     }
@@ -50,13 +53,13 @@ namespace RogueliteSurvivor.Components
                         int tileY = y * Map.TileHeight + Map.TileHeight / 2;
 
                         var body = new BodyDef();
-                        body.position = new System.Numerics.Vector2(tileX, tileY) / PhysicsConstants.PhysicsToPixelsRatio;
+                        body.position = new Vector2(tileX, tileY) / PhysicsConstants.PhysicsToPixelsRatio;
                         body.fixedRotation = true;
                         body.type = BodyType.Static;
 
 
                         var bodyShape = new Box2D.NetStandard.Dynamics.Fixtures.FixtureDef();
-                        bodyShape.shape = new PolygonShape((Map.TileWidth - 1f) / 2f / PhysicsConstants.PhysicsToPixelsRatio, (Map.TileHeight - 1f) / 2f / PhysicsConstants.PhysicsToPixelsRatio);
+                        bodyShape.shape = getTileShape(Map.TileWidth, Map.TileHeight, collisionShape);
                         bodyShape.density = 1;
                         bodyShape.friction = 0.0f;
 
@@ -121,6 +124,35 @@ namespace RogueliteSurvivor.Components
             var tileset = Tilesets[mapTileset.firstgid];
 
             return Map.GetTiledTile(mapTileset, tileset, gid);
+        }
+
+        private PolygonShape getTileShape(int tileWidth, int tileHeight, string collisionShape)
+        {
+            PolygonShape shape = null;
+            float hx = tileWidth / 2f / PhysicsConstants.PhysicsToPixelsRatio;
+            float hy = tileHeight / 2f / PhysicsConstants.PhysicsToPixelsRatio;
+
+            switch (collisionShape)
+            {
+                case "SQ":
+                    shape = new PolygonShape(hx, hy);
+                    break;
+                case "SE":
+                    shape = new PolygonShape(new Vector2(0f - hx, 0f - hy), new Vector2(hx, 0f - hy), new Vector2(0f - hx, hy));
+                    break;
+                case "NE":
+                    shape = new PolygonShape(new Vector2(0f - hx, 0f - hy), new Vector2(hx, hy), new Vector2(0f - hx, hy));
+                    break;
+                case "NW":
+                    shape = new PolygonShape(new Vector2(hx, 0f - hy), new Vector2(hx, hy), new Vector2(0f - hx, hy));
+                    break;
+                case "SW":
+                    shape = new PolygonShape(new Vector2(hx, 0f - hy), new Vector2(hx, hy), new Vector2(0f - hx, 0f - hy));
+                    break;
+            }
+
+
+            return shape;
         }
     }
 }
