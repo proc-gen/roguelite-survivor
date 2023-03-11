@@ -284,56 +284,56 @@
  <tile id="40">
   <properties>
    <property name="Collision Shape" value="SQ"/>
-   <property name="Full Height" type="bool" value="true"/>
+   <property name="Full Height" type="bool" value="false"/>
    <property name="Passable" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="41">
   <properties>
    <property name="Collision Shape" value="SQ"/>
-   <property name="Full Height" type="bool" value="true"/>
+   <property name="Full Height" type="bool" value="false"/>
    <property name="Passable" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="42">
   <properties>
    <property name="Collision Shape" value="SQ"/>
-   <property name="Full Height" type="bool" value="true"/>
+   <property name="Full Height" type="bool" value="false"/>
    <property name="Passable" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="43">
   <properties>
    <property name="Collision Shape" value="SQ"/>
-   <property name="Full Height" type="bool" value="true"/>
+   <property name="Full Height" type="bool" value="false"/>
    <property name="Passable" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="44">
   <properties>
    <property name="Collision Shape" value="SQ"/>
-   <property name="Full Height" type="bool" value="true"/>
+   <property name="Full Height" type="bool" value="false"/>
    <property name="Passable" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="45">
   <properties>
    <property name="Collision Shape" value="SQ"/>
-   <property name="Full Height" type="bool" value="true"/>
+   <property name="Full Height" type="bool" value="false"/>
    <property name="Passable" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="46">
   <properties>
    <property name="Collision Shape" value="SQ"/>
-   <property name="Full Height" type="bool" value="true"/>
+   <property name="Full Height" type="bool" value="false"/>
    <property name="Passable" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="47">
   <properties>
    <property name="Collision Shape" value="SQ"/>
-   <property name="Full Height" type="bool" value="true"/>
+   <property name="Full Height" type="bool" value="false"/>
    <property name="Passable" type="bool" value="false"/>
   </properties>
  </tile>

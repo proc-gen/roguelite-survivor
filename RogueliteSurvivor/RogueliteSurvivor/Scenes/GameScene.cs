@@ -350,7 +350,11 @@ namespace RogueliteSurvivor.Scenes
                         stateChangeTime = 0f;
                         playerInfo.Level++;
                         playerInfo.ExperienceToNextLevel += ExperienceHelper.ExperienceRequiredForLevel(playerInfo.Level + 1);
-                        player.Set(playerInfo);
+                        var playerHealth = player.Get<Health>();
+                        playerHealth.Max += 5;
+                        playerHealth.Current = playerHealth.Max;
+                        
+                        player.Set(playerInfo, playerHealth);
 
                         gameState = GameState.LevelUp;
 

@@ -102,7 +102,7 @@ namespace RogueliteSurvivor.Systems
                 new Damage() { Amount = spell.CurrentDamage, BaseAmount = spell.CurrentDamage, SpellEffect = effect },
                 new Owner() { Entity = entity },
                 new Pierce(entity.Has<Pierce>() ? entity.Get<Pierce>().Num : 0),
-                BodyFactory.CreateCircularBody(projectile, 16, physicsWorld, body, .1f)
+                BodyFactory.CreateCircularBody(projectile, 14, physicsWorld, body, .1f)
             );
         }
 
