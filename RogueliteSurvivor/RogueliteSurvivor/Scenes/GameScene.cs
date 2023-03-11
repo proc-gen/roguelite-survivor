@@ -272,7 +272,7 @@ namespace RogueliteSurvivor.Scenes
                 SpellFactory.CreateSpell<Spell2>(spellContainers[playerContainers[gameSettings.PlayerName].SecondarySpell]),
                 new Health() { Current = playerContainers[gameSettings.PlayerName].Health, Max = playerContainers[gameSettings.PlayerName].Health },
                 new KillCount() { Count = 0 },
-                BodyFactory.CreateCircularBody(player, 16, physicsWorld, body, 99)
+                BodyFactory.CreateCircularBody(player, 14, physicsWorld, body, 99)
             );
         }
 

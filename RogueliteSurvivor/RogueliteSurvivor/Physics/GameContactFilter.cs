@@ -3,6 +3,8 @@ using Arch.Core.Extensions;
 using Box2D.NetStandard.Dynamics.Fixtures;
 using Box2D.NetStandard.Dynamics.World.Callbacks;
 using RogueliteSurvivor.Components;
+using RogueliteSurvivor.Constants;
+using System.Numerics;
 
 namespace RogueliteSurvivor.Physics
 {
@@ -16,7 +18,27 @@ namespace RogueliteSurvivor.Physics
 
             if (a.Has<Map>() || b.Has<Map>())
             {
-                retVal = true;
+                if (a.Has<Projectile>() || b.Has<Projectile>())
+                {
+                    Vector2 position;
+                    MapInfo map;
+                    if (a.Has<Map>())
+                    {
+                        position = fixtureA.Body.Position * PhysicsConstants.PhysicsToPixelsRatio;
+                        map = (MapInfo)a.Get(typeof(MapInfo));
+                    }
+                    else
+                    {
+                        position = fixtureB.Body.Position * PhysicsConstants.PhysicsToPixelsRatio;
+                        map = (MapInfo)b.Get(typeof(MapInfo));
+                    }
+
+                    retVal = map.IsTileFullHeight((int)position.X, (int)position.Y);
+                }
+                else
+                {
+                    retVal = true;
+                }
             }
             else if (a.Has<Enemy>() && b.Has<Enemy>())
             {

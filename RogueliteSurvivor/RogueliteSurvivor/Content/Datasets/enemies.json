@@ -7,7 +7,7 @@
       "damage": 2,
       "speed": 50,
       "spell": "EnemyMelee",
-      "width": 16,
+      "width": 14,
       "experience": 1,
       "animation": {
         "firstFrame": 0,
@@ -30,7 +30,7 @@
       "damage": 2,
       "speed": 50,
       "spell": "EnemyMelee",
-      "width": 16,
+      "width": 14,
       "experience": 1,
       "animation": {
         "firstFrame": 0,
@@ -53,7 +53,7 @@
       "damage": 2,
       "speed": 50,
       "spell": "EnemyMelee",
-      "width": 16,
+      "width": 14,
       "experience": 1,
       "animation": {
         "firstFrame": 0,
@@ -76,7 +76,7 @@
       "damage": 10,
       "speed": 25,
       "spell": "EnemyMelee",
-      "width": 32,
+      "width": 28,
       "experience": 10,
       "animation": {
         "firstFrame": 0,
@@ -99,7 +99,7 @@
       "damage": 2,
       "speed": 50,
       "spell": "EnemyMelee",
-      "width": 16,
+      "width": 14,
       "experience": 1,
       "animation": {
         "firstFrame": 0,
@@ -122,7 +122,7 @@
       "damage": 2,
       "speed": 50,
       "spell": "EnemyMelee",
-      "width": 16,
+      "width": 14,
       "experience": 1,
       "animation": {
         "firstFrame": 0,
@@ -145,7 +145,7 @@
       "damage": 2,
       "speed": 50,
       "spell": "EnemyMelee",
-      "width": 16,
+      "width": 14,
       "experience": 1,
       "animation": {
         "firstFrame": 0,
@@ -168,7 +168,7 @@
       "damage": 2,
       "speed": 50,
       "spell": "EnemyMelee",
-      "width": 16,
+      "width": 14,
       "experience": 1,
       "animation": {
         "firstFrame": 0,
@@ -191,7 +191,7 @@
       "damage": 2,
       "speed": 50,
       "spell": "EnemyMelee",
-      "width": 32,
+      "width": 28,
       "experience": 15,
       "animation": {
         "firstFrame": 0,
