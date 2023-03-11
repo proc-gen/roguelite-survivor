@@ -503,15 +503,87 @@
       "enemyWaves": [
         {
           "repeat": true,
-          "start": 0,
+          "start": 5,
+          "maxEnemies": 50,
+          "enemies": [
+            {
+              "type": "SkitteringHand",
+              "weight": 4
+            },
+            {
+              "type": "VampireBat",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 30,
           "maxEnemies": 10,
           "enemies": [
             {
-              "type": "GnollGrunt",
+              "type": "ToxicHound",
               "weight": 1
             },
             {
-              "type": "GnollPikeman",
+              "type": "CarcassFeeder",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 60,
+          "maxEnemies": 30,
+          "enemies": [
+            {
+              "type": "SandGhoul",
+              "weight": 5
+            },
+            {
+              "type": "ToxicHound",
+              "weight": 1
+            },
+            {
+              "type": "CarcassFeeder",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 90,
+          "maxEnemies": 30,
+          "enemies": [
+            {
+              "type": "ToxicHound",
+              "weight": 1
+            },
+            {
+              "type": "CarcassFeeder",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 120,
+          "maxEnemies": 50,
+          "enemies": [
+            {
+              "type": "SandGhoul",
+              "weight": 1
+            },
+            {
+              "type": "BoundCadaver",
+              "weight": 1
+            },
+            {
+              "type": "MutilatedStumbler",
+              "weight": 1
+            },
+            {
+              "type": "CorpseWalker",
               "weight": 1
             }
           ]
