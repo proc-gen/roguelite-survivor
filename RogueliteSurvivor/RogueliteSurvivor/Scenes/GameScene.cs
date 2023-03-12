@@ -68,8 +68,11 @@ namespace RogueliteSurvivor.Scenes
         {
             var stats = new GameStats();
 
-            stats.EnemiesKilled = player.Get<KillCount>().Count;
-            string killerName = player.Get<KillCount>().KillerName;
+            KillCount killCount = (KillCount)player.Get(typeof(KillCount));
+
+
+            stats.EnemiesKilled = killCount.Count;
+            string killerName = killCount.KillerName;
             if (!string.IsNullOrEmpty(killerName))
             {
                 stats.Killer = enemyContainers[killerName].ReadableName;
@@ -279,7 +282,7 @@ namespace RogueliteSurvivor.Scenes
                 SpellFactory.CreateSpell<Spell1>(spellContainers[playerContainers[gameSettings.PlayerName].StartingSpell]),
                 SpellFactory.CreateSpell<Spell2>(spellContainers[playerContainers[gameSettings.PlayerName].SecondarySpell]),
                 new Health() { Current = playerContainers[gameSettings.PlayerName].Health, Max = playerContainers[gameSettings.PlayerName].Health },
-                new KillCount() { Count = 0 },
+                new KillCount(),
                 BodyFactory.CreateCircularBody(player, 14, physicsWorld, body, 99)
             );
         }
