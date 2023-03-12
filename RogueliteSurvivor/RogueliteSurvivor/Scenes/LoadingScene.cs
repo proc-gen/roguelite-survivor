@@ -73,20 +73,20 @@ namespace RogueliteSurvivor.Scenes
             if ((bool)values[0])
             {
                 _spriteBatch.DrawString(
-                fonts["Font"],
-                "Time to kill the bats!",
-                new Vector2(_graphics.PreferredBackBufferWidth / 6 - 66, _graphics.PreferredBackBufferHeight / 6),
-                Color.White
-            );
+                    fonts["Font"],
+                    "Get ready to send the undead back to their graves!",
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 180, _graphics.PreferredBackBufferHeight / 6),
+                    Color.White
+                );
             }
             else
             {
                 _spriteBatch.DrawString(
-                fonts["Font"],
-                "Loading" + dots[doot],
-                new Vector2(_graphics.PreferredBackBufferWidth / 6 - 30, _graphics.PreferredBackBufferHeight / 6),
-                Color.White
-            );
+                    fonts["Font"],
+                    "Loading" + dots[doot],
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 30, _graphics.PreferredBackBufferHeight / 6),
+                    Color.White
+                );
             }
 
 

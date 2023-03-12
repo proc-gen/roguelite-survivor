@@ -33,9 +33,9 @@ namespace RogueliteSurvivor.Systems
         Dictionary<Spells, SpellContainer> spellContainers;
         MapContainer mapContainer;
 
-        int enemyCount = 20;
+        int enemyCount = 0;
         int difficulty = 1;
-        int increaseAfterSeconds = 15;
+        int increaseAfterSeconds = 60;
         int lastSet = -1;
         int maxEnemiesPerUpdate = 200;
 

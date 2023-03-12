@@ -69,7 +69,15 @@ namespace RogueliteSurvivor.Scenes
             var stats = new GameStats();
 
             stats.EnemiesKilled = player.Get<KillCount>().Count;
-            stats.Killer = enemyContainers[player.Get<KillCount>().KillerName].ReadableName;
+            string killerName = player.Get<KillCount>().KillerName;
+            if (!string.IsNullOrEmpty(killerName))
+            {
+                stats.Killer = enemyContainers[killerName].ReadableName;
+            }
+            else
+            {
+                stats.Killer = "Nobody";
+            }
             stats.PlayTime = totalGameTime;
 
             return stats;
@@ -281,12 +289,11 @@ namespace RogueliteSurvivor.Scenes
             string retVal = string.Empty;
             var kState = Keyboard.GetState();
             var gState = GamePad.GetState(PlayerIndex.One);
+            stateChangeTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (gameState == GameState.LevelUp)
             {
-                stateChangeTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                if (stateChangeTime > .1f)
+                if (stateChangeTime > InputConstants.ResponseTime)
                 {
                     if (kState.IsKeyDown(Keys.Enter) || gState.Buttons.A == ButtonState.Pressed)
                     {
@@ -314,17 +321,35 @@ namespace RogueliteSurvivor.Scenes
                     }
                 }
             }
+            else if(gameState == GameState.WantToQuit)
+            {
+
+                if (stateChangeTime > InputConstants.ResponseTime)
+                {
+                    if (kState.IsKeyDown(Keys.Enter) || gState.Buttons.A == ButtonState.Pressed)
+                    {
+                        stateChangeTime = 0f;
+                        Loaded = false;
+                        retVal = "game-over";
+                    }
+                    else if(kState.IsKeyDown(Keys.Escape) || gState.Buttons.B == ButtonState.Pressed)
+                    {
+                        gameState = GameState.Running;
+                        stateChangeTime = 0f;
+                    }
+                }
+            }
             else
             {
-                if (stateChangeTime > .1f && (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P)))
+                if (stateChangeTime > InputConstants.ResponseTime && (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P)))
                 {
                     gameState = gameState == GameState.Running ? GameState.Paused : GameState.Running;
                     stateChangeTime = 0f;
                 }
-                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                else if (stateChangeTime > InputConstants.ResponseTime && (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)))
                 {
-                    Loaded = false;
-                    retVal = "main-menu";
+                    gameState = GameState.WantToQuit;
+                    stateChangeTime = 0f;
                 }
                 else if (player.Get<EntityStatus>().State == State.Dead)
                 {
@@ -350,7 +375,11 @@ namespace RogueliteSurvivor.Scenes
                         stateChangeTime = 0f;
                         playerInfo.Level++;
                         playerInfo.ExperienceToNextLevel += ExperienceHelper.ExperienceRequiredForLevel(playerInfo.Level + 1);
-                        player.Set(playerInfo);
+                        var playerHealth = player.Get<Health>();
+                        playerHealth.Max += 5;
+                        playerHealth.Current = playerHealth.Max;
+                        
+                        player.Set(playerInfo, playerHealth);
 
                         gameState = GameState.LevelUp;
 

@@ -34,7 +34,7 @@ namespace RogueliteSurvivor.Systems
 
         public void Update(GameTime gameTime, float totalElapsedTime)
         {
-            if (stateChangeTime > .1f)
+            if (stateChangeTime > InputConstants.ResponseTime)
             {
                 KeyboardState kState = Keyboard.GetState();
                 GamePadState gState = GamePad.GetState(PlayerIndex.One);
@@ -165,6 +165,36 @@ namespace RogueliteSurvivor.Systems
                         Color.White
                     );
                 }
+                else if(gameState == GameState.WantToQuit)
+                {
+                    spriteBatch.Draw(
+                        textures["StatsBackground"],
+                        new Rectangle(graphics.PreferredBackBufferWidth / 6 - 200, graphics.PreferredBackBufferHeight / 6 - 4, 400, 48),
+                        new Rectangle(0, 0, 64, 64),
+                        Color.White
+                    );
+
+                    spriteBatch.DrawString(
+                        fonts["Font"],
+                        "Are the undead getting too rough and making you quit?",
+                        new Vector2(graphics.PreferredBackBufferWidth / 6 - 188, graphics.PreferredBackBufferHeight / 6),
+                        Color.White
+                    );
+
+                    spriteBatch.DrawString(
+                        fonts["FontSmall"],
+                        "Press Enter or A button to leave like a coward",
+                        new Vector2(graphics.PreferredBackBufferWidth / 6 - 150, graphics.PreferredBackBufferHeight / 6 + 16),
+                        Color.White
+                    );
+                    spriteBatch.DrawString(
+                        fonts["FontSmall"],
+                        "Press Escape or B button to continue fighting the undead",
+                        new Vector2(graphics.PreferredBackBufferWidth / 6 - 150, graphics.PreferredBackBufferHeight / 6 + 28),
+                        Color.White
+                    );
+                }
+
             }
         }
 

@@ -5,5 +5,6 @@
         Running,
         Paused,
         LevelUp,
+        WantToQuit,
     }
 }
