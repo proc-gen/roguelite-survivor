@@ -258,7 +258,7 @@
         },
         {
           "repeat": true,
-          "start": 330,
+          "start": 360,
           "maxEnemies": 50,
           "enemies": [
             {
@@ -293,7 +293,7 @@
         },
         {
           "repeat": true,
-          "start": 360,
+          "start": 390,
           "maxEnemies": 100,
           "enemies": [
             {
@@ -328,7 +328,7 @@
         },
         {
           "repeat": true,
-          "start": 390,
+          "start": 420,
           "maxEnemies": 150,
           "enemies": [
             {
@@ -363,7 +363,7 @@
         },
         {
           "repeat": true,
-          "start": 420,
+          "start": 450,
           "maxEnemies": 200,
           "enemies": [
             {
@@ -398,7 +398,7 @@
         },
         {
           "repeat": true,
-          "start": 450,
+          "start": 480,
           "maxEnemies": 250,
           "enemies": [
             {
@@ -433,7 +433,7 @@
         },
         {
           "repeat": true,
-          "start": 480,
+          "start": 510,
           "maxEnemies": 300,
           "enemies": [
             {
@@ -576,6 +576,396 @@
             },
             {
               "type": "BoundCadaver",
+              "weight": 1
+            },
+            {
+              "type": "MutilatedStumbler",
+              "weight": 1
+            },
+            {
+              "type": "CorpseWalker",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 149,
+          "maxEnemies": 50,
+          "enemies": [
+            {
+              "type": "ToxicHound",
+              "weight": 1
+            },
+            {
+              "type": "CarcassFeeder",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": false,
+          "start": 150,
+          "maxEnemies": 4,
+          "enemies": [
+            {
+              "type": "GraveRevenant",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 180,
+          "maxEnemies": 100,
+          "enemies": [
+            {
+              "type": "SandGhoul",
+              "weight": 1
+            },
+            {
+              "type": "BoundCadaver",
+              "weight": 1
+            },
+            {
+              "type": "MutilatedStumbler",
+              "weight": 1
+            },
+            {
+              "type": "CorpseWalker",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 210,
+          "maxEnemies": 30,
+          "enemies": [
+            {
+              "type": "BoundCadaver",
+              "weight": 1
+            },
+            {
+              "type": "DustyShambler",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 240,
+          "maxEnemies": 30,
+          "enemies": [
+            {
+              "type": "BoundCadaver",
+              "weight": 1
+            },
+            {
+              "type": "DustyShambler",
+              "weight": 1
+            },
+            {
+              "type": "UnwrappedLurcher",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 270,
+          "maxEnemies": 50,
+          "enemies": [
+            {
+              "type": "BoundCadaver",
+              "weight": 1
+            },
+            {
+              "type": "DustyShambler",
+              "weight": 1
+            },
+            {
+              "type": "UnwrappedLurcher",
+              "weight": 1
+            },
+            {
+              "type": "RottingArcher",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 299,
+          "maxEnemies": 50,
+          "enemies": [
+            {
+              "type": "ToxicHound",
+              "weight": 1
+            },
+            {
+              "type": "CarcassFeeder",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": false,
+          "start": 300,
+          "maxEnemies": 1,
+          "enemies": [
+            {
+              "type": "TimewornPharoah",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 360,
+          "maxEnemies": 100,
+          "enemies": [
+            {
+              "type": "ToxicHound",
+              "weight": 1
+            },
+            {
+              "type": "CarcassFeeder",
+              "weight": 1
+            },
+            {
+              "type": "BoundCadaver",
+              "weight": 1
+            },
+            {
+              "type": "DustyShambler",
+              "weight": 1
+            },
+            {
+              "type": "UnwrappedLurcher",
+              "weight": 1
+            },
+            {
+              "type": "RottingArcher",
+              "weight": 1
+            },
+            {
+              "type": "SandGhoul",
+              "weight": 1
+            },
+            {
+              "type": "MutilatedStumbler",
+              "weight": 1
+            },
+            {
+              "type": "CorpseWalker",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 390,
+          "maxEnemies": 150,
+          "enemies": [
+            {
+              "type": "ToxicHound",
+              "weight": 1
+            },
+            {
+              "type": "CarcassFeeder",
+              "weight": 1
+            },
+            {
+              "type": "BoundCadaver",
+              "weight": 1
+            },
+            {
+              "type": "DustyShambler",
+              "weight": 1
+            },
+            {
+              "type": "UnwrappedLurcher",
+              "weight": 1
+            },
+            {
+              "type": "RottingArcher",
+              "weight": 1
+            },
+            {
+              "type": "SandGhoul",
+              "weight": 1
+            },
+            {
+              "type": "MutilatedStumbler",
+              "weight": 1
+            },
+            {
+              "type": "CorpseWalker",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 420,
+          "maxEnemies": 200,
+          "enemies": [
+            {
+              "type": "ToxicHound",
+              "weight": 1
+            },
+            {
+              "type": "CarcassFeeder",
+              "weight": 1
+            },
+            {
+              "type": "BoundCadaver",
+              "weight": 1
+            },
+            {
+              "type": "DustyShambler",
+              "weight": 1
+            },
+            {
+              "type": "UnwrappedLurcher",
+              "weight": 1
+            },
+            {
+              "type": "RottingArcher",
+              "weight": 1
+            },
+            {
+              "type": "SandGhoul",
+              "weight": 1
+            },
+            {
+              "type": "MutilatedStumbler",
+              "weight": 1
+            },
+            {
+              "type": "CorpseWalker",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 450,
+          "maxEnemies": 250,
+          "enemies": [
+            {
+              "type": "ToxicHound",
+              "weight": 1
+            },
+            {
+              "type": "CarcassFeeder",
+              "weight": 1
+            },
+            {
+              "type": "BoundCadaver",
+              "weight": 1
+            },
+            {
+              "type": "DustyShambler",
+              "weight": 1
+            },
+            {
+              "type": "UnwrappedLurcher",
+              "weight": 1
+            },
+            {
+              "type": "RottingArcher",
+              "weight": 1
+            },
+            {
+              "type": "SandGhoul",
+              "weight": 1
+            },
+            {
+              "type": "MutilatedStumbler",
+              "weight": 1
+            },
+            {
+              "type": "CorpseWalker",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 480,
+          "maxEnemies": 300,
+          "enemies": [
+            {
+              "type": "ToxicHound",
+              "weight": 1
+            },
+            {
+              "type": "CarcassFeeder",
+              "weight": 1
+            },
+            {
+              "type": "BoundCadaver",
+              "weight": 1
+            },
+            {
+              "type": "DustyShambler",
+              "weight": 1
+            },
+            {
+              "type": "UnwrappedLurcher",
+              "weight": 1
+            },
+            {
+              "type": "RottingArcher",
+              "weight": 1
+            },
+            {
+              "type": "SandGhoul",
+              "weight": 1
+            },
+            {
+              "type": "MutilatedStumbler",
+              "weight": 1
+            },
+            {
+              "type": "CorpseWalker",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "repeat": true,
+          "start": 510,
+          "maxEnemies": 350,
+          "enemies": [
+            {
+              "type": "ToxicHound",
+              "weight": 1
+            },
+            {
+              "type": "CarcassFeeder",
+              "weight": 1
+            },
+            {
+              "type": "BoundCadaver",
+              "weight": 1
+            },
+            {
+              "type": "DustyShambler",
+              "weight": 1
+            },
+            {
+              "type": "UnwrappedLurcher",
+              "weight": 1
+            },
+            {
+              "type": "RottingArcher",
+              "weight": 1
+            },
+            {
+              "type": "SandGhoul",
               "weight": 1
             },
             {
