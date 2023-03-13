@@ -18,8 +18,8 @@ namespace RogueliteSurvivor.Scenes
         private string[] dots = new string[4] { "", ".", "..", "..." };
         private int doot = 0;
 
-        public LoadingScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, ProgressionContainer progressionContainer)
-            : base(spriteBatch, contentManager, graphics, world, physicsWorld, progressionContainer)
+        public LoadingScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, ProgressionContainer progressionContainer, float scaleFactor)
+            : base(spriteBatch, contentManager, graphics, world, physicsWorld, progressionContainer, scaleFactor)
         {
         }
 
@@ -66,7 +66,7 @@ namespace RogueliteSurvivor.Scenes
             _spriteBatch.DrawString(
                 fonts["Font"],
                 "Roguelite Survivor",
-                new Vector2(_graphics.PreferredBackBufferWidth / 6 - 62, _graphics.PreferredBackBufferHeight / 6 - 64),
+                new Vector2(GetWidthOffset(2) - 62, GetHeightOffset(2) - 64),
                 Color.White
             );
 
@@ -75,7 +75,7 @@ namespace RogueliteSurvivor.Scenes
                 _spriteBatch.DrawString(
                     fonts["Font"],
                     "Get ready to send the undead back to their graves!",
-                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 180, _graphics.PreferredBackBufferHeight / 6),
+                    new Vector2(GetWidthOffset(2) - 180, GetHeightOffset(2)),
                     Color.White
                 );
             }
@@ -84,7 +84,7 @@ namespace RogueliteSurvivor.Scenes
                 _spriteBatch.DrawString(
                     fonts["Font"],
                     "Loading" + dots[doot],
-                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 30, _graphics.PreferredBackBufferHeight / 6),
+                    new Vector2(GetWidthOffset(2) - 30, GetHeightOffset(2)),
                     Color.White
                 );
             }
@@ -95,7 +95,7 @@ namespace RogueliteSurvivor.Scenes
                 _spriteBatch.DrawString(
                     fonts["Font"],
                     "Press Enter on the keyboard or A on the controller to start",
-                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 200, _graphics.PreferredBackBufferHeight / 6 + 32),
+                    new Vector2(GetWidthOffset(2) - 200, GetHeightOffset(2) + 32),
                     Color.White
                 );
             }

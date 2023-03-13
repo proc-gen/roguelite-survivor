@@ -17,7 +17,7 @@ namespace RogueliteSurvivor
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        const int scaleFactor = 3;
+        int scaleFactor;
         private Matrix transformMatrix;
 
         private World world = null;
@@ -38,11 +38,20 @@ namespace RogueliteSurvivor
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
+#if DEBUG
             _graphics.ApplyChanges(); //Needed because the graphics device is null before this is called
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.PreferredBackBufferHeight = 1080;
+            scaleFactor = 3;
             _graphics.ApplyChanges();
-            //_graphics.ToggleFullScreen();
+#else
+            _graphics.ApplyChanges(); //Needed because the graphics device is null before this is called
+            _graphics.PreferredBackBufferWidth = 640;
+            _graphics.PreferredBackBufferHeight = 360;
+            scaleFactor = 1;
+            _graphics.ApplyChanges();
+            _graphics.ToggleFullScreen();
+#endif
         }
 
         protected override void Initialize()
@@ -65,15 +74,15 @@ namespace RogueliteSurvivor
             loadProgression();
             loadEnemies();
 
-            GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers, progressionContainer, enemyContainers);
+            GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers, progressionContainer, enemyContainers, scaleFactor);
 
-            MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers, progressionContainer, enemyContainers);
+            MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers, progressionContainer, enemyContainers, scaleFactor);
             mainMenu.LoadContent();
 
-            LoadingScene loadingScene = new LoadingScene(_spriteBatch, Content, _graphics, world, physicsWorld, progressionContainer);
+            LoadingScene loadingScene = new LoadingScene(_spriteBatch, Content, _graphics, world, physicsWorld, progressionContainer, scaleFactor);
             loadingScene.LoadContent();
 
-            GameOverScene gameOverScene = new GameOverScene(_spriteBatch, Content, _graphics, world, physicsWorld, progressionContainer, mapContainers);
+            GameOverScene gameOverScene = new GameOverScene(_spriteBatch, Content, _graphics, world, physicsWorld, progressionContainer, mapContainers, scaleFactor);
             gameOverScene.LoadContent();
 
             scenes.Add("game", gameScene);

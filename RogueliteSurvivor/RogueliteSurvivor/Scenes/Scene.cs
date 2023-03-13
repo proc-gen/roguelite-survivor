@@ -18,9 +18,11 @@ namespace RogueliteSurvivor.Scenes
 
         protected ProgressionContainer progressionContainer;
 
+        protected float scaleFactor;
+
         public bool Loaded { get; protected set; }
 
-        public Scene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, ProgressionContainer progressionContainer)
+        public Scene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, ProgressionContainer progressionContainer, float scaleFactor)
         {
             _spriteBatch = spriteBatch;
             Content = contentManager;
@@ -30,10 +32,19 @@ namespace RogueliteSurvivor.Scenes
             this.progressionContainer = progressionContainer;
 
             Loaded = false;
+            this.scaleFactor = scaleFactor;
         }
 
         public abstract void Draw(GameTime gameTime, Matrix transform, params object[] values);
         public abstract void LoadContent();
         public abstract string Update(GameTime gameTime, params object[] values);
+        protected float GetWidthOffset(float divisor)
+        {
+            return _graphics.PreferredBackBufferWidth / (divisor * scaleFactor);
+        }
+        protected float GetHeightOffset(float divisor)
+        {
+            return _graphics.PreferredBackBufferHeight / (divisor * scaleFactor);
+        }
     }
 }
