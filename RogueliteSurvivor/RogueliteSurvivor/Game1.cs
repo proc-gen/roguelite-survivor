@@ -17,7 +17,7 @@ namespace RogueliteSurvivor
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        int scaleFactor;
+        float scaleFactor;
         private Matrix transformMatrix;
 
         private World world = null;
@@ -38,18 +38,15 @@ namespace RogueliteSurvivor
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
+            _graphics.ApplyChanges(); //Needed because the graphics device is null before this is called
+            _graphics.PreferredBackBufferWidth = GraphicsDevice.Adapter.CurrentDisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsDevice.Adapter.CurrentDisplayMode.Height;
+            scaleFactor = GraphicsDevice.Adapter.CurrentDisplayMode.Width / 640f;
+            _graphics.ApplyChanges();
+
 #if DEBUG
-            _graphics.ApplyChanges(); //Needed because the graphics device is null before this is called
-            _graphics.PreferredBackBufferWidth = 1920;
-            _graphics.PreferredBackBufferHeight = 1080;
-            scaleFactor = 3;
-            _graphics.ApplyChanges();
+            //Do Nothing
 #else
-            _graphics.ApplyChanges(); //Needed because the graphics device is null before this is called
-            _graphics.PreferredBackBufferWidth = 640;
-            _graphics.PreferredBackBufferHeight = 360;
-            scaleFactor = 1;
-            _graphics.ApplyChanges();
             _graphics.ToggleFullScreen();
 #endif
         }
