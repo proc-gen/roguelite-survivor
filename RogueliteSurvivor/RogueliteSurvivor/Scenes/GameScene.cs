@@ -82,7 +82,11 @@ namespace RogueliteSurvivor.Scenes
                 stats.Killer = "Nobody";
             }
             stats.PlayTime = totalGameTime;
-
+            stats.Kills = new Dictionary<string, int>();
+            foreach(var enemy in killCount.Kills)
+            {
+                stats.Kills.Add(enemyContainers[enemy.Key].ReadableName, enemy.Value);
+            }
             return stats;
         }
 

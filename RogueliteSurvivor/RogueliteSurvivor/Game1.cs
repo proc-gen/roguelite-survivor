@@ -38,9 +38,10 @@ namespace RogueliteSurvivor
             IsMouseVisible = true;
 
             _graphics.ApplyChanges(); //Needed because the graphics device is null before this is called
-            _graphics.PreferredBackBufferWidth = GraphicsDevice.Adapter.CurrentDisplayMode.Width;
-            _graphics.PreferredBackBufferHeight = GraphicsDevice.Adapter.CurrentDisplayMode.Height;
+            _graphics.PreferredBackBufferWidth = 1920;
+            _graphics.PreferredBackBufferHeight = 1080;
             _graphics.ApplyChanges();
+            //_graphics.ToggleFullScreen();
         }
 
         protected override void Initialize()
