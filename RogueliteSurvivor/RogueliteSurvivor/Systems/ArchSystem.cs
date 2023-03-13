@@ -1,4 +1,5 @@
 ﻿using Arch.Core;
+using Microsoft.Xna.Framework;
 
 namespace RogueliteSurvivor.Systems
 {
@@ -11,6 +12,15 @@ namespace RogueliteSurvivor.Systems
         {
             this.world = world;
             this.query = query;
+        }
+
+        protected float GetWidthOffset(GraphicsDeviceManager graphics, float scaleFactor, float divisor)
+        {
+            return graphics.PreferredBackBufferWidth / (divisor * scaleFactor);
+        }
+        protected float GetHeightOffset(GraphicsDeviceManager graphics, float scaleFactor, float divisor)
+        {
+            return graphics.PreferredBackBufferHeight / (divisor * scaleFactor);
         }
     }
 }

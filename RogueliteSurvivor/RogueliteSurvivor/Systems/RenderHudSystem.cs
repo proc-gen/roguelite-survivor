@@ -52,7 +52,7 @@ namespace RogueliteSurvivor.Systems
             }
         }
 
-        public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player, float totalElapsedTime, GameState gameState, int layer)
+        public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player, float totalElapsedTime, GameState gameState, int layer, float scaleFactor)
         {
             if (layer == 4)
             {
@@ -137,7 +137,7 @@ namespace RogueliteSurvivor.Systems
 
                 spriteBatch.Draw(
                         textures["StatsBackground"],
-                        new Rectangle((int)TimeLocation.X + graphics.PreferredBackBufferWidth / 3 - 4, (int)TimeLocation.Y - 5, 100, 24),
+                        new Rectangle((int)TimeLocation.X + (int)GetWidthOffset(graphics, scaleFactor, 1) - 4, (int)TimeLocation.Y - 5, 100, 24),
                         new Rectangle(0, 0, 64, 64),
                         OffsetColor
                     );
@@ -145,7 +145,7 @@ namespace RogueliteSurvivor.Systems
                 spriteBatch.DrawString(
                         fonts["Font"],
                         string.Concat("Time: ", float.Round(totalElapsedTime, 2)),
-                        TimeLocation + Vector2.UnitX * (graphics.PreferredBackBufferWidth / 3),
+                        TimeLocation + Vector2.UnitX * GetWidthOffset(graphics, scaleFactor, 1),
                         Color.White
                     );
 
@@ -153,7 +153,7 @@ namespace RogueliteSurvivor.Systems
                 {
                     spriteBatch.Draw(
                         textures["StatsBackground"],
-                        new Rectangle(graphics.PreferredBackBufferWidth / 6 - 55, graphics.PreferredBackBufferHeight / 6 - 4, 110, 24),
+                        new Rectangle((int)GetWidthOffset(graphics, scaleFactor, 2) - 55, (int)GetHeightOffset(graphics, scaleFactor, 2) - 4, 110, 24),
                         new Rectangle(0, 0, 64, 64),
                         Color.White
                     );
@@ -161,7 +161,7 @@ namespace RogueliteSurvivor.Systems
                     spriteBatch.DrawString(
                         fonts["Font"],
                         "Game Paused",
-                        new Vector2(graphics.PreferredBackBufferWidth / 6 - 50, graphics.PreferredBackBufferHeight / 6),
+                        new Vector2((int)GetWidthOffset(graphics, scaleFactor, 2) - 50, (int)GetHeightOffset(graphics, scaleFactor, 2)),
                         Color.White
                     );
                 }
@@ -169,7 +169,7 @@ namespace RogueliteSurvivor.Systems
                 {
                     spriteBatch.Draw(
                         textures["StatsBackground"],
-                        new Rectangle(graphics.PreferredBackBufferWidth / 6 - 200, graphics.PreferredBackBufferHeight / 6 - 4, 400, 48),
+                        new Rectangle((int)GetWidthOffset(graphics, scaleFactor, 2) - 200, (int)GetHeightOffset(graphics, scaleFactor, 2) - 4, 400, 48),
                         new Rectangle(0, 0, 64, 64),
                         Color.White
                     );
@@ -177,20 +177,20 @@ namespace RogueliteSurvivor.Systems
                     spriteBatch.DrawString(
                         fonts["Font"],
                         "Are the undead getting too rough and making you quit?",
-                        new Vector2(graphics.PreferredBackBufferWidth / 6 - 188, graphics.PreferredBackBufferHeight / 6),
+                        new Vector2((int)GetWidthOffset(graphics, scaleFactor, 2) - 188, (int)GetHeightOffset(graphics, scaleFactor, 2)),
                         Color.White
                     );
 
                     spriteBatch.DrawString(
                         fonts["FontSmall"],
                         "Press Enter or A button to leave like a coward",
-                        new Vector2(graphics.PreferredBackBufferWidth / 6 - 150, graphics.PreferredBackBufferHeight / 6 + 16),
+                        new Vector2((int)GetWidthOffset(graphics, scaleFactor, 2) - 150, (int)GetHeightOffset(graphics, scaleFactor, 2) + 16),
                         Color.White
                     );
                     spriteBatch.DrawString(
                         fonts["FontSmall"],
                         "Press Escape or B button to continue fighting the undead",
-                        new Vector2(graphics.PreferredBackBufferWidth / 6 - 150, graphics.PreferredBackBufferHeight / 6 + 28),
+                        new Vector2((int)GetWidthOffset(graphics, scaleFactor, 2) - 150, (int)GetHeightOffset(graphics, scaleFactor, 2) + 28),
                         Color.White
                     );
                 }

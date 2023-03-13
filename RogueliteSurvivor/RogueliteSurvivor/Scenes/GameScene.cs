@@ -412,7 +412,7 @@ namespace RogueliteSurvivor.Scenes
                     foreach (var system in renderSystems)
                     {
                         _spriteBatch.Begin(samplerState: SamplerState.PointClamp, blendState: BlendState.AlphaBlend, transformMatrix: transformMatrix);
-                        system.Render(gameTime, _spriteBatch, textures, player, totalGameTime, gameState, layer);
+                        system.Render(gameTime, _spriteBatch, textures, player, totalGameTime, gameState, layer, scaleFactor);
                         _spriteBatch.End();
                     }
                 }
