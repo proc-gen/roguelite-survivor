@@ -11,6 +11,7 @@ namespace RogueliteSurvivor.Containers
     public class ProgressionContainer
     {
         public List<LevelProgressionContainer> LevelProgressions { get; set; }
+        public List<EnemyKillStatsContainer> EnemyKillStats { get; set; }
 
         public void Save()
         {
@@ -33,6 +34,15 @@ namespace RogueliteSurvivor.Containers
                 progressionContainer.LevelProgressions.Add(LevelProgressionContainer.ToLevelProgressionContainer(level));
             }
 
+            progressionContainer.EnemyKillStats = new List<EnemyKillStatsContainer>();
+            if (progression["EnemyKillStats"] != null)
+            {
+                foreach (var enemyStats in progression["EnemyKillStats"])
+                {
+                    progressionContainer.EnemyKillStats.Add(EnemyKillStatsContainer.ToEnemyKillStatsContainer(enemyStats));
+                }
+            }
+
             return progressionContainer;
         }
     }
@@ -51,6 +61,25 @@ namespace RogueliteSurvivor.Containers
             };
 
             return levelProgression;
+        }
+    }
+
+    public class EnemyKillStatsContainer
+    {
+        public string Name { get; set; }
+        public int Kills { get; set; }
+        public int KilledBy { get; set; }
+
+        public static EnemyKillStatsContainer ToEnemyKillStatsContainer(JToken enemyStats)
+        {
+            var enemyKillStats = new EnemyKillStatsContainer()
+            {
+                Name = (string)enemyStats["Name"],
+                Kills = (int)enemyStats["Kills"],
+                KilledBy = (int)enemyStats["KilledBy"]
+            };
+
+            return enemyKillStats;
         }
     }
 

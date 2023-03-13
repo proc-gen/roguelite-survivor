@@ -79,9 +79,29 @@ namespace RogueliteSurvivor.Scenes
                     }
 
                     level.BestTime = MathF.Max(gameStats.PlayTime, level.BestTime);
-                    progressionContainer.Save();
                 }
-                
+
+                if(progressionContainer.EnemyKillStats == null)
+                {
+                    progressionContainer.EnemyKillStats = new List<EnemyKillStatsContainer>();
+                }
+
+                foreach(var enemy in gameStats.Kills)
+                {
+                    var enemyStats = progressionContainer.EnemyKillStats.Where(a => a.Name == enemy.Key).FirstOrDefault();
+                    if(enemyStats == null)
+                    {
+                        enemyStats = new EnemyKillStatsContainer() { Name = enemy.Key, Kills = enemy.Value, KilledBy = gameStats.Killer == enemy.Key ? 1 : 0 };
+                        progressionContainer.EnemyKillStats.Add(enemyStats);
+                    }
+                    else
+                    {
+                        enemyStats.Kills += enemy.Value;
+                        enemyStats.KilledBy += gameStats.Killer == enemy.Key ? 1 : 0;
+                    }
+                }
+
+                progressionContainer.Save();
                 saved = true;
             }
 
