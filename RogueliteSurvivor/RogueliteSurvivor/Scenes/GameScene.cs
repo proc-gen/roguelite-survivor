@@ -50,11 +50,12 @@ namespace RogueliteSurvivor.Scenes
         private List<PickupType> levelUpChoices = new List<PickupType>();
         private PickupType selectedLevelUpChoice;
 
-        public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers, Dictionary<string, MapContainer> mapContainers, ProgressionContainer progressionContainer)
+        public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers, Dictionary<string, MapContainer> mapContainers, ProgressionContainer progressionContainer, Dictionary<string, EnemyContainer> enemyContainers)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld, progressionContainer)
         {
             this.playerContainers = playerContainers;
             this.mapContainers = mapContainers;
+            this.enemyContainers = enemyContainers;
 
             random = new Random();
         }
@@ -96,7 +97,6 @@ namespace RogueliteSurvivor.Scenes
             loadTexturesAndFonts();
 
             loadMap();
-            loadEnemies();
             loadSpells();
             initializeSystems();
             placePlayer();
@@ -151,20 +151,6 @@ namespace RogueliteSurvivor.Scenes
                 { "Font", Content.Load<SpriteFont>(Path.Combine("Fonts", "Font")) },
                 { "FontSmall", Content.Load<SpriteFont>(Path.Combine("Fonts", "FontSmall")) },
             };
-        }
-
-        private void loadEnemies()
-        {
-            JObject enemies = JObject.Parse(File.ReadAllText(Path.Combine(Content.RootDirectory, "Datasets", "enemies.json")));
-            enemyContainers = new Dictionary<string, EnemyContainer>();
-
-            foreach (var enemy in enemies["data"])
-            {
-                enemyContainers.Add(
-                    EnemyContainer.EnemyContainerName(enemy),
-                    EnemyContainer.ToEnemyContainer(enemy)
-                );
-            }
         }
 
         private void loadSpells()

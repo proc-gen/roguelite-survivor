@@ -27,6 +27,7 @@ namespace RogueliteSurvivor
         Dictionary<string, Scene> scenes = new Dictionary<string, Scene>();
         Dictionary<string, PlayerContainer> playerCharacters = new Dictionary<string, PlayerContainer>();
         Dictionary<string, MapContainer> mapContainers = new Dictionary<string, MapContainer>();
+        Dictionary<string, EnemyContainer> enemyContainers = new Dictionary<string, EnemyContainer>();
         ProgressionContainer progressionContainer = null;
         string currentScene = "main-menu";
         string nextScene = string.Empty;
@@ -62,10 +63,11 @@ namespace RogueliteSurvivor
             loadPlayerCharacters();
             loadPlayableMaps();
             loadProgression();
+            loadEnemies();
 
-            GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers, progressionContainer);
+            GameScene gameScene = new GameScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers, progressionContainer, enemyContainers);
 
-            MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers, progressionContainer);
+            MainMenuScene mainMenu = new MainMenuScene(_spriteBatch, Content, _graphics, world, physicsWorld, playerCharacters, mapContainers, progressionContainer, enemyContainers);
             mainMenu.LoadContent();
 
             LoadingScene loadingScene = new LoadingScene(_spriteBatch, Content, _graphics, world, physicsWorld, progressionContainer);
@@ -104,6 +106,19 @@ namespace RogueliteSurvivor
                 mapContainers.Add(
                     MapContainer.MapContainerName(map),
                     MapContainer.ToMapContainer(map)
+                );
+            }
+        }
+
+        private void loadEnemies()
+        {
+            JObject enemies = JObject.Parse(File.ReadAllText(Path.Combine(Content.RootDirectory, "Datasets", "enemies.json")));
+
+            foreach (var enemy in enemies["data"])
+            {
+                enemyContainers.Add(
+                    EnemyContainer.EnemyContainerName(enemy),
+                    EnemyContainer.ToEnemyContainer(enemy)
                 );
             }
         }
