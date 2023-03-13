@@ -50,11 +50,12 @@ namespace RogueliteSurvivor.Scenes
         private List<PickupType> levelUpChoices = new List<PickupType>();
         private PickupType selectedLevelUpChoice;
 
-        public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers, Dictionary<string, MapContainer> mapContainers, ProgressionContainer progressionContainer)
+        public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers, Dictionary<string, MapContainer> mapContainers, ProgressionContainer progressionContainer, Dictionary<string, EnemyContainer> enemyContainers)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld, progressionContainer)
         {
             this.playerContainers = playerContainers;
             this.mapContainers = mapContainers;
+            this.enemyContainers = enemyContainers;
 
             random = new Random();
         }
@@ -68,8 +69,11 @@ namespace RogueliteSurvivor.Scenes
         {
             var stats = new GameStats();
 
-            stats.EnemiesKilled = player.Get<KillCount>().Count;
-            string killerName = player.Get<KillCount>().KillerName;
+            KillCount killCount = (KillCount)player.Get(typeof(KillCount));
+
+
+            stats.EnemiesKilled = killCount.Count;
+            string killerName = killCount.KillerName;
             if (!string.IsNullOrEmpty(killerName))
             {
                 stats.Killer = enemyContainers[killerName].ReadableName;
@@ -79,7 +83,11 @@ namespace RogueliteSurvivor.Scenes
                 stats.Killer = "Nobody";
             }
             stats.PlayTime = totalGameTime;
-
+            stats.Kills = new Dictionary<string, int>();
+            foreach(var enemy in killCount.Kills)
+            {
+                stats.Kills.Add(enemyContainers[enemy.Key].ReadableName, enemy.Value);
+            }
             return stats;
         }
 
@@ -89,7 +97,6 @@ namespace RogueliteSurvivor.Scenes
             loadTexturesAndFonts();
 
             loadMap();
-            loadEnemies();
             loadSpells();
             initializeSystems();
             placePlayer();
@@ -144,20 +151,6 @@ namespace RogueliteSurvivor.Scenes
                 { "Font", Content.Load<SpriteFont>(Path.Combine("Fonts", "Font")) },
                 { "FontSmall", Content.Load<SpriteFont>(Path.Combine("Fonts", "FontSmall")) },
             };
-        }
-
-        private void loadEnemies()
-        {
-            JObject enemies = JObject.Parse(File.ReadAllText(Path.Combine(Content.RootDirectory, "Datasets", "enemies.json")));
-            enemyContainers = new Dictionary<string, EnemyContainer>();
-
-            foreach (var enemy in enemies["data"])
-            {
-                enemyContainers.Add(
-                    EnemyContainer.EnemyContainerName(enemy),
-                    EnemyContainer.ToEnemyContainer(enemy)
-                );
-            }
         }
 
         private void loadSpells()
@@ -279,7 +272,7 @@ namespace RogueliteSurvivor.Scenes
                 SpellFactory.CreateSpell<Spell1>(spellContainers[playerContainers[gameSettings.PlayerName].StartingSpell]),
                 SpellFactory.CreateSpell<Spell2>(spellContainers[playerContainers[gameSettings.PlayerName].SecondarySpell]),
                 new Health() { Current = playerContainers[gameSettings.PlayerName].Health, Max = playerContainers[gameSettings.PlayerName].Health },
-                new KillCount() { Count = 0 },
+                new KillCount(),
                 BodyFactory.CreateCircularBody(player, 14, physicsWorld, body, 99)
             );
         }

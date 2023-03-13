@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json.Linq;
+using RogueliteSurvivor.Components;
 using RogueliteSurvivor.Constants;
 using RogueliteSurvivor.Containers;
 using RogueliteSurvivor.Utils;
@@ -27,16 +28,20 @@ namespace RogueliteSurvivor.Scenes
         private string selectedMap;
 
         private Dictionary<string, PlayerContainer> playerContainers;
+        Dictionary<string, EnemyContainer> enemyContainers;
         private List<MapContainer> mapContainers;
         private List<MapContainer> unlockedMaps;
         private CreditsContainer creditsContainer = null;
 
+        private int statsPage = 0;
 
-        public MainMenuScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers, Dictionary<string, MapContainer> mapContainers, ProgressionContainer progressionContainer)
+
+        public MainMenuScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers, Dictionary<string, MapContainer> mapContainers, ProgressionContainer progressionContainer, Dictionary<string, EnemyContainer> enemyContainers)
             : base(spriteBatch, contentManager, graphics, world, physicsWorld, progressionContainer)
         {
             this.playerContainers = playerContainers;
             this.mapContainers = mapContainers.Values.ToList();
+            this.enemyContainers = enemyContainers;
         }
 
         public override void LoadContent()
@@ -99,6 +104,7 @@ namespace RogueliteSurvivor.Scenes
                                 state = MainMenuState.CharacterSelection;
                                 break;
                             case 2:
+                                state = MainMenuState.PlayStats;
                                 break;
                             case 3:
                                 state = MainMenuState.Credits;
@@ -204,6 +210,26 @@ namespace RogueliteSurvivor.Scenes
                         readyForInput = false;
                     }
                 }
+                else if(state == MainMenuState.PlayStats)
+                {
+                    if (kState.IsKeyDown(Keys.Escape) || gState.Buttons.B == ButtonState.Pressed)
+                    {
+                        state = MainMenuState.MainMenu;
+                        readyForInput = false;
+                        selectedButton = 1;
+                        statsPage = 0;
+                    }
+                    else if (kState.IsKeyDown(Keys.Left) || gState.DPad.Left == ButtonState.Pressed || gState.ThumbSticks.Left.X < -0.5f)
+                    {
+                        statsPage = (statsPage - 1) % 2;
+                        readyForInput = false;
+                    }
+                    else if (kState.IsKeyDown(Keys.Right) || gState.DPad.Right == ButtonState.Pressed || gState.ThumbSticks.Left.X > 0.5f)
+                    {
+                        statsPage = (statsPage + 1) % 2;
+                        readyForInput = false;
+                    }
+                }
             }
 
             return retVal;
@@ -216,7 +242,7 @@ namespace RogueliteSurvivor.Scenes
             _spriteBatch.DrawString(
                 fonts["Font"],
                 "Roguelite Survivor",
-                new Vector2(_graphics.PreferredBackBufferWidth / 6 - 62, _graphics.PreferredBackBufferHeight / 6 - 64),
+                new Vector2(_graphics.PreferredBackBufferWidth / 6 - 62, _graphics.PreferredBackBufferHeight / 6 - 128),
                 Color.White
             );
 
@@ -406,6 +432,103 @@ namespace RogueliteSurvivor.Scenes
                         counterX += 200;
                     }
                 }
+            }
+            else if (state == MainMenuState.PlayStats)
+            {
+                int counterX = 0, counterY = 0;
+                switch (statsPage)
+                {
+                    case 0:
+                        _spriteBatch.DrawString(
+                            fonts["Font"],
+                            "Play Stats - Maps",
+                            new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 - 96),
+                            Color.White
+                        );
+
+                        foreach(var map in progressionContainer.LevelProgressions)
+                        {
+                            _spriteBatch.DrawString(
+                                fonts["FontSmall"],
+                                map.Name,
+                                new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 - 72 + counterY),
+                                Color.White
+                            );
+                            _spriteBatch.DrawString(
+                                fonts["FontSmall"],
+                                string.Concat("  Best Time: ", float.Round(map.BestTime, 2)),
+                                new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 - 60 + counterY),
+                                Color.White
+                            );
+                            
+                            counterY += 36;
+                        }
+                        break;
+                    case 1:
+                        _spriteBatch.DrawString(
+                            fonts["Font"],
+                            "Play Stats - Enemies",
+                            new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 - 96),
+                            Color.White
+                        );
+
+                        foreach(var enemy in enemyContainers)
+                        {
+                            var enemyProgression = progressionContainer.EnemyKillStats.Where(a => a.Name == enemy.Value.ReadableName).FirstOrDefault();
+                            _spriteBatch.DrawString(
+                                fonts["FontSmall"],
+                                enemy.Value.ReadableName,
+                                new Vector2(_graphics.PreferredBackBufferWidth / 32 + counterX, _graphics.PreferredBackBufferHeight / 6 - 72 + counterY),
+                                Color.White
+                            );
+                            if (enemyProgression != null) {
+                                _spriteBatch.DrawString(
+                                    fonts["FontSmall"],
+                                    string.Concat("  Kills: ", enemyProgression.Kills),
+                                    new Vector2(_graphics.PreferredBackBufferWidth / 32 + counterX, _graphics.PreferredBackBufferHeight / 6 - 60 + counterY),
+                                    Color.White
+                                );
+                                _spriteBatch.DrawString(
+                                    fonts["FontSmall"],
+                                    string.Concat("  Killed By: ", enemyProgression.KilledBy),
+                                    new Vector2(_graphics.PreferredBackBufferWidth / 32 + counterX, _graphics.PreferredBackBufferHeight / 6 - 48+ counterY),
+                                    Color.White
+                                );
+                                counterY += 48;
+                            }
+                            else
+                            {
+                                _spriteBatch.DrawString(
+                                    fonts["FontSmall"],
+                                    "  Not Yet Found",
+                                    new Vector2(_graphics.PreferredBackBufferWidth / 32 + counterX, _graphics.PreferredBackBufferHeight / 6 - 60 + counterY),
+                                    Color.White
+                                );
+
+                                counterY += 36;
+                            }
+
+                            if(counterY > 160)
+                            {
+                                counterX += 112;
+                                counterY = 0;
+                            }
+                        }
+                        break;
+                }
+
+                _spriteBatch.DrawString(
+                    fonts["FontSmall"],
+                    "Press left and right to cycle through the stat pages",
+                    new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 116),
+                    Color.White
+                );
+                _spriteBatch.DrawString(
+                    fonts["FontSmall"],
+                    "Press Esc on the keyboard or B on the controller to return to the main menu",
+                    new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 128),
+                    Color.White
+                );
             }
             _spriteBatch.End();
         }

@@ -5,6 +5,7 @@
         MainMenu,
         CharacterSelection,
         MapSelection,
-        Credits
+        Credits,
+        PlayStats,
     }
 }

@@ -113,9 +113,9 @@ namespace RogueliteSurvivor.Physics
                     entityStatus.State = State.ReadyToDie;
                     entity.Set(entityStatus);
                     Experience enemyExperience = entity.Get<Experience>();
-                    KillCount killCount = owner.Entity.Get<KillCount>();
+                    KillCount killCount = (KillCount)owner.Entity.Get(typeof(KillCount));
                     Player playerExperience = owner.Entity.Get<Player>();
-                    killCount.Count++;
+                    killCount.AddKill(entity.Get<SpriteSheet>().TextureName);
                     playerExperience.TotalExperience += enemyExperience.Amount;
                     playerExperience.ExperienceToNextLevel -= enemyExperience.Amount;
                     owner.Entity.Set(killCount, playerExperience);
@@ -215,7 +215,8 @@ namespace RogueliteSurvivor.Physics
 
                 if (health.Current < 1)
                 {
-                    var killCount = entity.Get<KillCount>();
+                    KillCount killCount = (KillCount)entity.Get(typeof(KillCount));
+
                     killCount.KillerName = other.Get<SpriteSheet>().TextureName;
                     entity.Set(killCount);
 
