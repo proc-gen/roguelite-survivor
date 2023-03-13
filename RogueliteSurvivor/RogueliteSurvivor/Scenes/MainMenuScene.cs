@@ -99,6 +99,7 @@ namespace RogueliteSurvivor.Scenes
                                 state = MainMenuState.CharacterSelection;
                                 break;
                             case 2:
+                                state = MainMenuState.PlayStats;
                                 break;
                             case 3:
                                 state = MainMenuState.Credits;
@@ -202,6 +203,15 @@ namespace RogueliteSurvivor.Scenes
                     {
                         state = MainMenuState.MainMenu;
                         readyForInput = false;
+                    }
+                }
+                else if(state == MainMenuState.PlayStats)
+                {
+                    if (kState.IsKeyDown(Keys.Escape) || gState.Buttons.B == ButtonState.Pressed)
+                    {
+                        state = MainMenuState.MainMenu;
+                        readyForInput = false;
+                        selectedButton = 1;
                     }
                 }
             }
@@ -406,6 +416,22 @@ namespace RogueliteSurvivor.Scenes
                         counterX += 200;
                     }
                 }
+            }
+            else if (state == MainMenuState.PlayStats)
+            {
+                _spriteBatch.DrawString(
+                    fonts["Font"],
+                    "Play Stats",
+                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 35, _graphics.PreferredBackBufferHeight / 6 - 32),
+                    Color.White
+                );
+
+                _spriteBatch.DrawString(
+                    fonts["FontSmall"],
+                    "Press Esc on the keyboard or B on the controller to return to the main menu",
+                    new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 128),
+                    Color.White
+                );
             }
             _spriteBatch.End();
         }
