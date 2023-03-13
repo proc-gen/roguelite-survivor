@@ -32,7 +32,7 @@ namespace RogueliteSurvivor.Systems
             this.fonts = fonts;
         }
 
-        public void Update(GameTime gameTime, float totalElapsedTime)
+        public void Update(GameTime gameTime, float totalElapsedTime, float scaleFactor)
         {
             if (stateChangeTime > InputConstants.ResponseTime)
             {

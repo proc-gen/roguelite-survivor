@@ -357,7 +357,7 @@ namespace RogueliteSurvivor.Scenes
 
                         foreach (var system in updateSystems)
                         {
-                            system.Update(gameTime, totalGameTime);
+                            system.Update(gameTime, totalGameTime, scaleFactor);
                         }
                     }
                     stateChangeTime += (float)gameTime.ElapsedGameTime.TotalSeconds;

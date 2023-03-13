@@ -14,7 +14,7 @@ namespace RogueliteSurvivor.Systems
                                 .WithAll<Enemy, Position, Velocity, Speed, Target>())
         { }
 
-        public void Update(GameTime gameTime, float totalElapsedTime)
+        public void Update(GameTime gameTime, float totalElapsedTime, float scaleFactor)
         {
             MapInfo map = null;
             world.Query(in mapQuery, (ref MapInfo mapInfo) =>

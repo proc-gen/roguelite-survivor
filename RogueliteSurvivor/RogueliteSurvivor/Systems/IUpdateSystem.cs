@@ -4,6 +4,6 @@ namespace RogueliteSurvivor.Systems
 {
     internal interface IUpdateSystem
     {
-        void Update(GameTime gameTime, float totalElapsedTime);
+        void Update(GameTime gameTime, float totalElapsedTime, float scaleFactor);
     }
 }
