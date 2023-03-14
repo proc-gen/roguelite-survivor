@@ -22,10 +22,10 @@ namespace RogueliteSurvivor.Systems
             this.graphics = graphics;
         }
 
-        public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player, float totalElapsedTime, GameState gameState, int layer)
+        public void Render(GameTime gameTime, SpriteBatch spriteBatch, Dictionary<string, Texture2D> textures, Entity player, float totalElapsedTime, GameState gameState, int layer, float scaleFactor)
         {
             Vector2 playerPosition = player.Get<Position>().XY;
-            Vector2 offset = new Vector2(graphics.PreferredBackBufferWidth / 6, graphics.PreferredBackBufferHeight / 6);
+            Vector2 offset = new Vector2(GetWidthOffset(graphics, scaleFactor, 2), GetHeightOffset(graphics, scaleFactor, 2));
 
             world.Query(in query, (ref MapInfo map) =>
             {

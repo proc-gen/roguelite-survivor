@@ -18,7 +18,7 @@ namespace RogueliteSurvivor.Systems
                                 .WithAll<PickupSprite, Position>())
         { }
 
-        public void Update(GameTime gameTime, float totalElapsedTime)
+        public void Update(GameTime gameTime, float totalElapsedTime, float scaleFactor)
         {
             Entity player = new Entity();
             Position? playerPos = null;

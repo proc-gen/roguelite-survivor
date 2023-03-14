@@ -12,7 +12,7 @@ namespace RogueliteSurvivor.Systems
                                 .WithAny<Projectile, SingleTarget>())
         { }
 
-        public void Update(GameTime gameTime, float totalElapsedTime)
+        public void Update(GameTime gameTime, float totalElapsedTime, float scaleFactor)
         {
 
             world.Query(in query, (in Entity entity, ref EntityStatus entityStatus) =>

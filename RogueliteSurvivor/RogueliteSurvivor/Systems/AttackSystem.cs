@@ -37,7 +37,7 @@ namespace RogueliteSurvivor.Systems
             random = new Random();
         }
 
-        public void Update(GameTime gameTime, float totalElapsedTime)
+        public void Update(GameTime gameTime, float totalElapsedTime, float scaleFactor)
         {
             world.Query(in spell1Query, (in Entity entity, ref Position pos, ref Target target, ref Spell1 spell1) =>
             {

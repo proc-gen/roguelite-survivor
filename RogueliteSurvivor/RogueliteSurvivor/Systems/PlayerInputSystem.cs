@@ -17,7 +17,7 @@ namespace RogueliteSurvivor.Systems
 
         static Vector2 InverseY = new Vector2(1, -1);
 
-        public void Update(GameTime gameTime, float totalElapsedTime)
+        public void Update(GameTime gameTime, float totalElapsedTime, float scaleFactor)
         {
             KeyboardState kState = Keyboard.GetState();
             GamePadState gState = GamePad.GetState(PlayerIndex.One);

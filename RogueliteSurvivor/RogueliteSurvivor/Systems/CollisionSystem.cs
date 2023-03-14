@@ -23,7 +23,7 @@ namespace RogueliteSurvivor.Systems
             this.physicsWorld = physicsWorld;
         }
 
-        public void Update(GameTime gameTime, float totalElapsedTime)
+        public void Update(GameTime gameTime, float totalElapsedTime, float scaleFactor)
         {
             world.Query(in mainQuery, (ref Velocity vel, ref Body body) =>
             {

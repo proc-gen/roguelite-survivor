@@ -50,8 +50,8 @@ namespace RogueliteSurvivor.Scenes
         private List<PickupType> levelUpChoices = new List<PickupType>();
         private PickupType selectedLevelUpChoice;
 
-        public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers, Dictionary<string, MapContainer> mapContainers, ProgressionContainer progressionContainer, Dictionary<string, EnemyContainer> enemyContainers)
-            : base(spriteBatch, contentManager, graphics, world, physicsWorld, progressionContainer)
+        public GameScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, Dictionary<string, PlayerContainer> playerContainers, Dictionary<string, MapContainer> mapContainers, ProgressionContainer progressionContainer, Dictionary<string, EnemyContainer> enemyContainers, float scaleFactor)
+            : base(spriteBatch, contentManager, graphics, world, physicsWorld, progressionContainer, scaleFactor)
         {
             this.playerContainers = playerContainers;
             this.mapContainers = mapContainers;
@@ -357,7 +357,7 @@ namespace RogueliteSurvivor.Scenes
 
                         foreach (var system in updateSystems)
                         {
-                            system.Update(gameTime, totalGameTime);
+                            system.Update(gameTime, totalGameTime, scaleFactor);
                         }
                     }
                     stateChangeTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -412,7 +412,7 @@ namespace RogueliteSurvivor.Scenes
                     foreach (var system in renderSystems)
                     {
                         _spriteBatch.Begin(samplerState: SamplerState.PointClamp, blendState: BlendState.AlphaBlend, transformMatrix: transformMatrix);
-                        system.Render(gameTime, _spriteBatch, textures, player, totalGameTime, gameState, layer);
+                        system.Render(gameTime, _spriteBatch, textures, player, totalGameTime, gameState, layer, scaleFactor);
                         _spriteBatch.End();
                     }
                 }
@@ -424,7 +424,7 @@ namespace RogueliteSurvivor.Scenes
                 _spriteBatch.DrawString(
                     fonts["Font"],
                     "Level Up! Select an upgrade:",
-                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - 116, _graphics.PreferredBackBufferHeight / 6 - 64),
+                    new Vector2(GetWidthOffset(2) - 116, GetHeightOffset(2) - 64),
                     Color.White
                 );
 
@@ -433,7 +433,7 @@ namespace RogueliteSurvivor.Scenes
                 {
                     _spriteBatch.Draw(
                         textures["LevelUpChoices"],
-                        new Vector2(_graphics.PreferredBackBufferWidth / 6 + counter, _graphics.PreferredBackBufferHeight / 6 + 32),
+                        new Vector2(GetWidthOffset(2) + counter, GetHeightOffset(2) + 32),
                         LevelUpChoiceHelper.GetLevelUpChoiceButton(levelUpChoice, levelUpChoice == selectedLevelUpChoice),
                         Color.White,
                         0f,
@@ -449,7 +449,7 @@ namespace RogueliteSurvivor.Scenes
                 _spriteBatch.DrawString(
                     fonts["Font"],
                     PickupHelper.GetPickupDisplayTextForLevelUpChoice(selectedLevelUpChoice),
-                    new Vector2(_graphics.PreferredBackBufferWidth / 6 - PickupHelper.GetPickupDisplayTextForLevelUpChoice(selectedLevelUpChoice).Length * 4.5f, _graphics.PreferredBackBufferHeight / 6 + 96),
+                    new Vector2(GetWidthOffset(2) - PickupHelper.GetPickupDisplayTextForLevelUpChoice(selectedLevelUpChoice).Length * 4.5f, GetHeightOffset(2) + 96),
                     Color.White
                 );
 

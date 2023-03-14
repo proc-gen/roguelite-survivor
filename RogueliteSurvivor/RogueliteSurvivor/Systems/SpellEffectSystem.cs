@@ -19,7 +19,7 @@ namespace RogueliteSurvivor.Systems
         {
         }
 
-        public void Update(GameTime gameTime, float totalElapsedTime)
+        public void Update(GameTime gameTime, float totalElapsedTime, float scaleFactor)
         {
             world.Query(in burnQuery, (in Entity entity, ref EntityStatus entityStatus, ref Burn burn, ref Health health, ref Animation anim) =>
             {

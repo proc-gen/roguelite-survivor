@@ -53,11 +53,11 @@ namespace RogueliteSurvivor.Systems
             random = new Random();
         }
 
-        public void Update(GameTime gameTime, float totalElapsedTime)
+        public void Update(GameTime gameTime, float totalElapsedTime, float scaleFactor)
         {
             int numEnemies = 0;
 
-            Vector2 offset = new Vector2(graphics.PreferredBackBufferWidth / 6, graphics.PreferredBackBufferHeight / 6);
+            Vector2 offset = new Vector2(GetWidthOffset(graphics, scaleFactor, 2), GetHeightOffset(graphics, scaleFactor, 2));
             Position? player = null;
             MapInfo map = null;
             world.Query(in playerQuery, (ref Position playerPos) =>
@@ -113,8 +113,8 @@ namespace RogueliteSurvivor.Systems
             int x, y;
             do
             {
-                x = random.Next(int.Max(0, (int)playerPosition.X - 300), int.Min(map.Map.Width * 16, (int)playerPosition.X + 300));
-                y = random.Next(int.Max(0, (int)playerPosition.Y - 300), int.Min(map.Map.Height * 16, (int)playerPosition.Y + 300));
+                x = random.Next(int.Max(0, (int)playerPosition.X - (int)offset.X), int.Min(map.Map.Width * map.Map.TileWidth, (int)playerPosition.X + (int)offset.X));
+                y = random.Next(int.Max(0, (int)playerPosition.Y - (int)offset.Y), int.Min(map.Map.Height * map.Map.TileHeight, (int)playerPosition.Y + (int)offset.Y));
             } while (((x > (playerPosition.X - offset.X) && x < (playerPosition.X + offset.X)) 
                         && (y > (playerPosition.Y - offset.Y) && y < (playerPosition.Y + offset.Y)))
                         || !map.IsTileWalkable(x, y));

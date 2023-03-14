@@ -29,8 +29,8 @@ namespace RogueliteSurvivor.Scenes
         private GameOverState state = GameOverState.Main;
         private float stateChangeTime = .11f;
 
-        public GameOverScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, ProgressionContainer progressionContainer, Dictionary<string, MapContainer> mapContainers)
-            : base(spriteBatch, contentManager, graphics, world, physicsWorld, progressionContainer)
+        public GameOverScene(SpriteBatch spriteBatch, ContentManager contentManager, GraphicsDeviceManager graphics, World world, Box2D.NetStandard.Dynamics.World.World physicsWorld, ProgressionContainer progressionContainer, Dictionary<string, MapContainer> mapContainers, float scaleFactor)
+            : base(spriteBatch, contentManager, graphics, world, physicsWorld, progressionContainer, scaleFactor)
         {
             this.mapContainers = mapContainers;
         }
@@ -132,14 +132,14 @@ namespace RogueliteSurvivor.Scenes
                 _spriteBatch.DrawString(
                     fonts["Font"],
                    string.Concat(getProperArticle(gameStats.Killer), gameStats.Killer, " pummeled you into oblivion..."),
-                    new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 - 64),
+                    new Vector2(GetWidthOffset(10.66f), GetHeightOffset(2) - 64),
                     Color.White
                 );
 
                 _spriteBatch.DrawString(
                     fonts["Font"],
                    string.Concat("You killed ", gameStats.EnemiesKilled, " enemies in ", float.Round(gameStats.PlayTime, 2), " seconds!"),
-                    new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 - 32),
+                    new Vector2(GetWidthOffset(10.66f), GetHeightOffset(2) - 32),
                     Color.White
                 );
 
@@ -148,7 +148,7 @@ namespace RogueliteSurvivor.Scenes
                     _spriteBatch.DrawString(
                         fonts["Font"],
                        string.Concat("New best time for ", gameSettings.MapName, "!"),
-                        new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6),
+                        new Vector2(GetWidthOffset(10.66f), GetHeightOffset(2)),
                         Color.White
                     );
                 }
@@ -158,7 +158,7 @@ namespace RogueliteSurvivor.Scenes
                     _spriteBatch.DrawString(
                         fonts["Font"],
                        string.Concat("You've unlocked ", unlockedMap.Name, "!"),
-                        new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 32),
+                        new Vector2(GetWidthOffset(10.66f), GetHeightOffset(2) + 32),
                         Color.White
                     );
                 }
@@ -168,7 +168,7 @@ namespace RogueliteSurvivor.Scenes
                 _spriteBatch.DrawString(
                     fonts["Font"],
                     "Enemies Killed: ",
-                    new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 - 64),
+                    new Vector2(GetWidthOffset(10.66f), GetHeightOffset(2) - 64),
                     Color.White
                 );
 
@@ -178,7 +178,7 @@ namespace RogueliteSurvivor.Scenes
                     _spriteBatch.DrawString(
                         fonts["FontSmall"],
                         string.Concat(" - ", enemy.Key, " : ", enemy.Value),
-                        new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 - 48 + counter),
+                        new Vector2(GetWidthOffset(10.66f), GetHeightOffset(2) - 48 + counter),
                         Color.White
                     );
                     counter += 12;
@@ -189,13 +189,13 @@ namespace RogueliteSurvivor.Scenes
             _spriteBatch.DrawString(
                 fonts["FontSmall"],
                 "Press Tab on the keyboard or Y on the controller to toggle between map stats and advanced stats",
-                new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 96),
+                new Vector2(GetWidthOffset(10.66f), GetHeightOffset(2) + 96),
                 Color.White
             );
             _spriteBatch.DrawString(
                 fonts["FontSmall"],
                 "Press Space on the keyboard or Start on the controller to return to the main menu",
-                new Vector2(_graphics.PreferredBackBufferWidth / 32, _graphics.PreferredBackBufferHeight / 6 + 108),
+                new Vector2(GetWidthOffset(10.66f), GetHeightOffset(2) + 108),
                 Color.White
             );
 

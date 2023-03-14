@@ -15,7 +15,7 @@ namespace RogueliteSurvivor.Systems
             : base(world, new QueryDescription())
         { }
 
-        public void Update(GameTime gameTime, float totalElapsedTime)
+        public void Update(GameTime gameTime, float totalElapsedTime, float scaleFactor)
         {
             world.Query(in playerQuery, (ref EntityStatus status, ref Position pos, ref Target target) =>
             {
